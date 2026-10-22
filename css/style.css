@@ -15,6 +15,6 @@
 
 .container { 
     max-width: 1200px; 
-    background: var(--rc-white)
-    var(--bs-body-font-family)
+    background: var(--rc-black);
+    --bs-body-font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
