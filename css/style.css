@@ -22,6 +22,12 @@
     background: var(--rc-surface);
     border: 1px solid var(--rc-border);
 }
+.contador{
+    transition: transform 0.2s ease;
+}
+.contador:hover{
+    transform: scale(1.02);
+}
 .contador-contenido h2{
     font-weight: 700;
     color: var(--rc-red);
