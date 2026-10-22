@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
 :root { 
     --rc-red: #e0202a; 
     --rc-red-dark: #a50d14; 
@@ -18,3 +23,81 @@
     background: var(--rc-white)
     var(--bs-body-font-family)
 }
+.footer {
+  background-color: #171717;
+  color: white;
+  padding: 30px 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo-footer{
+    max-width: 60px; 
+    display: flex
+    flex-start;
+}
+.logo-footer img{
+    width: 100%;
+}
+
+.footer-contenido {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer h3 {
+  margin-bottom: 10px;
+}
+
+.footer p {
+  color: #cccccc;
+  font-size: 14px;
+}
+
+.footer a {
+  display: block;
+  color: #cccccc;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+
+.footer a:hover {
+  color: white;
+}
+
+.footer-final {
+  border-top: 1px solid #444;
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+/* Contenedor simple */
+.social-container {
+    display: flex;
+    gap: 15px;
+}
+
+/* Estilo del enlace */
+.icono-social {
+    display: inline-block;
+    width: 32px;  /* Controla el tamaño del botón */
+    height: 32px;
+}
+
+/* El SVG hereda las propiedades del enlace */
+.icono-social svg {
+    width: 100%;
+    height: 100%;
+    fill: #666666; /* Color gris opaco inicial */
+    transition: fill 0.2s ease; /* Transición fluida */
+}
+
+/* Cambios de color específicos con CSS nativo al hacer hover */
+.facebook:hover svg  { fill: #1877f2; }
+.instagram:hover svg { fill: #e1306c; }
+.twitter:hover svg   { fill: #000000; }
+.youtube:hover svg   { fill: #ff0000; }
