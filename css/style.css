@@ -20,4 +20,12 @@
 }
 .contador{
     background: var(--rc-surface);
+    border: 1px solid var(--rc-border);
+}
+.contador-contenido h2{
+    font-weight: 700;
+    color: var(--rc-red);
+}
+.contador-contenido p{
+    color: var(--rc-text-soft);
 }
