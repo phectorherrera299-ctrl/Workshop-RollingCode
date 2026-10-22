@@ -18,3 +18,6 @@
     background: var(--rc-black);
     --bs-body-font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
+.contador{
+    background: var(--rc-surface);
+}
