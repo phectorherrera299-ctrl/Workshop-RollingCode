@@ -18,3 +18,17 @@
     background: var(--rc-white)
     var(--bs-body-font-family)
 }
+
+.bg-surface {
+    background: var(--rc-surface)
+}
+
+.navbar-text-soft {
+    color: var(--rc-text-soft);
+    text-decoration: none;
+}
+.navbar-important {
+    background-color: var(--rc-red);
+    border-radius: 20px;
+    font-weight: bold;
+}
