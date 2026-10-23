@@ -335,7 +335,7 @@ body {
 }
 
 .logo-footer{
-    max-width: 60px; 
+    max-width: 120px; 
     display: flex
     flex-start;
 }
