@@ -24,7 +24,129 @@
     <div class="container">
       <header></header>
       <main>
+     <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubicación - Rolling Code School</title>
 
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Leaflet: biblioteca para el mapa dinámico -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+</head>
+<body>
+
+    <section class="ubicacion">
+
+        <div class="contenido">
+            <span class="subtitulo">CÓMO LLEGAR</span>
+
+            <h1>Te esperamos en<br>Rolling Code<br>School</h1>
+
+            <div class="direccion">
+                <span class="pin">📍</span>
+                <div>
+                    <strong>Calle Gral. Paz 576, Entrepiso</strong>
+                    <p>4000 San Miguel de Tucumán, Tucumán</p>
+                </div>
+            </div>
+
+            <div class="etiquetas">
+                <span>Jueves 19/11</span>
+                <span>18.00 hs</span>
+                <span>Entrepiso</span>
+            </div>
+
+            <div class="botones">
+                <a
+                    href="https://www.bing.com/maps?q=Gral.+Paz+576+San+Miguel+de+Tucuman"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-mapa"
+                >
+                    Abrir en Bing Maps
+                </a>
+
+                <a href="#entrada" class="btn-entrada">
+                    Comprar entrada
+                </a>
+            </div>
+        </div>
+
+        <!-- MAPA DINÁMICO -->
+        <div class="mapa">
+            <div id="map"></div>
+
+            <!-- Marcador personalizado -->
+            <div class="marcador">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                        d="M12 22s8-7.1 8-13a8 8 0 1 0-16 0c0 5.9 8 13 8 13z"
+                        fill="#ef3340"
+                    />
+                    <circle cx="12" cy="9" r="3" fill="#171719"/>
+                </svg>
+            </div>
+
+            <!-- Tarjeta inferior -->
+            <div class="info-mapa">
+                <div>
+                    <strong>Rolling Code School</strong>
+                    <p>Gral. Paz 576 · San Miguel de Tucumán</p>
+                </div>
+                <span>-26.8366, -65.2072</span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Biblioteca JavaScript de Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // Coordenadas del lugar
+        const ubicacion = [-26.8366, -65.2072];
+
+        // Crear mapa interactivo
+        const map = L.map('map', {
+            center: ubicacion,
+            zoom: 17,
+            zoomControl: false,
+            scrollWheelZoom: true
+        });
+
+        // Calles y edificios del mapa
+        L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                maxZoom: 19
+            }
+        ).addTo(map);
+
+        // Marcador real en el mapa
+        const marcador = L.marker(ubicacion).addTo(map);
+
+        marcador.bindPopup(
+            '<strong>Rolling Code School</strong><br>Calle Gral. Paz 576'
+        );
+
+        // Control de zoom
+        L.control.zoom({
+            position: 'topright'
+        }).addTo(map);
+    </script>
+
+</body>
+</html>
       </main>
     </div>
     <footer class="footer">
