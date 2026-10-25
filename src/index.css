@@ -15,11 +15,11 @@
   --color-rc-chip: #3a3a40;
   --color-rc-pink: #ffe9ea;
 
-  --radius-rc-red-block: 40px; /* bloques rojos */
-  --radius-rc-card: 32px; /* tarjetas */
-  --radius-rc-box: 28px; /* cajas y tarjeta blanca */
-  --radius-rc-option: 18px; /* opciones y contador */
-  --radius-rc-field: 14px; /* campos */
+  --radius-rc-red-block: 40px;
+  --radius-rc-card: 32px; 
+  --radius-rc-box: 28px; 
+  --radius-rc-option: 18px; 
+  --radius-rc-field: 14px; 
 }
 
 @utility bg-rc-gradient {
