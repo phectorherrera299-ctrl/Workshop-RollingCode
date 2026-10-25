@@ -1,12 +1,14 @@
+import Container from './components/Container'
 import Navbar from "./components/Navbar";
-import NotFound from "./pages/NotFound";
 
 function App() {
   return (
     <>
       <Navbar />
       <main>
-        <NotFound />
+        <Container>
+          <h1 className='text-4xl'>Hola mundo</h1>
+        </Container>
       </main>
     </>
   )
