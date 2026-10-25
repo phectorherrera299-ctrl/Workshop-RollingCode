@@ -11,10 +11,10 @@
   --color-rc-white: #ffffff;
   --color-rc-text-soft: #d4d4d8;
   --color-rc-text-mute: #a1a1aa;
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --color-rc-chip: #3a3a40;
   --color-rc-pink: #ffe9ea;
-
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  
   --radius-rc-red-block: 40px; /* bloques rojos */
   --radius-rc-card: 32px; /* tarjetas */
   --radius-rc-box: 28px; /* cajas y tarjeta blanca */

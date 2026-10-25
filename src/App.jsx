@@ -1,11 +1,10 @@
 import Container from './components/Container'
-import 
-
+import Contador from './components/Contador'
 function App() {
   return (
     <main>
       <Container>
-        <h1></h1>
+        <Contador></Contador>
       </Container>
     </main>
   )
