@@ -1,13 +1,12 @@
-import Container from './components/Container'
+
+import PublicidadWorkshop from "./PublicidadWorkshop";
 
 function App() {
   return (
-    <main>
-      <Container>
-        <h1 className='text-4xl'>Hola mundo</h1>
-      </Container>
-    </main>
-  )
+    <div>
+      <PublicidadWorkshop />
+    </div>
+  );
 }
 
-export default App
+export default App;
