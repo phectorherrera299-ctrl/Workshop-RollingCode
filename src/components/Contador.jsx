@@ -4,3 +4,16 @@ const datos = [
     {numero: "3h 40", texto: "de 18:00 a 21:40 hs"},
     {numero: "2", texto: "modalidades: presencial y virtual"}
 ]
+
+const Contador = () => {
+    return (
+        <div>
+            {datos.map ((dato) => (
+                <div key={dato.numero}>
+                    <div>{dato.numero}</div>
+                    <p>{dato.texto}</p>
+                </div>
+            ))}
+        </div>
+    )
+}
