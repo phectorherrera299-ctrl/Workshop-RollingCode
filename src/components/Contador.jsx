@@ -1,4 +1,5 @@
 import useContador from "./hooks/useContador";
+import useEnPantalla from "./hooks/useEnPantalla";
 
 const datos = [
   { valor: 120, texto: "lugares presenciales" },
@@ -16,12 +17,12 @@ const datos = [
   },
 ];
 
-const Estadistica = ({ valor, fijo, texto }) => {
-  const numero = useContador(valor ?? 0, true);
+const Estadistica = ({ valor, fijo, texto, activo }) => {
+  const numero = useContador(valor ?? 0, activo);
   return (
     <div>
       <div className="text-rc-red font-extrabold text-[40px] tabular-nums">
-        {fijo ?? numero} 
+        {fijo ?? numero}
       </div>
       <p className="text-rc-text-soft text-sm">{texto}</p>
     </div>
@@ -29,14 +30,15 @@ const Estadistica = ({ valor, fijo, texto }) => {
 };
 
 const Contador = () => {
+  const [ref, visible] = useEnPantalla();
   return (
-    <section className="mt-3 rounded-rc-option border border-rc-border bg-rc-surface p-6 transition-transform duration-200 hover:scale-[1.02]">
+    <section ref={ref} className="mt-3 rounded-rc-option border border-rc-border bg-rc-surface p-6 transition-transform duration-200 hover:scale-[1.02]">
       <div
         className="pb-1
        pl-2 grid grid-cols-2 gap-6 md:grid-cols-4"
       >
         {datos.map((dato) => (
-          <Estadistica key={dato.texto} {...dato} />
+          <Estadistica key={dato.texto} activo={visible} {...dato} />
         ))}
       </div>
     </section>
