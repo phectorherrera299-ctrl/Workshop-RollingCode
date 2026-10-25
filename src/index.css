@@ -37,6 +37,27 @@ body {
   line-height: 1.55;
 }
 
+@layer components {
+  .bg-surface {
+    background-color: var(--color-rc-surface);
+  }
+
+  .navbar-text-soft {
+    color: var(--color-rc-text-soft);
+    text-decoration: none;
+  }
+
+  .navbar-text-soft:hover {
+    color: var(--color-rc-white);
+  }
+
+  .navbar-important {
+    background-color: var(--color-rc-red);
+    border-radius: 20px;
+    font-weight: bold;
+  }
+}
+
 @layer base {
   h1 {
     font-size: clamp(40px, 6vw, 88px);
