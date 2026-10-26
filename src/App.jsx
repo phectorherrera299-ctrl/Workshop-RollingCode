@@ -6,27 +6,28 @@ import Speakers from "./pages/Speakers";
 import Navbar from "./components/navbar";
 import PublicidadWorkshop from "./PublicidadWorkshop";
 import { Ubicacion } from "./Ubicacion";
+import { Footer } from './components/Footer'
+import { Ubicacion } from './Ubicacion'
 
 
 function App() {
   return (
     <>
-      <header>
-        <Navbar></Navbar>
-      </header>
+      <Navbar />
       <main>
         <Container>
           <PublicidadWorkshop />
           <Speakers />
           <Contador />
           <NotFound />
-          <Entradas></Entradas>
-          <Ubicacion></Ubicacion>
+          <Speakers />
+          <Entradas />
+          <Ubicacion />
         </Container>
       </main>
-      <footer></footer>
+      <Footer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App
