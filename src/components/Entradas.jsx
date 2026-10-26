@@ -1,3 +1,5 @@
+import Tarjeta from "./Tarjeta";
+
 const tiempo = [
   { numero: "17", etiqueta: "Días" },
   { numero: "09", etiqueta: "Horas" },
