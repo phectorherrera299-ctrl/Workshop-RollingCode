@@ -1,8 +1,30 @@
 import { useState } from "react";
 
+const opciones = [
+  {
+    id: "early",
+    nombre: "Early Bird",
+    detalle: "Presencial · hasta el 31/10",
+    precio: 25000,
+  },
+  {
+    id: "general",
+    nombre: "General",
+    detalle: "Presencial · desde el 1/11",
+    precio: 35000,
+  },
+  {
+    id: "virtual",
+    nombre: "Virtual",
+    detalle: "Transmisión en vivo y grabación",
+    precio: 15000,
+  },
+];
+
 const pasos = ["Entrada", "Datos", "Pago", "Listo"];
 const Checkout = () => {
   const [pasoActual, setPasoActual] = useState(0);
+  const [entradaId, setEntradaId] = useState("early");
 
   return (
     <section
@@ -32,6 +54,45 @@ const Checkout = () => {
             </li>
           ))}
         </ol>
+      </div>
+      <div className="mt-10 grid gap-6 lg:grid-cols-[1.43fr_1fr]">
+        <div className="rounded-rc-box bg-white p-9">
+          <h3 className="text-[22px] font-extrabold text-rc-black">
+            Elegí tu entrada
+          </h3>
+
+          <div className="mt-4 flex flex-col gap-3">
+            {opciones.map((opcion) => {
+              const activa = opcion.id === entradaId;
+              return (
+                <button
+                  key={opcion.id}
+                  onClick={() => setEntradaId(opcion.id)}
+                  aria-pressed={activa}
+                  className={`flex w-full cursor-pointer items-center justify-between rounded-rc-option border-2 px-5 py-3.5 text-left transition ${
+                    activa
+                      ? "border-rc-black bg-rc-black text-white"
+                      : "border-rc-text-soft text-rc-black hover:border-rc-black"
+                  }`}
+                >
+                  <span>
+                    <span className="block font-extrabold">{opcion.nombre}</span>
+                    <span
+                      className={`block text-sm ${
+                        activa ? "text-rc-text-mute" : "text-rc-text-on-white"
+                      }`}
+                    >
+                      {opcion.detalle}
+                    </span>
+                  </span>
+                  <span className="text-lg font-extrabold">
+                    ${opcion.precio.toLocaleString("es-AR")}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );
