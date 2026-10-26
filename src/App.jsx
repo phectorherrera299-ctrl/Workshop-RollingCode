@@ -4,8 +4,8 @@ import Contador from "./components/Contador";
 import NotFound from "./pages/NotFound";
 import Speakers from "./pages/Speakers";
 import Navbar from "./components/navbar";
-
 import PublicidadWorkshop from "./PublicidadWorkshop";
+import Checkout from './components/Checkout';
 
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
           
           <Contador />
           <NotFound />
+          <Checkout></Checkout>
           <Ubicacion/>
         </Container>
       </main>
