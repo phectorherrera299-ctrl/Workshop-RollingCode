@@ -68,7 +68,7 @@ export default function Navbar() {
               ))}
               <li className="whitespace-nowrap">
                 <a
-                  href="#"
+                  href=""
                   className="navbar-important navbar-text-soft block px-4 py-2 text-center"
                 >
                   Comprar entrada
