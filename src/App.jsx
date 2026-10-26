@@ -1,4 +1,5 @@
-import Container from './components/Container'
+import Container from './components/Container';
+import Contador from './components/Contador';
 import Navbar from "./components/Navbar";
 import NotFound from "./pages/NotFound";
 import Speakers from "./pages/Speakers";
@@ -8,11 +9,14 @@ function App() {
     <>
       <Navbar />
       <main>
-        <NotFound />
-        <Speakers />
+        <Container>
+          <Contador />
+          <NotFound />
+          <Speakers />
+        </Container>
       </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
