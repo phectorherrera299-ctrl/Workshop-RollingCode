@@ -1,3 +1,9 @@
+const tiempo = [
+  { numero: "17", etiqueta: "Días" },
+  { numero: "09", etiqueta: "Horas" },
+  { numero: "24", etiqueta: "Min" },
+];
+
 const Entradas = () => {
   return (
     <section className="mt-24">
@@ -16,6 +22,21 @@ const Entradas = () => {
           <p className="text-sm text-rc-text-mute">
             Después la entrada pasa de $25.000 a $35.000.
           </p>
+        </div>
+        <div className="flex gap-3">
+          {tiempo.map((tiempo) => (
+            <div
+              key={tiempo.etiqueta}
+              className="rounded-rc-option border border-rc-border bg-rc-black px-4 py-2 text-center"
+            >
+              <div className="text-[32px] font-extrabold leading-none tabular-nums">
+                {tiempo.numero}
+              </div>
+              <div className="text-sm uppercase text-rc-text-mute">
+                {tiempo.etiqueta}
+              </div>
+            </div>
+          ))}
         </div>
         <div className="lg:w-72">
           <div className="mb-2 flex justify-between text-sm">
