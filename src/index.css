@@ -52,6 +52,7 @@ body {
   background: var(--color-rc-black);
   color: var(--color-rc-white);
   line-height: 1.55;
+}
 @layer components {
   .bg-surface {
     background-color: var(--color-rc-surface);
