@@ -1,21 +1,23 @@
-import Entradas from './components/Entradas';
+import Entradas from "./components/Entradas";
 import Container from "./components/Container";
 import Contador from "./components/Contador";
 import NotFound from "./pages/NotFound";
 import Speakers from "./pages/Speakers";
 import Navbar from "./components/navbar";
+import PublicidadWorkshop from "./PublicidadWorkshop";
 
 function App() {
   return (
     <>
-    <header>
-      <Navbar></Navbar>
-    </header>
+      <header>
+        <Navbar></Navbar>
+      </header>
       <main>
         <Container>
+          <PublicidadWorkshop />
+          <Speakers />
           <Contador />
           <NotFound />
-          <Speakers />
           <Entradas></Entradas>
         </Container>
       </main>
