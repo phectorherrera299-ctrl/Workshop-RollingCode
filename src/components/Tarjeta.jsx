@@ -21,10 +21,11 @@ const Tarjeta = ({
   subtitulo,
   items,
   destacada = false,
+  className = ""
 }) => {
   return (
     <article
-      className={`flex flex-col rounded-rc-card p-9 ${destacada ? "bg-rc-gradient" : "border border-rc-border bg-rc-surface"}`}
+      className={`flex flex-col rounded-rc-card p-9 ${destacada ? "bg-rc-gradient" : "border border-rc-border bg-rc-surface"} ${className}`}
     >
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-extrabold">{nombre}</h3>

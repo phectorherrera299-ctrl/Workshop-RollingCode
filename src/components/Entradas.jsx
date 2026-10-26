@@ -27,7 +27,22 @@ const planes = [
       "Grabación de todas las charlas",
     ],
   },
+  {
+  nombre: "Virtual",
+  chip: "Desde donde estés",
+  precio: "$15.000",
+  subtitulo: "Transmisión en vivo",
+  className: "lg:col-span-2",
+  items: [
+    "Transmisión en vivo de las 10 charlas",
+    "Chat para hacer preguntas a los speakers",
+    "Certificado de asistencia",
+    "Grabación disponible por 30 días",
+  ],
+},
 ];
+
+
 
 const tiempo = [
   { numero: "17", etiqueta: "Días" },
