@@ -18,7 +18,6 @@ function App() {
         <Container>
           <PublicidadWorkshop />
           <Speakers />
-          
           <Contador />
           <NotFound />
           <Entradas></Entradas>
@@ -26,7 +25,6 @@ function App() {
         </Container>
       </main>
       <footer></footer>
-      
     </>
   );
 }
