@@ -50,7 +50,7 @@ export const Footer = () => {
     {
       nombre: "YouTube",
       className: "red-youtube",
-      url: "https://www.youtube.com/@rollingcode7175/shorts",
+      url: "https://youtube.com/@rollingcode7175",
     },
     {
       nombre: "X",

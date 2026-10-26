@@ -7,6 +7,7 @@ import PublicidadWorkshop from "./PublicidadWorkshop";
 import { Ubicacion } from "./Ubicacion";
 import { Footer } from './components/Footer'
 import Agenda from "./Agenda";
+import Sponsors from "./components/Sponsors";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Speakers />
           <Agenda />  
           <Entradas />
+          <Sponsors />
           <Ubicacion />
         </Container>
       </main>

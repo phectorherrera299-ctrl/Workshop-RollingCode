@@ -3,7 +3,8 @@ import { useState } from "react";
 const links = [
   { label: "Speakers", href: "#speakers" },
   { label: "Cómo llegar", href: "#ubicacion" },
-  { label: "Agenda", href: "#" },
+  { label: "Agenda", href: "#agenda" },
+  { label: "Sponsors", href: "#sponsors" },
 ];
 
 export default function Navbar() {
