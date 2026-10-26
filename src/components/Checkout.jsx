@@ -25,6 +25,7 @@ const pasos = ["Entrada", "Datos", "Pago", "Listo"];
 const Checkout = () => {
   const [pasoActual, setPasoActual] = useState(0);
   const [entradaId, setEntradaId] = useState("early");
+  const [cantidad, setCantidad] = useState(1);
 
   return (
     <section
@@ -76,7 +77,9 @@ const Checkout = () => {
                   }`}
                 >
                   <span>
-                    <span className="block font-extrabold">{opcion.nombre}</span>
+                    <span className="block font-extrabold">
+                      {opcion.nombre}
+                    </span>
                     <span
                       className={`block text-sm ${
                         activa ? "text-rc-text-mute" : "text-rc-text-on-white"
@@ -92,6 +95,42 @@ const Checkout = () => {
               );
             })}
           </div>
+          <div className="mt-6 flex items-center justify-between">
+            <span className="font-extrabold text-rc-black">Cantidad</span>
+
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setCantidad(cantidad - 1)}
+                disabled={cantidad === 1}
+                aria-label="Quitar una entrada"
+                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-2 border-rc-text-soft text-xl font-extrabold text-rc-black transition hover:border-rc-black disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                −
+              </button>
+
+              <span className="w-6 text-center text-xl font-extrabold tabular-nums text-rc-black">
+                {cantidad}
+              </span>
+
+              <button
+                onClick={() => setCantidad(cantidad + 1)}
+                disabled={cantidad === 10}
+                aria-label="Agregar una entrada"
+                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-2 border-rc-text-soft text-xl font-extrabold text-rc-black transition hover:border-rc-black disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <button className="mt-6 min-h-[52px] w-full cursor-pointer rounded-full bg-rc-black text-lg font-extrabold text-white transition hover:bg-rc-surface-2 active:scale-95">
+            Continuar
+          </button>
+
+          <p className="mt-6 text-sm text-rc-text-on-white">
+            Pasarela de pago de ejemplo: no se procesan pagos ni se guardan
+            datos.
+          </p>
         </div>
       </div>
     </section>
