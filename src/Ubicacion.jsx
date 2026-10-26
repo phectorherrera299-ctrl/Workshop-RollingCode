@@ -1,4 +1,4 @@
-import { direccion } from './App';
+import { direccion } from './direccion';
 
 export function Ubicacion() {
   const mapaUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
