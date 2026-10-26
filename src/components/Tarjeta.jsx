@@ -21,11 +21,15 @@ const Tarjeta = ({
   subtitulo,
   items,
   destacada = false,
-  className = ""
+  className = "",
 }) => {
   return (
     <article
-      className={`flex flex-col rounded-rc-card p-9 ${destacada ? "bg-rc-gradient" : "border border-rc-border bg-rc-surface"} ${className}`}
+      className={`flex flex-col rounded-rc-card p-9 transition duration-300 hover:-translate-y-1 ${
+        destacada
+          ? "bg-rc-gradient hover:shadow-[0_20px_40px_-12px_rgba(224,32,42,0.5)]"
+          : "border border-rc-border bg-rc-surface hover:border-rc-red/50"
+      } ${className}`}
     >
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-extrabold">{nombre}</h3>
@@ -63,10 +67,10 @@ const Tarjeta = ({
         ))}
       </ul>
       <button
-        className={`mt-8 min-h-[52px] cursor-pointer rounded-full text-lg font-extrabold ${
+        className={`mt-8 min-h-[52px] cursor-pointer rounded-full text-lg font-extrabold transition duration-200 active:scale-95 ${
           destacada
-            ? "bg-white text-rc-black"
-            : "border-2 border-white text-white"
+            ? "bg-white text-rc-black hover:bg-rc-pink"
+            : "border-2 border-white text-white hover:bg-white hover:text-rc-black"
         }`}
       >
         Comprar entrada
