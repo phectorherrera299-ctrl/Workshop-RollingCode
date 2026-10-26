@@ -1,30 +1,30 @@
-import { Ubicacion } from './Ubicacion'
+import Entradas from "./components/Entradas";
 import Container from "./components/Container";
 import Contador from "./components/Contador";
 import NotFound from "./pages/NotFound";
 import Speakers from "./pages/Speakers";
 import Navbar from "./components/navbar";
-
 import PublicidadWorkshop from "./PublicidadWorkshop";
+import { Ubicacion } from "./Ubicacion";
 
 
 function App() {
   return (
     <>
-    <header>
-      <Navbar></Navbar>
-    </header>
+      <header>
+        <Navbar></Navbar>
+      </header>
       <main>
         <Container>
           <PublicidadWorkshop />
           <Speakers />
-          
           <Contador />
           <NotFound />
-          <Ubicacion/>
+          <Entradas></Entradas>
+          <Ubicacion></Ubicacion>
         </Container>
       </main>
-      
+      <footer></footer>
     </>
   );
 }
