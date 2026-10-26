@@ -24,7 +24,7 @@ const Tarjeta = ({
 }) => {
   return (
     <article
-      className={`rounded-rc-card p-9 ${destacada ? "bg-rc-gradient" : "border border-rc-border bg-rc-surface"}`}
+      className={`flex flex-col rounded-rc-card p-9 ${destacada ? "bg-rc-gradient" : "border border-rc-border bg-rc-surface"}`}
     >
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-extrabold">{nombre}</h3>
@@ -44,11 +44,14 @@ const Tarjeta = ({
           </span>
         )}
       </div>
-      <p className={`mt-3 text-sm ${destacada ? "text-rc-pink" : "text-rc-text-mute"}`}>
+      <p
+        className={`mt-3 text-sm ${destacada ? "text-rc-pink" : "text-rc-text-mute"}`}
+      >
         {subtitulo}
       </p>
       <ul
-        className={`mt-6 flex flex-col gap-3 ${destacada ? "text-white" : "text-rc-text-soft"}`}xxxxxx>
+        className={`mt-6 flex flex-1 flex-col gap-3 ${destacada ? "text-white" : "text-rc-text-soft"}`}
+      >
         {items.map((item) => (
           <li key={item} className="flex items-center gap-3">
             <span className={destacada ? "text-white" : "text-rc-red"}>
@@ -58,6 +61,15 @@ const Tarjeta = ({
           </li>
         ))}
       </ul>
+      <button
+        className={`mt-8 min-h-[52px] cursor-pointer rounded-full text-lg font-extrabold ${
+          destacada
+            ? "bg-white text-rc-black"
+            : "border-2 border-white text-white"
+        }`}
+      >
+        Comprar entrada
+      </button>
     </article>
   );
 };
