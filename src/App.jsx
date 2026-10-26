@@ -1,20 +1,27 @@
-import Container from './components/Container'
 import Entradas from './components/Entradas';
-import Navbar from "./components/Navbar";
+import Container from "./components/Container";
+import Contador from "./components/Contador";
 import NotFound from "./pages/NotFound";
 import Speakers from "./pages/Speakers";
+import Navbar from "./components/navbar";
 
 function App() {
   return (
     <>
-      <Navbar />
+    <header>
+      <Navbar></Navbar>
+    </header>
       <main>
-        <NotFound />
-        <Speakers />
-        <Entradas />
+        <Container>
+          <Contador />
+          <NotFound />
+          <Speakers />
+          <Entradas></Entradas>
+        </Container>
       </main>
+      <footer></footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

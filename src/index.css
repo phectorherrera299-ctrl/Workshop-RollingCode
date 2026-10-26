@@ -11,15 +11,24 @@
   --color-rc-white: #ffffff;
   --color-rc-text-soft: #d4d4d8;
   --color-rc-text-mute: #a1a1aa;
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --color-rc-chip: #3a3a40;
   --color-rc-pink: #ffe9ea;
+<<<<<<< HEAD
 
   --radius-rc-red-block: 40px;
   --radius-rc-card: 32px; 
   --radius-rc-box: 28px; 
   --radius-rc-option: 18px; 
   --radius-rc-field: 14px; 
+=======
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  
+  --radius-rc-red-block: 40px; /* bloques rojos */
+  --radius-rc-card: 32px; /* tarjetas */
+  --radius-rc-box: 28px; /* cajas y tarjeta blanca */
+  --radius-rc-option: 18px; /* opciones y contador */
+  --radius-rc-field: 14px; /* campos */
+>>>>>>> 0cd5689385b96e449c2bc4a146a139df501cc98e
 }
 
 @utility bg-rc-gradient {
@@ -29,12 +38,6 @@
     #a50d14 55%,
     #6e070c 100%
   );
-}
-
-body {
-  background: var(--color-rc-black);
-  color: var(--color-rc-white);
-  line-height: 1.55;
 }
 
 @layer components {
@@ -59,6 +62,11 @@ body {
 }
 
 @layer base {
+  body {
+    background: var(--color-rc-black);
+    color: var(--color-rc-white);
+    line-height: 1.55;
+  }
   h1 {
     font-size: clamp(40px, 6vw, 88px);
     font-weight: 800;
