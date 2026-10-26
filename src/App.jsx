@@ -5,6 +5,8 @@ import NotFound from "./pages/NotFound";
 import Speakers from "./pages/Speakers";
 import Navbar from "./components/navbar";
 import PublicidadWorkshop from "./PublicidadWorkshop";
+import { Ubicacion } from "./Ubicacion";
+
 
 function App() {
   return (
@@ -16,12 +18,15 @@ function App() {
         <Container>
           <PublicidadWorkshop />
           <Speakers />
+          
           <Contador />
           <NotFound />
           <Entradas></Entradas>
+          <Ubicacion></Ubicacion>
         </Container>
       </main>
       <footer></footer>
+      
     </>
   );
 }

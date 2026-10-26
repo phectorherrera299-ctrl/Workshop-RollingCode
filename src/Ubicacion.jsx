@@ -1,9 +1,10 @@
-import { direccion } from './App';
+
 
 export function Ubicacion() {
+  const direccion = "Gral. José María Paz 576, San Miguel de Tucumán";
   const mapaUrl = `https://maps.google.com/maps?q=${encodeURIComponent(
-    direccion
-  )}&z=16&output=embed`;
+  direccion
+)}&z=16&output=embed`;
 
   return (
     <section className="ubicacion" id="ubicacion">
