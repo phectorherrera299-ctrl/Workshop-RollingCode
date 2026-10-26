@@ -12,15 +12,15 @@
   --color-rc-white: #ffffff;
   --color-rc-text-soft: #d4d4d8;
   --color-rc-text-mute: #a1a1aa;
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --color-rc-chip: #3a3a40;
   --color-rc-pink: #ffe9ea;
-
-  --radius-rc-red-block: 40px;
-  --radius-rc-card: 32px;
-  --radius-rc-box: 28px;
-  --radius-rc-option: 18px;
-  --radius-rc-field: 14px;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  
+  --radius-rc-red-block: 40px; /* bloques rojos */
+  --radius-rc-card: 32px; /* tarjetas */
+  --radius-rc-box: 28px; /* cajas y tarjeta blanca */
+  --radius-rc-option: 18px; /* opciones y contador */
+  --radius-rc-field: 14px; /* campos */
 }
 
 @utility bg-rc-gradient {
@@ -52,9 +52,33 @@ body {
   background: var(--color-rc-black);
   color: var(--color-rc-white);
   line-height: 1.55;
+@layer components {
+  .bg-surface {
+    background-color: var(--color-rc-surface);
+  }
+
+  .navbar-text-soft {
+    color: var(--color-rc-text-soft);
+    text-decoration: none;
+  }
+
+  .navbar-text-soft:hover {
+    color: var(--color-rc-white);
+  }
+
+  .navbar-important {
+    background-color: var(--color-rc-red);
+    border-radius: 20px;
+    font-weight: bold;
+  }
 }
 
 @layer base {
+  body {
+    background: var(--color-rc-black);
+    color: var(--color-rc-white);
+    line-height: 1.55;
+  }
   h1 {
     font-size: clamp(40px, 6vw, 88px);
     font-weight: 800;
