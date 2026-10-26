@@ -6,6 +6,7 @@ import Speakers from "./pages/Speakers";
 import Navbar from "./components/navbar";
 import PublicidadWorkshop from "./PublicidadWorkshop";
 
+
 function App() {
   return (
     <>
