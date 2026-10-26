@@ -5,6 +5,19 @@ const Entradas = () => {
         ENTRADAS
       </p>
       <h2>Asegurá tu lugar antes de que suba el precio</h2>
+      <div className="mt-8 flex flex-col gap-6 rounded-rc-card border border-rc-border bg-rc-surface p-6 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p className="text-sm font-extrabold uppercase tracking-[3px] text-rc-red">
+            Early Bird
+          </p>
+          <p className="text-[22px] font-extrabold leading-tight">
+            El precio especial termina el 31/10
+          </p>
+          <p className="text-sm text-rc-text-mute">
+            Después la entrada pasa de $25.000 a $35.000.
+          </p>
+        </div>
+      </div>
     </section>
   );
 };
