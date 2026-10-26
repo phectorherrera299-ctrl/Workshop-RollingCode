@@ -1,4 +1,18 @@
 import Tarjeta from "./Tarjeta";
+const planes = [
+  {
+    nombre: "Early Bird",
+    chip: "Quedan 38",
+    precio: "$25.000",
+    tachado: "$35.000",
+    destacada: true,
+  },
+  {
+    nombre: "General",
+    chip: "Desde el 1/11",
+    precio: "$35.000",
+  },
+];
 
 const tiempo = [
   { numero: "17", etiqueta: "Días" },
@@ -50,6 +64,11 @@ const Entradas = () => {
           </div>
         </div>
       </div>
+      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        {planes.map((plan) => (
+          <Tarjeta key={plan.nombre} {...plan} />
+        ))}
+      </div>    
     </section>
   );
 };
