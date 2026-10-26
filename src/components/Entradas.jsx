@@ -7,16 +7,16 @@ const tiempo = [
 const Entradas = () => {
   return (
     <section className="mt-24">
-      <p className="text-base font-extrabold  tracking-[3px] text-rc-red">
-        ENTRADAS
+      <p className="text-base font-extrabold uppercase tracking-[3px] text-rc-red">
+        Entradas
       </p>
       <h2>Asegurá tu lugar antes de que suba el precio</h2>
-      <div className="mt-8 flex flex-col gap-6 rounded-rc-card border border-rc-border bg-rc-surface p-6 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-          <p className="text-sm font-extrabold uppercase tracking-[3px] text-rc-red">
+      <div className="mt-8 flex flex-col gap-6 rounded-rc-card border border-rc-red/25 bg-linear-to-r from-rc-red-deep/30 to-rc-surface p-9 lg:flex-row lg:items-center lg:justify-between">
+        <div className="max-w-xs">
+          <p className="text-xs font-extrabold uppercase tracking-[2px] text-rc-red">
             Early Bird
           </p>
-          <p className="text-[22px] font-extrabold leading-tight">
+          <p className="text-2xl font-extrabold leading-tight">
             El precio especial termina el 31/10
           </p>
           <p className="text-sm text-rc-text-mute">
@@ -27,23 +27,23 @@ const Entradas = () => {
           {tiempo.map((tiempo) => (
             <div
               key={tiempo.etiqueta}
-              className="rounded-rc-option border border-rc-border bg-rc-black px-4 py-2 text-center"
+              className="w-28 rounded-rc-option border border-rc-border bg-rc-black py-4 text-center"
             >
-              <div className="text-[32px] font-extrabold leading-none tabular-nums">
+              <div className="text-[40px] font-extrabold leading-none tabular-nums">
                 {tiempo.numero}
               </div>
-              <div className="text-sm uppercase text-rc-text-mute">
+              <div className="text-xs uppercase text-rc-text-mute">
                 {tiempo.etiqueta}
               </div>
             </div>
           ))}
         </div>
-        <div className="lg:w-72">
+        <div className="lg:w-[350px]">
           <div className="mb-2 flex justify-between text-sm">
             <span className="font-semibold">Quedan 38 de 60 Early Bird</span>
             <span className="text-rc-text-mute">63% vendidas</span>
           </div>
-          <div className="h-2 rounded-full bg-rc-surface-2">
+          <div className="h-2.5 rounded-full bg-rc-surface-2">
             <div className="h-full w-[63%] rounded-full bg-rc-red"></div>
           </div>
         </div>
