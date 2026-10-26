@@ -5,12 +5,27 @@ const planes = [
     chip: "Quedan 38",
     precio: "$25.000",
     tachado: "$35.000",
+    subtitulo: "Presencial · precio especial hasta el 31/10",
     destacada: true,
+    items: [
+      "Acceso a las 10 charlas",
+      "Kit de stickers Rolling Code",
+      "Certificado de asistencia",
+      "Coffee break y networking con los speakers",
+      "Grabación de todas las charlas",
+    ],
   },
   {
     nombre: "General",
     chip: "Desde el 1/11",
     precio: "$35.000",
+    subtitulo: "Presencial · precio regular",
+    items: [
+      "Acceso a las 10 charlas",
+      "Certificado de asistencia",
+      "Coffee break y networking con los speakers",
+      "Grabación de todas las charlas",
+    ],
   },
 ];
 
