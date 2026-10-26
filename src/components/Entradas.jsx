@@ -17,6 +17,15 @@ const Entradas = () => {
             Después la entrada pasa de $25.000 a $35.000.
           </p>
         </div>
+        <div className="lg:w-72">
+          <div className="mb-2 flex justify-between text-sm">
+            <span className="font-semibold">Quedan 38 de 60 Early Bird</span>
+            <span className="text-rc-text-mute">63% vendidas</span>
+          </div>
+          <div className="h-2 rounded-full bg-rc-surface-2">
+            <div className="h-full w-[63%] rounded-full bg-rc-red"></div>
+          </div>
+        </div>
       </div>
     </section>
   );
