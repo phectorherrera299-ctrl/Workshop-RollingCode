@@ -1,12 +1,19 @@
 
-import PublicidadWorkshop from "./PublicidadWorkshop";
+import Container from "./components/Container";
+import PublicidadWorkshop from "./PublicidadWorkshop.jsx";
+import Agenda from "./Agenda.jsx";
 
 function App() {
   return (
-    <div>
-      <PublicidadWorkshop />
-    </div>
+    <main>
+      <Container>
+        <PublicidadWorkshop />
+        <Agenda />
+      </Container>
+    </main>
   );
 }
 
 export default App;
+
+
