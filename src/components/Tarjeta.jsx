@@ -11,6 +11,16 @@ const Tarjeta = ({ nombre, chip, precio, tachado, destacada = false }) => {
           {chip}
         </span>
       </div>
+      <div className="mt-4 flex items-baseline gap-3">
+        <span className="text-[56px] font-extrabold leading-none tracking-[-1px]">
+          {precio}
+        </span>
+        {tachado && (
+          <span className="text-xl font-semibold text-rc-pink line-through">
+            {tachado}
+          </span>
+        )}
+      </div>
     </article>
   );
 };
