@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import { useState } from "react";
 
 const links = [
@@ -14,18 +13,16 @@ export default function Navbar() {
     <header>
       <nav className="bg-surface w-full">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2">
-          {/* Logo */}
-          <a href="./index.html" className="shrink-0">
+          <a href="/" className="shrink-0">
             <img
               src="/logo-rolling-blanco.png"
-              alt="Logo"
+              alt="RollingCode"
               width="200"
               height="64"
               className="inline-block align-text-top"
             />
           </a>
 
-          {/* Botón hamburguesa (solo móvil) */}
           <button
             type="button"
             onClick={() => setOpen(!open)}
@@ -42,14 +39,21 @@ export default function Navbar() {
               viewBox="0 0 24 24"
             >
               {open ? (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </button>
 
-          {/* Links */}
           <div
             id="navbar-menu"
             className={`${open ? "flex" : "hidden"} w-full flex-col gap-2 pb-4 lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-0 lg:pb-0`}
@@ -64,7 +68,7 @@ export default function Navbar() {
               ))}
               <li className="whitespace-nowrap">
                 <a
-                  href="#"
+                  href=""
                   className="navbar-important navbar-text-soft block px-4 py-2 text-center"
                 >
                   Comprar entrada
