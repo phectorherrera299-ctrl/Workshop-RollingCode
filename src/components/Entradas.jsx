@@ -1,4 +1,9 @@
 import Tarjeta from "./Tarjeta";
+import useCuentaRegresiva from "./hooks/useCuntaRegresiva";
+
+const FECHA_LIMITE = new Date("2026-10-31T23:59:59-03:00").getTime();
+const dosDigitos = (n) => String(n).padStart(2, "0");
+
 const planes = [
   {
     nombre: "Early Bird",
@@ -28,29 +33,28 @@ const planes = [
     ],
   },
   {
-  nombre: "Virtual",
-  chip: "Desde donde estés",
-  precio: "$15.000",
-  subtitulo: "Transmisión en vivo",
-  className: "lg:col-span-2",
-  items: [
-    "Transmisión en vivo de las 10 charlas",
-    "Chat para hacer preguntas a los speakers",
-    "Certificado de asistencia",
-    "Grabación disponible por 30 días",
-  ],
-},
-];
-
-
-
-const tiempo = [
-  { numero: "17", etiqueta: "Días" },
-  { numero: "09", etiqueta: "Horas" },
-  { numero: "24", etiqueta: "Min" },
+    nombre: "Virtual",
+    chip: "Desde donde estés",
+    precio: "$15.000",
+    subtitulo: "Transmisión en vivo",
+    className: "lg:col-span-2",
+    items: [
+      "Transmisión en vivo de las 10 charlas",
+      "Chat para hacer preguntas a los speakers",
+      "Certificado de asistencia",
+      "Grabación disponible por 30 días",
+    ],
+  },
 ];
 
 const Entradas = () => {
+  const { dias, horas, minutos } = useCuentaRegresiva(FECHA_LIMITE);
+
+  const cajas = [
+    { numero: dosDigitos(dias), etiqueta: "Días" },
+    { numero: dosDigitos(horas), etiqueta: "Horas" },
+    { numero: dosDigitos(minutos), etiqueta: "Min" },
+  ];
   return (
     <section className="mt-24">
       <p className="text-base font-extrabold uppercase tracking-[3px] text-rc-red">
@@ -70,16 +74,16 @@ const Entradas = () => {
           </p>
         </div>
         <div className="flex gap-3">
-          {tiempo.map((tiempo) => (
+          {cajas.map((t) => (
             <div
-              key={tiempo.etiqueta}
+              key={t.etiqueta}
               className="w-28 rounded-rc-option border border-rc-border bg-rc-black py-4 text-center"
             >
               <div className="text-[40px] font-extrabold leading-none tabular-nums">
-                {tiempo.numero}
+                {t.numero}
               </div>
               <div className="text-xs uppercase text-rc-text-mute">
-                {tiempo.etiqueta}
+                {t.etiqueta}
               </div>
             </div>
           ))}
@@ -98,7 +102,7 @@ const Entradas = () => {
         {planes.map((plan) => (
           <Tarjeta key={plan.nombre} {...plan} />
         ))}
-      </div>    
+      </div>
     </section>
   );
 };
