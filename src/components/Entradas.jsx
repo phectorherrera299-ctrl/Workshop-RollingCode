@@ -56,7 +56,7 @@ const Entradas = () => {
     { numero: dosDigitos(minutos), etiqueta: "Min" },
   ];
   return (
-    <section className="mt-24">
+    <section className="bg-transparent">
       <p className="text-base font-extrabold uppercase tracking-[3px] text-rc-red">
         Entradas
       </p>

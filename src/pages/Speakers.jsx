@@ -242,7 +242,7 @@ function SpeakersCarousel() {
 
 export default function Speakers() {
   return (
-    <section className="bg-black px-4 py-12 sm:py-16">
+    <section className="bg-transparent px-4 py-10 sm:py-12">
       <div className="mx-auto max-w-7xl">
         {/* Móvil y tablet: carrusel */}
         <div className="lg:hidden">

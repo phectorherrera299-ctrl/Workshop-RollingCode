@@ -115,14 +115,16 @@ a {
 /* UBICACIÓN */
 
 .ubicacion {
-  padding: 90px 0;
+  padding: 56px 0;
+  border: 1px solid var(--color-rc-border);
+  border-radius: var(--radius-rc-card);
   background:
     radial-gradient(
       ellipse at 12% 10%,
-      rgba(205, 0, 30, 0.09),
+      rgba(165, 13, 20, 0.14),
       transparent 42%
     ),
-    #080808;
+    var(--color-rc-surface);
 }
 
 .ubicacion-grid {
@@ -501,7 +503,7 @@ a {
   }
 
   .ubicacion {
-    padding: 70px 0;
+    padding: 48px 0;
   }
 
   .ubicacion-grid {
@@ -531,7 +533,7 @@ a {
   }
 
   .ubicacion {
-    padding: 55px 0;
+    padding: 40px 0;
   }
 
   .etiqueta {
