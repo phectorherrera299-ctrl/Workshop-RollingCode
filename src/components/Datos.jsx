@@ -68,15 +68,15 @@ const campos = [
   },
 ];
 
-const Datos = ({ onVolver, onContinuar }) => {
-  const [valores, setValores] = useState({
+const Datos = ({ inicial, onVolver, onContinuar }) => {
+  const [valores, setValores] = useState( inicial?? {
     nombre: "",
     apellido: "",
     email: "",
     telefono: "",
     dni: "",
   });
-  const [acepta, setAcepta] = useState(false);
+  const [acepta, setAcepta] = useState(Boolean(inicial));
   const [errores, setErrores] = useState({});
 
   const handleChange = (e) => {
@@ -98,7 +98,7 @@ const Datos = ({ onVolver, onContinuar }) => {
     }
 
     setErrores(nuevos);
-    if (Object.keys(nuevos).length === 0) onContinuar();
+    if (Object.keys(nuevos).length === 0) onContinuar(valores);
   };
 
   return (

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Datos from "./Datos";
+import Pago from "./Pago";
 
 const opciones = [
   {
@@ -29,6 +30,7 @@ const Checkout = () => {
   const [pasoActual, setPasoActual] = useState(0);
   const [entradaId, setEntradaId] = useState("early");
   const [cantidad, setCantidad] = useState(1);
+  const [datos, setDatos] = useState(null);
   const entrada = opciones.find((opcion) => opcion.id === entradaId);
   const subtotal = entrada.precio * cantidad;
   const cargo = Math.round(subtotal * 0.05);
@@ -65,7 +67,7 @@ const Checkout = () => {
       </div>
       <div className="mt-10 grid gap-6 lg:grid-cols-[1.43fr_1fr]">
         <div className="rounded-rc-box bg-white p-9">
-          {pasoActual === 0 ? (
+          {pasoActual === 0 && (
             <>
               <h3 className="text-[22px] font-extrabold text-rc-black">
                 Elegí tu entrada
@@ -144,8 +146,23 @@ const Checkout = () => {
                 datos.
               </p>
             </>
-          ) : (
-            <Datos onVolver={() => setPasoActual(0)} onContinuar={() => {}} />
+          )}
+          {pasoActual === 1 && (
+            <Datos
+              inicial={datos}
+              onVolver={() => setPasoActual(0)}
+              onContinuar={(valores) => {
+                setDatos(valores);
+                setPasoActual(2);
+              }}
+            />
+          )}
+          {pasoActual === 2 && (
+            <Pago
+              total={formato(total)}
+              onVolver={() => setPasoActual(1)}
+              onPagar={() => {}}
+            />
           )}
         </div>
         <div className="self-start rounded-rc-box bg-rc-black p-9">
