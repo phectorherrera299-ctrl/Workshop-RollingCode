@@ -14,6 +14,7 @@ const Check = () => (
 );
 
 const Tarjeta = ({
+  id,
   nombre,
   chip,
   precio,
@@ -22,6 +23,7 @@ const Tarjeta = ({
   items,
   destacada = false,
   className = "",
+  onComprar,
 }) => {
   return (
     <article
@@ -67,6 +69,7 @@ const Tarjeta = ({
         ))}
       </ul>
       <button
+        onClick={() => onComprar(id)}
         className={`mt-8 min-h-[52px] cursor-pointer rounded-full text-lg font-extrabold transition duration-200 active:scale-95 ${
           destacada
             ? "bg-white text-rc-black hover:bg-rc-pink"
