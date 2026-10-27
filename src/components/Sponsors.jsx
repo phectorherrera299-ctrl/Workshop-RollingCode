@@ -166,7 +166,6 @@ function SponsorGroup({ tier, level, className, partners }) {
           >
             <div className="sponsor-card-topline">
               <span>{partner.category ?? level}</span>
-              <span aria-hidden="true">↗</span>
             </div>
             <div className="sponsor-logo">
               <span className="sponsor-logo-fallback" aria-hidden="true">
