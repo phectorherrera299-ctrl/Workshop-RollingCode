@@ -6,25 +6,25 @@ const speakers = [
     name: "Tomás Escudero",
     tag: "Diseño para developers",
     desc: "Qué mira un equipo de diseño antes de que escribas código y cómo leer un mockup para construirlo igual.",
-    img: "",
+    img: "public/img/tomas-escudero.png",
   },
   {
     name: "Franco Díaz",
     tag: "De cero a tu primer proyecto",
     desc: "Un recorrido para pasar de mirar tutoriales a terminar una app simple con HTML, JavaScript y React.",
-    img: "",
+    img: "public/img/franco-diaz.jpeg",
   },
   {
     name: "Gastón",
     tag: "Armá tu portfolio con IA",
     desc: "Cómo usar asistentes de IA para construir y publicar un portfolio que muestre lo que sabés hacer.",
-    img: "",
+    img: "public/img/gaston.png",
   },
   {
     name: "Mauro",
     tag: "Git y GitHub sin miedo",
     desc: "Los comandos que vas a usar todos los días y cómo trabajar en equipo sin pisar el código de otros.",
-    img: "",
+    img: "public/img/mauro.png",
   },
   {
     name: "José Díaz",
@@ -48,7 +48,7 @@ const speakers = [
     name: "Julián Martín",
     tag: "Testing: cómo no romper todo",
     desc: "Qué es testear, por qué importa y cómo escribir tus primeras pruebas sin complicarte.",
-    img: "",
+    img: "public/img/julian-martin.png",
   },
   {
     name: "Daniela Cardozo",
@@ -64,11 +64,9 @@ const speakers = [
   },
 ];
 
-/* ---------- Tarjeta: dos variantes según el mockup ---------- */
+/* ---------- Tarjeta: siempre muestra nombre, tag y descripción ---------- */
 
 function SpeakerCard({ name, tag, desc, img, variant = "grid" }) {
-  const isFeatured = variant === "featured";
-
   return (
     <article
       className={`group flex flex-col overflow-hidden rounded-2xl bg-[#141414] ring-1 ring-white/10 transition hover:ring-[#e01b24]/40 ${
@@ -97,25 +95,13 @@ function SpeakerCard({ name, tag, desc, img, variant = "grid" }) {
           {name}
         </h3>
 
-        {isFeatured ? (
-          <>
-            <span className="w-fit rounded-md bg-[#e01b24] px-3 py-1.5 text-xs font-semibold text-white sm:text-sm">
-              Charla destacada
-            </span>
-            <p className="text-xs leading-relaxed text-neutral-400 sm:text-sm">
-              Conocé al speaker y su experiencia.
-            </p>
-          </>
-        ) : (
-          <>
-            <span className="w-fit rounded-md bg-[#2a2a2a] px-2.5 py-1 text-xs font-semibold text-white sm:px-3 sm:py-1.5 sm:text-sm">
-              {tag}
-            </span>
-            <p className="text-xs leading-relaxed text-neutral-400 sm:text-sm">
-              {desc}
-            </p>
-          </>
-        )}
+        <span className="w-fit rounded-md bg-[#2a2a2a] px-2.5 py-1 text-xs font-semibold text-white sm:px-3 sm:py-1.5 sm:text-sm">
+          {tag}
+        </span>
+
+        <p className="text-xs leading-relaxed text-neutral-400 sm:text-sm">
+          {desc}
+        </p>
       </div>
     </article>
   );
@@ -196,7 +182,6 @@ function SpeakersCarousel() {
 
   return (
     <div>
-      {/* Encabezado del carrusel */}
       <div className="flex items-end justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-widest text-[#e01b24] sm:text-sm">
@@ -226,7 +211,6 @@ function SpeakersCarousel() {
         </div>
       </div>
 
-      {/* Track */}
       <div
         ref={trackRef}
         onScroll={updateState}
@@ -237,7 +221,6 @@ function SpeakersCarousel() {
         ))}
       </div>
 
-      {/* Indicadores de posición */}
       <div className="mt-5 flex justify-center gap-1.5">
         {speakers.map((s, i) => (
           <button
@@ -266,7 +249,7 @@ export default function Speakers() {
           <SpeakersCarousel />
         </div>
 
-        {/* Desktop: grilla original del mockup */}
+        {/* Desktop: grilla */}
         <div className="hidden lg:block">
           <p className="text-sm font-bold uppercase tracking-widest text-[#e01b24]">
             Speakers
@@ -276,12 +259,8 @@ export default function Speakers() {
           </h2>
 
           <div className="mt-10 grid grid-cols-5 gap-5">
-            {speakers.map((s, i) => (
-              <SpeakerCard
-                key={s.name}
-                {...s}
-                variant={i < 5 ? "featured" : "grid"}
-              />
+            {speakers.map((s) => (
+              <SpeakerCard key={s.name} {...s} />
             ))}
           </div>
         </div>
