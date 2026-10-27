@@ -138,6 +138,55 @@ const Checkout = () => {
             datos.
           </p>
         </div>
+        <div className="self-start rounded-rc-box bg-rc-black p-9">
+          <p className="text-xs font-extrabold uppercase tracking-[2px] text-rc-red">
+            Tu pedido
+          </p>
+          <h3 className="mt-3 text-xl font-extrabold">
+            Workshop Rolling Code School
+          </h3>
+          <p className="text-sm text-rc-text-mute">
+            Jueves 19/11 · 18.00 hs · Gral. Paz 576
+          </p>
+
+          <div className="mt-5 border-t border-rc-border pt-4">
+            <div className="flex justify-between text-sm text-rc-text-soft">
+              <span>
+                {cantidad} {cantidad === 1 ? "entrada" : "entradas"}{" "}
+                {entrada.nombre}
+              </span>
+              <span className="tabular-nums">{formato(subtotal)}</span>
+            </div>
+            <div className="mt-3 flex justify-between text-sm text-rc-text-soft">
+              <span>Cargo por servicio (5%)</span>
+              <span className="tabular-nums">{formato(cargo)}</span>
+            </div>
+          </div>
+
+          <div className="mt-5 flex items-center justify-between border-t border-rc-border pt-4">
+            <span className="font-extrabold">Total</span>
+            <span className="text-[32px] font-extrabold leading-none tabular-nums">
+              {formato(total)}
+            </span>
+          </div>
+
+          <p className="mt-4 flex items-center gap-2 text-sm text-rc-text-mute">
+            <svg
+              viewBox="0 0 24 24"
+              className="h-4 w-4 shrink-0 text-rc-red"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="5" y="11" width="14" height="9" rx="2" />
+              <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+            </svg>
+            Pago protegido. Recibís la entrada por email.
+          </p>
+        </div>
       </div>
     </section>
   );
