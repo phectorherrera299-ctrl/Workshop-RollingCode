@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Datos from "./Datos";
 import Pago from "./Pago";
+import Listo from "./Listo";
 
 const opciones = [
   {
@@ -25,16 +26,28 @@ const opciones = [
 
 const pasos = ["Entrada", "Datos", "Pago", "Listo"];
 const formato = (n) => `$${n.toLocaleString("es-AR")}`;
+const generarCodigo = () =>
+  `RC-2026-${Math.floor(1000 + Math.random() * 9000)}`;
 
 const Checkout = () => {
   const [pasoActual, setPasoActual] = useState(0);
   const [entradaId, setEntradaId] = useState("early");
   const [cantidad, setCantidad] = useState(1);
   const [datos, setDatos] = useState(null);
+  const [reserva, setReserva] = useState("");
   const entrada = opciones.find((opcion) => opcion.id === entradaId);
   const subtotal = entrada.precio * cantidad;
   const cargo = Math.round(subtotal * 0.05);
   const total = subtotal + cargo;
+
+  const reiniciar = () => {
+    setPasoActual(0);
+    setEntradaId("early");
+    setCantidad(1);
+    setDatos(null);
+    setReserva("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <section
@@ -161,7 +174,17 @@ const Checkout = () => {
             <Pago
               total={formato(total)}
               onVolver={() => setPasoActual(1)}
-              onPagar={() => {}}
+              onPagar={() => {
+                setReserva(generarCodigo());
+                setPasoActual(3);
+              }}
+            />
+          )}
+          {pasoActual === 3 && (
+            <Listo
+              email={datos.email}
+              reserva={reserva}
+              onReiniciar={reiniciar}
             />
           )}
         </div>
@@ -192,8 +215,15 @@ const Checkout = () => {
 
           <div className="mt-5 flex items-center justify-between border-t border-rc-border pt-4">
             <span className="font-extrabold">Total</span>
-            <span className="text-[32px] font-extrabold leading-none tabular-nums">
-              {formato(total)}
+            <span className="flex items-center gap-3">
+              {pasoActual === 3 && (
+                <span className="rounded bg-rc-red px-2 py-0.5 text-xs font-extrabold uppercase tracking-wider text-white">
+                  Pagado
+                </span>
+              )}
+              <span className="text-[32px] font-extrabold leading-none tabular-nums">
+                {formato(total)}
+              </span>
             </span>
           </div>
 
