@@ -6,25 +6,25 @@ const speakers = [
     name: "Tomás Escudero",
     tag: "Diseño para developers",
     desc: "Qué mira un equipo de diseño antes de que escribas código y cómo leer un mockup para construirlo igual.",
-    img: "public/img/tomas-escudero.png",
+    img: "/img/tomas-escudero.png",
   },
   {
     name: "Franco Díaz",
     tag: "De cero a tu primer proyecto",
     desc: "Un recorrido para pasar de mirar tutoriales a terminar una app simple con HTML, JavaScript y React.",
-    img: "public/img/franco-diaz.jpeg",
+    img: "/img/franco-diaz.jpeg",
   },
   {
     name: "Gastón",
     tag: "Armá tu portfolio con IA",
     desc: "Cómo usar asistentes de IA para construir y publicar un portfolio que muestre lo que sabés hacer.",
-    img: "public/img/gaston.png",
+    img: "/img/gaston.png",
   },
   {
     name: "Mauro",
     tag: "Git y GitHub sin miedo",
     desc: "Los comandos que vas a usar todos los días y cómo trabajar en equipo sin pisar el código de otros.",
-    img: "public/img/mauro.png",
+    img: "/img/mauro.png",
   },
   {
     name: "José Díaz",
@@ -48,7 +48,7 @@ const speakers = [
     name: "Julián Martín",
     tag: "Testing: cómo no romper todo",
     desc: "Qué es testear, por qué importa y cómo escribir tus primeras pruebas sin complicarte.",
-    img: "public/img/julian-martin.png",
+    img: "/img/julian-martin.png",
   },
   {
     name: "Daniela Cardozo",
@@ -187,13 +187,13 @@ function SpeakersCarousel() {
           <p className="text-xs font-bold uppercase tracking-widest text-[#e01b24] sm:text-sm">
             Speakers
           </p>
-          <h2 className="mt-2 text-2xl font-extrabold leading-tight text-white sm:text-3xl">
+          <h2 className="mt-2 text-2xl font-extrabold leading-tight text-white sm:text-3xl lg:text-4xl">
             Diez charlas,
             <br />
             un mismo objetivo
           </h2>
           <p className="mt-2 text-sm text-neutral-400">
-            Deslizá para conocer a los oradores
+            Usá las flechas o desplazate para conocer a los oradores
           </p>
         </div>
 
@@ -242,28 +242,9 @@ function SpeakersCarousel() {
 
 export default function Speakers() {
   return (
-    <section className="bg-transparent px-4 py-10 sm:py-12">
+    <section id="speakers" className="bg-transparent px-4 py-10 sm:py-12">
       <div className="mx-auto max-w-7xl">
-        {/* Móvil y tablet: carrusel */}
-        <div className="lg:hidden">
-          <SpeakersCarousel />
-        </div>
-
-        {/* Desktop: grilla */}
-        <div className="hidden lg:block">
-          <p className="text-sm font-bold uppercase tracking-widest text-[#e01b24]">
-            Speakers
-          </p>
-          <h2 className="mt-2 text-4xl font-extrabold leading-tight text-white xl:text-5xl">
-            Diez charlas, un mismo objetivo
-          </h2>
-
-          <div className="mt-10 grid grid-cols-5 gap-5">
-            {speakers.map((s) => (
-              <SpeakerCard key={s.name} {...s} />
-            ))}
-          </div>
-        </div>
+        <SpeakersCarousel />
       </div>
     </section>
   );
