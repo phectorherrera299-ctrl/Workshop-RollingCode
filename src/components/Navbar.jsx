@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 const links = [
-  { label: "Speakers", href: "#" },
-  { label: "Cómo llegar", href: "#" },
+  { label: "Speakers", href: "#speakers" },
+  { label: "Cómo llegar", href: "#ubicacion" },
   { label: "Agenda", href: "#" },
 ];
 
@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <header>
       <nav className="bg-surface w-full">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between px-4 py-2">
           <a href="/" className="shrink-0">
             <img
               src="/logo-rolling-blanco.png"
@@ -56,19 +56,24 @@ export default function Navbar() {
 
           <div
             id="navbar-menu"
-            className={`${open ? "flex" : "hidden"} w-full flex-col gap-2 pb-4 lg:flex lg:w-auto lg:flex-row lg:items-center lg:gap-0 lg:pb-0`}
+            className={`${open ? "flex" : "hidden"} w-full basis-full flex-col gap-2 pb-4 lg:flex lg:w-auto lg:basis-auto lg:flex-row lg:items-center lg:gap-0 lg:pb-0`}
           >
             <ul className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-2">
               {links.map(({ label, href }) => (
                 <li key={label} className="whitespace-nowrap">
-                  <a href={href} className="navbar-text-soft px-2 py-1">
+                  <a
+                    href={href}
+                    onClick={() => setOpen(false)}
+                    className="navbar-text-soft px-2 py-1"
+                  >
                     {label}
                   </a>
                 </li>
               ))}
               <li className="whitespace-nowrap">
                 <a
-                  href=""
+                  href="#entradas"
+                  onClick={() => setOpen(false)}
                   className="navbar-important navbar-text-soft block px-4 py-2 text-center"
                 >
                   Comprar entrada

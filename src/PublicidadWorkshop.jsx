@@ -3,7 +3,7 @@ import { CalendarDays, MapPin, Ticket } from "lucide-react";
 
 export default function PublicidadWorkshop() {
   return (
-    <section className="w-full max-w-6xl mx-auto overflow-hidden rounded-[28px] bg-gradient-to-br from-[#e51d2a] via-[#b90919] to-[#900916] p-6 text-white shadow-xl md:p-10">
+    <section id="inicio" className="w-full max-w-6xl mx-auto overflow-hidden rounded-[28px] bg-gradient-to-br from-[#e51d2a] via-[#b90919] to-[#900916] p-6 text-white shadow-xl md:p-10">
 
       <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-[1.2fr_1fr]">
 
