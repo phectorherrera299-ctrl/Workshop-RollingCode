@@ -10,6 +10,8 @@ import { Footer } from "./components/Footer";
 import Agenda from "./Agenda";
 import Sponsors from "./components/Sponsors";
 import ScrollReveal from "./components/ScrollReveal";
+import SumateSponsor from "./components/SumateComoSponsor";
+
 import { useState } from "react";
 
 function App() {
@@ -28,9 +30,10 @@ function App() {
           <ScrollReveal><Contador /></ScrollReveal>
           <ScrollReveal><Speakers /></ScrollReveal>
           <ScrollReveal><Agenda /></ScrollReveal>
+          <ScrollReveal><Sponsors /></ScrollReveal>
           <ScrollReveal><Entradas onComprar={comprar} /></ScrollReveal>
           <ScrollReveal><Checkout entradaId={entradaId} setEntradaId={setEntradaId} /></ScrollReveal>
-          <ScrollReveal><Sponsors /></ScrollReveal>
+          <ScrollReveal><SumateSponsor></SumateSponsor></ScrollReveal>
           <ScrollReveal><Ubicacion /></ScrollReveal>
         </Container>
       </main>

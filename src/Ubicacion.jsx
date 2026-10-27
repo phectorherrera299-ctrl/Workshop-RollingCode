@@ -43,7 +43,7 @@ export function Ubicacion() {
               target="_blank"
               rel="noreferrer"
             >
-              Cómo llegar <span>↗</span>
+              Cómo llegar
             </a>
 
             <a
