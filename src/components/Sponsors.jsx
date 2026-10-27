@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useEnPantalla from "./hooks/useEnPantalla";
 
 const sponsors = [
   {
@@ -143,8 +144,13 @@ const WHATSAPP_URL = "https://wa.me/5493815783030";
 const MAX_LOGO_SIZE = 5 * 1024 * 1024;
 
 function SponsorGroup({ tier, level, className, partners }) {
+  const [groupRef, visible] = useEnPantalla(0.08);
+
   return (
-    <div className={`sponsor-tier ${className}`}>
+    <div
+      ref={groupRef}
+      className={`sponsor-tier ${className} ${visible ? "is-visible" : ""}`}
+    >
       <div className="sponsor-tier-heading">
         <h3>{tier}</h3>
         <span>{level}</span>
@@ -155,10 +161,11 @@ function SponsorGroup({ tier, level, className, partners }) {
         </p>
       )}
       <div className="sponsor-grid">
-        {partners.map((partner) => (
+        {partners.map((partner, index) => (
           <a
             key={partner.name}
             className="sponsor-card"
+            style={{ "--card-index": index }}
             href={partner.url}
             target="_blank"
             rel="noreferrer"

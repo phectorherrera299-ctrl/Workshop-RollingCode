@@ -15,13 +15,13 @@ const speakers = [
     img: "/img/franco-diaz.jpeg",
   },
   {
-    name: "Gastón",
+    name: "Gastón Roger",
     tag: "Armá tu portfolio con IA",
     desc: "Cómo usar asistentes de IA para construir y publicar un portfolio que muestre lo que sabés hacer.",
     img: "/img/gaston.png",
   },
   {
-    name: "Mauro",
+    name: "Mauro Coniglio",
     tag: "Git y GitHub sin miedo",
     desc: "Los comandos que vas a usar todos los días y cómo trabajar en equipo sin pisar el código de otros.",
     img: "/img/mauro.png",

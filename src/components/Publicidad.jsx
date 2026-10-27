@@ -1,5 +1,4 @@
 
-import React from "react";
 import { CalendarDays, MapPin, Ticket } from "lucide-react";
 
 export default function PublicidadWorkshop() {
@@ -43,7 +42,7 @@ export default function PublicidadWorkshop() {
 
             <a
               href="#agenda"
-              className="rounded-full border border-white px-6 py-3 text-sm font-bold text-white transition hover:bg-white hover:text-red-700"
+              className="agenda-button rounded-full border border-white px-6 py-3 text-sm font-bold text-white transition"
             >
               Ver agenda
             </a>
