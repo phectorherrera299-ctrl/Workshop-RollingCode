@@ -27,13 +27,13 @@ const Tarjeta = ({
 }) => {
   return (
     <article
-      className={`flex flex-col rounded-rc-card p-9 transition duration-300 hover:-translate-y-1 ${
+      className={`flex min-w-0 flex-col rounded-rc-card p-6 transition duration-300 hover:-translate-y-1 sm:p-9 ${
         destacada
           ? "bg-rc-gradient hover:shadow-[0_20px_40px_-12px_rgba(224,32,42,0.5)]"
           : "border border-rc-border bg-rc-surface hover:border-rc-red/50"
       } ${className}`}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h3 className="text-xl font-extrabold">{nombre}</h3>
         <span
           className={`rounded-full px-3 py-1 text-sm font-semibold ${destacada ? "bg-rc-black text-white" : "border border-rc-chip text-rc-text-soft"}`}
@@ -41,8 +41,8 @@ const Tarjeta = ({
           {chip}
         </span>
       </div>
-      <div className="mt-4 flex items-baseline gap-3">
-        <span className="text-[56px] font-extrabold leading-none tracking-[-1px]">
+      <div className="mt-4 flex flex-wrap items-baseline gap-3">
+        <span className="text-[40px] font-extrabold leading-none tracking-[-1px] sm:text-[56px]">
           {precio}
         </span>
         {tachado && (

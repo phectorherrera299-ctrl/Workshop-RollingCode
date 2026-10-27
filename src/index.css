@@ -55,6 +55,7 @@ body {
   color: var(--color-rc-white);
   line-height: 1.55;
 }
+
 @layer components {
   .bg-surface {
     background-color: var(--color-rc-surface);
@@ -112,17 +113,21 @@ a {
   margin-inline: auto;
 }
 
+/* FONDO DE LA LANDING */
+
+.landing-main {
+  background-image: radial-gradient(
+    ellipse 85% 50% at 0% 88%,
+    rgba(165, 13, 20, 0.2),
+    transparent 100%
+  );
+}
+
 /* UBICACIÓN */
 
 .ubicacion {
-  padding: 90px 0;
-  background:
-    radial-gradient(
-      ellipse at 12% 10%,
-      rgba(205, 0, 30, 0.09),
-      transparent 42%
-    ),
-    #080808;
+  padding: 56px 0;
+  background: transparent;
 }
 
 .ubicacion-grid {
@@ -232,6 +237,45 @@ a {
 .boton-contorno:hover {
   border-color: #f02035;
   color: #ff3047;
+}
+
+.boton-whatsapp {
+  position: fixed;
+  z-index: 20;
+  right: 24px;
+  bottom: 24px;
+  display: grid;
+  width: 64px;
+  min-width: 64px;
+  height: 64px;
+  min-height: 64px;
+  margin: 0;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #e81730;
+  color: #fff;
+  box-shadow:
+    0 0 14px rgba(232, 23, 48, 0.75),
+    0 0 32px rgba(232, 23, 48, 0.42);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.boton-whatsapp:hover {
+  transform: scale(1.08);
+  background: #ff3047;
+  box-shadow:
+    0 0 18px rgba(255, 48, 71, 0.85),
+    0 0 40px rgba(255, 48, 71, 0.5);
+}
+
+.boton-whatsapp:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
 }
 
 /* TARJETA DEL MAPA */
@@ -501,7 +545,7 @@ a {
   }
 
   .ubicacion {
-    padding: 70px 0;
+    padding: 48px 0;
   }
 
   .ubicacion-grid {
@@ -531,7 +575,16 @@ a {
   }
 
   .ubicacion {
-    padding: 55px 0;
+    padding: 40px 0;
+  }
+
+  .boton-whatsapp {
+    right: 18px;
+    bottom: 18px;
+    width: 58px;
+    min-width: 58px;
+    height: 58px;
+    min-height: 58px;
   }
 
   .etiqueta {

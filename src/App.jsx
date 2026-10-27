@@ -1,12 +1,13 @@
 import Entradas from "./components/Entradas";
 import Container from "./components/Container";
 import Contador from "./components/Contador";
-import NotFound from "./pages/NotFound";
 import Speakers from "./pages/Speakers";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import PublicidadWorkshop from "./PublicidadWorkshop";
 import Checkout from "./components/Checkout";
 import { Ubicacion } from "./Ubicacion";
+import { Footer } from './components/Footer'
+import Agenda from "./Agenda";
 
 import { useState } from "react";
 
@@ -19,23 +20,21 @@ function App() {
 
   return (
     <>
-      <header>
-        <Navbar></Navbar>
-      </header>
-      <main>
-        <Container>
+      <Navbar />
+      <main className="landing-main mb-[19px]">
+        <Container className="flex flex-col gap-[19px]">
           <PublicidadWorkshop />
-          <Speakers />
           <Contador />
-          <NotFound />
+          <Speakers />
+          <Agenda />  
           <Entradas onComprar={comprar}></Entradas>
           <Checkout entradaId={entradaId} setEntradaId={setEntradaId}></Checkout>
           <Ubicacion />
         </Container>
       </main>
-      <footer></footer>
+      <Footer />
     </>
-  );
+  )
 }
 
-export default App;
+export default App

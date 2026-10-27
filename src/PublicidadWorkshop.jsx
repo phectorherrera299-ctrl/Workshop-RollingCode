@@ -1,11 +1,9 @@
 
-import React from "react";
 import { CalendarDays, MapPin, Ticket } from "lucide-react";
 
 export default function PublicidadWorkshop() {
   return (
-    <>
-    <section className="w-full max-w-6xl mx-auto overflow-hidden rounded-[28px] bg-gradient-to-br from-[#e51d2a] via-[#b90919] to-[#900916] p-6 text-white shadow-xl md:p-10">
+    <section id="inicio" className="w-full max-w-6xl mx-auto overflow-hidden rounded-[28px] bg-gradient-to-br from-[#e51d2a] via-[#b90919] to-[#900916] p-6 text-white shadow-xl md:p-10">
 
       <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-[1.2fr_1fr]">
 
@@ -112,48 +110,5 @@ export default function PublicidadWorkshop() {
         </div>
       </div>
     </section>
-    
-{/* BARRA INFERIOR DE ESTADÍSTICAS */}
-<div className="mx-auto mt-4 grid w-full max-w-6xl grid-cols-2 gap-6 rounded-[22px] border border-zinc-800 bg-[#111111] p-6 text-white md:grid-cols-4 md:px-8">
-
-  <div>
-    <h3 className="text-3xl font-black text-red-600">
-      120
-    </h3>
-    <p className="mt-1 text-sm text-zinc-400">
-      lugares presenciales
-    </p>
-  </div>
-
-  <div>
-    <h3 className="text-3xl font-black text-red-600">
-      10
-    </h3>
-    <p className="mt-1 text-sm text-zinc-400">
-      charlas de speakers
-    </p>
-  </div>
-
-  <div>
-    <h3 className="text-3xl font-black text-red-600">
-      3 h 40
-    </h3>
-    <p className="mt-1 text-sm text-zinc-400">
-      de 18.00 a 21.40 hs
-    </p>
-  </div>
-
-  <div>
-    <h3 className="text-3xl font-black text-red-600">
-      2
-    </h3>
-    <p className="mt-1 text-sm text-zinc-400">
-      modalidades: presencial y virtual
-    </p>
-  </div>
-
-</div>
-
-    </>
   );
 }

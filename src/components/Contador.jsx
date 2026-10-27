@@ -32,7 +32,7 @@ const Estadistica = ({ valor, fijo, texto, activo }) => {
 const Contador = () => {
   const [ref, visible] = useEnPantalla();
   return (
-    <section ref={ref} className="mt-3 rounded-rc-option border border-rc-border bg-rc-surface p-6 transition-transform duration-200 hover:scale-[1.02]">
+    <section ref={ref} className="rounded-rc-option border border-rc-border bg-rc-surface p-6 transition-transform duration-200 hover:scale-[1.02]">
       <div
         className="pb-1
        pl-2 grid grid-cols-2 gap-6 md:grid-cols-4"

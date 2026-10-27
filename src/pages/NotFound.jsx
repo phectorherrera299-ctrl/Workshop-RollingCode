@@ -1,9 +1,9 @@
 // src/pages/NotFound.jsx
 export default function NotFound() {
   return (
-    <section className="relative min-h-[70vh] overflow-hidden bg-[#8b0000] px-4 py-16">
+    <section className="relative overflow-hidden rounded-rc-card border border-rc-border bg-[radial-gradient(ellipse_at_top_left,rgba(165,13,20,0.22),transparent_58%),#111113] px-4 py-12 sm:py-16">
       {/* Tarjeta superior */}
-      <div className="relative mx-auto max-w-4xl rounded-2xl bg-[#e01b24] px-8 py-10 shadow-lg sm:px-12">
+      <div className="relative mx-auto max-w-4xl rounded-2xl border border-rc-red/30 bg-rc-red-dark/80 px-8 py-10 shadow-lg sm:px-12">
         <div className="flex flex-col items-start gap-8 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">

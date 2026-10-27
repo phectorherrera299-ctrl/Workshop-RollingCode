@@ -56,7 +56,7 @@ const Entradas = ({onComprar}) => {
     { numero: dosDigitos(minutos), etiqueta: "Min" },
   ];
   return (
-    <section className="mt-24">
+    <section id="entradas" className="bg-transparent">
       <p className="text-base font-extrabold uppercase tracking-[3px] text-rc-red">
         Entradas
       </p>
