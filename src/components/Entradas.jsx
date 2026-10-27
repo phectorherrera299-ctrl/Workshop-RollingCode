@@ -1,12 +1,12 @@
 import Tarjeta from "./Tarjeta";
-import useCuentaRegresiva from "./hooks/useCuntaRegresiva";
+import useCuentaRegresiva from "./hooks/useCuentaRegresiva";
 
 const FECHA_LIMITE = new Date("2026-10-31T23:59:59-03:00").getTime();
 const dosDigitos = (n) => String(n).padStart(2, "0");
 
 const planes = [
   {
-    nombre: "Early Bird",
+    id: "early", nombre: "Early Bird",
     chip: "Quedan 38",
     precio: "$25.000",
     tachado: "$35.000",
@@ -21,7 +21,7 @@ const planes = [
     ],
   },
   {
-    nombre: "General",
+    id: "general", nombre: "General",
     chip: "Desde el 1/11",
     precio: "$35.000",
     subtitulo: "Presencial · precio regular",
@@ -33,7 +33,7 @@ const planes = [
     ],
   },
   {
-    nombre: "Virtual",
+    id: "virtual", nombre: "Virtual",
     chip: "Desde donde estés",
     precio: "$15.000",
     subtitulo: "Transmisión en vivo",
@@ -47,7 +47,7 @@ const planes = [
   },
 ];
 
-const Entradas = () => {
+const Entradas = ({onComprar}) => {
   const { dias, horas, minutos } = useCuentaRegresiva(FECHA_LIMITE);
 
   const cajas = [
@@ -100,7 +100,7 @@ const Entradas = () => {
       </div>
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         {planes.map((plan) => (
-          <Tarjeta key={plan.nombre} {...plan} />
+          <Tarjeta key={plan.id} {...plan} onComprar={onComprar} />
         ))}
       </div>
     </section>

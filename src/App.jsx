@@ -5,11 +5,18 @@ import NotFound from "./pages/NotFound";
 import Speakers from "./pages/Speakers";
 import Navbar from "./components/navbar";
 import PublicidadWorkshop from "./PublicidadWorkshop";
-import Checkout from './components/Checkout';
+import Checkout from "./components/Checkout";
 import { Ubicacion } from "./Ubicacion";
 
+import { useState } from "react";
 
 function App() {
+  const [entradaId, setEntradaId] = useState("early");
+  const comprar = (id) => {
+    setEntradaId(id);
+    document.getElementById("checkout")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
       <header>
@@ -21,9 +28,9 @@ function App() {
           <Speakers />
           <Contador />
           <NotFound />
-          <Entradas></Entradas>
-          <Checkout></Checkout>
-          <Ubicacion/>
+          <Entradas onComprar={comprar}></Entradas>
+          <Checkout entradaId={entradaId} setEntradaId={setEntradaId}></Checkout>
+          <Ubicacion />
         </Container>
       </main>
       <footer></footer>

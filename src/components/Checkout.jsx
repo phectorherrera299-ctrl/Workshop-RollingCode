@@ -29,9 +29,8 @@ const formato = (n) => `$${n.toLocaleString("es-AR")}`;
 const generarCodigo = () =>
   `RC-2026-${Math.floor(1000 + Math.random() * 9000)}`;
 
-const Checkout = () => {
+const Checkout = ({entradaId, setEntradaId}) => {
   const [pasoActual, setPasoActual] = useState(0);
-  const [entradaId, setEntradaId] = useState("early");
   const [cantidad, setCantidad] = useState(1);
   const [datos, setDatos] = useState(null);
   const [reserva, setReserva] = useState("");
