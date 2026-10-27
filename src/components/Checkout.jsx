@@ -22,10 +22,16 @@ const opciones = [
 ];
 
 const pasos = ["Entrada", "Datos", "Pago", "Listo"];
+const formato = (n) => `$${n.toLocaleString("es-AR")}`;
+
 const Checkout = () => {
   const [pasoActual, setPasoActual] = useState(0);
   const [entradaId, setEntradaId] = useState("early");
   const [cantidad, setCantidad] = useState(1);
+  const entrada = opciones.find((opcion) => opcion.id === entradaId);
+  const subtotal = entrada.precio * cantidad;
+  const cargo = Math.round(subtotal * 0.05);
+  const total = subtotal + cargo;
 
   return (
     <section
