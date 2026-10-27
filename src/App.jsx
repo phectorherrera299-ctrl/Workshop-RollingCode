@@ -6,10 +6,10 @@ import Navbar from "./components/Navbar";
 import PublicidadWorkshop from "./PublicidadWorkshop";
 import Checkout from "./components/Checkout";
 import { Ubicacion } from "./Ubicacion";
-import { Footer } from './components/Footer'
+import { Footer } from "./components/Footer";
 import Agenda from "./Agenda";
 import Sponsors from "./components/Sponsors";
-
+import ScrollReveal from "./components/ScrollReveal";
 import { useState } from "react";
 
 function App() {
@@ -22,21 +22,21 @@ function App() {
   return (
     <>
       <Navbar />
-      <main className="landing-main mb-[19px]">
+      <main className="landing-main">
         <Container className="flex flex-col gap-[19px]">
           <PublicidadWorkshop />
-          <Contador />
-          <Speakers />
-          <Agenda />  
-          <Entradas onComprar={comprar} />
-          <Checkout entradaId={entradaId} setEntradaId={setEntradaId} />
-          <Sponsors />
-          <Ubicacion />
+          <ScrollReveal><Contador /></ScrollReveal>
+          <ScrollReveal><Speakers /></ScrollReveal>
+          <ScrollReveal><Agenda /></ScrollReveal>
+          <ScrollReveal><Entradas onComprar={comprar} /></ScrollReveal>
+          <ScrollReveal><Checkout entradaId={entradaId} setEntradaId={setEntradaId} /></ScrollReveal>
+          <ScrollReveal><Sponsors /></ScrollReveal>
+          <ScrollReveal><Ubicacion /></ScrollReveal>
         </Container>
       </main>
       <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

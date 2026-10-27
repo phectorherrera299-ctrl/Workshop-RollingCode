@@ -18,12 +18,12 @@ function Agenda() {
     {
       hora: "19:00",
       titulo: "Armá tu portfolio con IA",
-      speaker: "Gastón",
+      speaker: "Gastón Roger",
     },
     {
       hora: "19:20",
       titulo: "Git y GitHub sin miedo",
-      speaker: "Mauro",
+      speaker: "Mauro Coniglio",
     },
     {
       hora: "19:40",
