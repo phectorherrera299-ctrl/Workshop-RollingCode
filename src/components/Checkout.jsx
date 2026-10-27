@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Datos from "./Datos";
 
 const opciones = [
   {
@@ -64,79 +65,88 @@ const Checkout = () => {
       </div>
       <div className="mt-10 grid gap-6 lg:grid-cols-[1.43fr_1fr]">
         <div className="rounded-rc-box bg-white p-9">
-          <h3 className="text-[22px] font-extrabold text-rc-black">
-            Elegí tu entrada
-          </h3>
-
-          <div className="mt-4 flex flex-col gap-3">
-            {opciones.map((opcion) => {
-              const activa = opcion.id === entradaId;
-              return (
-                <button
-                  key={opcion.id}
-                  onClick={() => setEntradaId(opcion.id)}
-                  aria-pressed={activa}
-                  className={`flex w-full cursor-pointer items-center justify-between rounded-rc-option border-2 px-5 py-3.5 text-left transition ${
-                    activa
-                      ? "border-rc-black bg-rc-black text-white"
-                      : "border-rc-text-soft text-rc-black hover:border-rc-black"
-                  }`}
-                >
-                  <span>
-                    <span className="block font-extrabold">
-                      {opcion.nombre}
-                    </span>
-                    <span
-                      className={`block text-sm ${
-                        activa ? "text-rc-text-mute" : "text-rc-text-on-white"
+          {pasoActual === 0 ? (
+            <>
+              <h3 className="text-[22px] font-extrabold text-rc-black">
+                Elegí tu entrada
+              </h3>
+              <div className="mt-4 flex flex-col gap-3">
+                {opciones.map((opcion) => {
+                  const activa = opcion.id === entradaId;
+                  return (
+                    <button
+                      key={opcion.id}
+                      onClick={() => setEntradaId(opcion.id)}
+                      aria-pressed={activa}
+                      className={`flex w-full cursor-pointer items-center justify-between rounded-rc-option border-2 px-5 py-3.5 text-left transition ${
+                        activa
+                          ? "border-rc-black bg-rc-black text-white"
+                          : "border-rc-text-soft text-rc-black hover:border-rc-black"
                       }`}
                     >
-                      {opcion.detalle}
-                    </span>
-                  </span>
-                  <span className="text-lg font-extrabold">
-                    ${opcion.precio.toLocaleString("es-AR")}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          <div className="mt-6 flex items-center justify-between">
-            <span className="font-extrabold text-rc-black">Cantidad</span>
+                      <span>
+                        <span className="block font-extrabold">
+                          {opcion.nombre}
+                        </span>
+                        <span
+                          className={`block text-sm ${
+                            activa
+                              ? "text-rc-text-mute"
+                              : "text-rc-text-on-white"
+                          }`}
+                        >
+                          {opcion.detalle}
+                        </span>
+                      </span>
+                      <span className="text-lg font-extrabold">
+                        ${opcion.precio.toLocaleString("es-AR")}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="mt-6 flex items-center justify-between">
+                <span className="font-extrabold text-rc-black">Cantidad</span>
 
-            <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setCantidad(cantidad - 1)}
+                    disabled={cantidad === 1}
+                    aria-label="Quitar una entrada"
+                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-2 border-rc-text-soft text-xl font-extrabold text-rc-black transition hover:border-rc-black disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    −
+                  </button>
+
+                  <span className="w-6 text-center text-xl font-extrabold tabular-nums text-rc-black">
+                    {cantidad}
+                  </span>
+
+                  <button
+                    onClick={() => setCantidad(cantidad + 1)}
+                    disabled={cantidad === 10}
+                    aria-label="Agregar una entrada"
+                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-2 border-rc-text-soft text-xl font-extrabold text-rc-black transition hover:border-rc-black disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
               <button
-                onClick={() => setCantidad(cantidad - 1)}
-                disabled={cantidad === 1}
-                aria-label="Quitar una entrada"
-                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-2 border-rc-text-soft text-xl font-extrabold text-rc-black transition hover:border-rc-black disabled:cursor-not-allowed disabled:opacity-40"
+                onClick={() => setPasoActual(1)}
+                className="mt-6 min-h-[52px] w-full cursor-pointer rounded-full bg-rc-black text-lg font-extrabold text-white transition hover:bg-rc-surface-2 active:scale-95"
               >
-                −
+                Continuar
               </button>
 
-              <span className="w-6 text-center text-xl font-extrabold tabular-nums text-rc-black">
-                {cantidad}
-              </span>
-
-              <button
-                onClick={() => setCantidad(cantidad + 1)}
-                disabled={cantidad === 10}
-                aria-label="Agregar una entrada"
-                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-2 border-rc-text-soft text-xl font-extrabold text-rc-black transition hover:border-rc-black disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          <button className="mt-6 min-h-[52px] w-full cursor-pointer rounded-full bg-rc-black text-lg font-extrabold text-white transition hover:bg-rc-surface-2 active:scale-95">
-            Continuar
-          </button>
-
-          <p className="mt-6 text-sm text-rc-text-on-white">
-            Pasarela de pago de ejemplo: no se procesan pagos ni se guardan
-            datos.
-          </p>
+              <p className="mt-6 text-sm text-rc-text-on-white">
+                Pasarela de pago de ejemplo: no se procesan pagos ni se guardan
+                datos.
+              </p>
+            </>
+          ) : (
+            <Datos onVolver={() => setPasoActual(0)} onContinuar={() => {}} />
+          )}
         </div>
         <div className="self-start rounded-rc-box bg-rc-black p-9">
           <p className="text-xs font-extrabold uppercase tracking-[2px] text-rc-red">
