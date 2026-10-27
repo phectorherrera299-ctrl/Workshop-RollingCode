@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import PublicidadWorkshop from "./PublicidadWorkshop";
 import { Ubicacion } from "./Ubicacion";
 import { Footer } from './components/Footer'
+import Agenda from "./Agenda";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <PublicidadWorkshop />
           <Contador />
           <Speakers />
+          <Agenda />  
           <Entradas />
           <Ubicacion />
         </Container>
