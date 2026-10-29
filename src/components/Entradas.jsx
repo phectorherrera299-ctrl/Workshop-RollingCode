@@ -1,5 +1,5 @@
 import Tarjeta from "./Tarjeta";
-import useCuentaRegresiva from "./hooks/useCuentaRegresiva";
+import useCuentaRegresiva from "../hooks/useCuentaRegresiva";
 
 const FECHA_LIMITE = new Date("2026-10-31T23:59:59-03:00").getTime();
 const dosDigitos = (n) => String(n).padStart(2, "0");
