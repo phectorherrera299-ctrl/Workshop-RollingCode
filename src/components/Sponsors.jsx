@@ -1,204 +1,109 @@
 import { useState } from "react";
+import { sponsors } from "../data/sponsors";
 
-const sponsors = [
-  {
-    tier: "Main partners",
-    level: "Tier diamante",
-    className: "sponsor-tier-main",
-    partners: [
-      {
-        name: "Google Cloud",
-        slug: "googlecloud",
-        color: "EA4335",
-        description: "Infraestructura global de cloud e inteligencia artificial.",
-        url: "https://cloud.google.com/",
-        category: "Cloud & AI",
-        badge: "Líder global",
-      },
-      {
-        name: "Amazon Web Services",
-        mark: "AWS",
-        slug: "amazonaws",
-        color: "FF9900",
-        description: "Servicios de nube, infraestructura y tecnología para empresas.",
-        url: "https://aws.amazon.com/",
-        category: "Cloud hosting",
-        badge: "Global leader",
-      },
-      {
-        name: "Mercado Libre",
-        mark: "ML",
-        slug: "mercadolibre",
-        color: "FFE600",
-        description: "Tecnología para impulsar el comercio y los pagos digitales.",
-        url: "https://www.mercadolibre.com/",
-        category: "Fintech & e-commerce",
-        badge: "Unicorn LATAM",
-      },
-    ],
-  },
-  {
-    tier: "Gold tier",
-    level: "Nivel oro",
-    className: "sponsor-tier-gold",
-    partners: [
-      {
-        name: "Microsoft",
-        mark: "M",
-        slug: "microsoft",
-        color: "F25022",
-        description: "Tecnología y herramientas para desarrolladores.",
-        url: "https://www.microsoft.com/",
-      },
-      {
-        name: "GitHub",
-        slug: "github",
-        color: "F0F6FC",
-        description: "Desarrollo de software y colaboración.",
-        url: "https://github.com/",
-      },
-      {
-        name: "Globant",
-        mark: "G",
-        slug: "globant",
-        color: "00CC99",
-        description: "Transformación digital y tecnología.",
-        url: "https://www.globant.com/",
-      },
-      {
-        name: "Auth0",
-        slug: "auth0",
-        color: "EB5424",
-        description: "Identidad y seguridad para aplicaciones.",
-        url: "https://auth0.com/",
-      },
-      {
-        name: "Vercel",
-        slug: "vercel",
-        color: "FFFFFF",
-        description: "Plataforma para construir y desplegar productos web.",
-        url: "https://vercel.com/",
-      },
-    ],
-  },
-  {
-    tier: "Bronze tier",
-    level: "Nivel bronce",
-    className: "sponsor-tier-bronze",
-    partners: [
-      {
-        name: "Supabase",
-        slug: "supabase",
-        color: "3FCF8E",
-        description: "Open source Firebase alternative.",
-        url: "https://supabase.com/",
-      },
-      {
-        name: "DigitalOcean",
-        slug: "digitalocean",
-        color: "0080FF",
-        description: "Cloud computing.",
-        url: "https://www.digitalocean.com/",
-      },
-      {
-        name: "Cloudflare",
-        slug: "cloudflare",
-        color: "F38020",
-        description: "Infraestructura web y seguridad.",
-        url: "https://www.cloudflare.com/",
-      },
-      {
-        name: "MongoDB",
-        slug: "mongodb",
-        color: "47A248",
-        description: "Base de datos para aplicaciones modernas.",
-        url: "https://www.mongodb.com/",
-      },
-      {
-        name: "Docker",
-        slug: "docker",
-        color: "2496ED",
-        description: "Plataforma de desarrollo en contenedores.",
-        url: "https://www.docker.com/",
-      },
-      {
-        name: "Stripe",
-        slug: "stripe",
-        color: "635BFF",
-        description: "Infraestructura de pagos en línea.",
-        url: "https://stripe.com/",
-      },
-      {
-        name: "Postman",
-        slug: "postman",
-        color: "FF6C37",
-        description: "Plataforma para desarrollar y probar APIs.",
-        url: "https://www.postman.com/",
-      },
-    ],
-  },
-];
+const grids = {
+  main: "grid-cols-2 sm:grid-cols-3 [&>*:last-child]:col-span-full sm:[&>*:last-child]:col-span-1",
+  gold: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5",
+  bronze: "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7",
+};
 
-const WHATSAPP_URL = "https://wa.me/5493815783030";
-const MAX_LOGO_SIZE = 5 * 1024 * 1024;
+function SponsorCard({ partner, level, destacado }) {
+  const [cargado, setCargado] = useState(false);
 
-function SponsorGroup({ tier, level, className, partners }) {
+  const marca =
+    partner.mark ??
+    partner.name
+      .split(/\s+/)
+      .map((palabra) => palabra[0])
+      .join("")
+      .slice(0, 3);
+
   return (
-    <div className={`sponsor-tier ${className}`}>
-      <div className="sponsor-tier-heading">
-        <h3>{tier}</h3>
-        <span>{level}</span>
+    <a
+      href={partner.url}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={`Conocé a ${partner.name} (abre en una pestaña nueva)`}
+      className={`flex min-w-0 flex-col items-center rounded-rc-field border border-transparent p-3.5 text-center transition duration-200 hover:-translate-y-1 hover:border-rc-red/75 focus-visible:-translate-y-1 focus-visible:border-rc-red/75 focus-visible:outline-none ${
+        destacado ? "" : "min-h-[132px] justify-center"
+      }`}
+    >
+      {destacado && (
+        <p className="w-full text-xs font-extrabold uppercase tracking-wider text-rc-text-mute">
+          {partner.category ?? level}
+        </p>
+      )}
+
+      <div
+        className={`relative grid h-[58px] w-16 shrink-0 place-items-center ${
+          destacado ? "mb-2 mt-3" : "mb-2"
+        }`}
+      >
+        <span
+          aria-hidden="true"
+          className={`text-base font-extrabold tracking-tight text-white ${
+            cargado ? "invisible" : ""
+          }`}
+        >
+          {marca}
+        </span>
+        <img
+          src={`https://cdn.simpleicons.org/${partner.slug}/${partner.color}`}
+          alt=""
+          loading="lazy"
+          onLoad={() => setCargado(true)}
+          className={`absolute inset-0 m-auto h-9 w-9 object-contain ${
+            cargado ? "visible" : "invisible"
+          }`}
+        />
       </div>
-      {className === "sponsor-tier-main" && (
-        <p className="sponsor-tier-description">
+
+      <strong className="text-base font-extrabold leading-tight">
+        {partner.name}
+      </strong>
+
+      {destacado && (
+        <p className="mt-2 text-sm text-rc-text-mute">{partner.description}</p>
+      )}
+
+      {partner.category && (
+        <div className="mt-3 flex w-full justify-between gap-2 text-xs text-rc-text-mute">
+          <span>{partner.category}</span>
+          <span className="text-right text-rc-text-soft">{partner.badge}</span>
+        </div>
+      )}
+    </a>
+  );
+}
+
+function SponsorGroup({ id, tier, level, partners }) {
+  const destacado = id === "main";
+
+  return (
+    <div className="mt-8">
+      <div className="flex flex-wrap items-center gap-3 uppercase">
+        <h3 className="text-base font-extrabold tracking-[3px] text-rc-red">
+          {tier}
+        </h3>
+        <span className="rounded-full border border-rc-chip px-3 py-1 text-xs font-extrabold tracking-wider text-rc-text-soft">
+          {level}
+        </span>
+      </div>
+
+      {destacado && (
+        <p className="mt-1.5 text-sm text-rc-text-mute">
           Empresas líderes que hacen posible este encuentro.
         </p>
       )}
-      <div className="sponsor-grid">
+
+      <div className={`mt-4 grid gap-4 ${grids[id]}`}>
         {partners.map((partner) => (
-          <a
+          <SponsorCard
             key={partner.name}
-            className="sponsor-card"
-            href={partner.url}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Conocé a ${partner.name} (abre en una pestaña nueva)`}
-          >
-            <div className="sponsor-card-topline">
-              <span>{partner.category ?? level}</span>
-              <span aria-hidden="true">↗</span>
-            </div>
-            <div className="sponsor-logo">
-              <span className="sponsor-logo-fallback" aria-hidden="true">
-                {partner.mark ??
-                  partner.name
-                    .split(/\s+/)
-                    .map((word) => word[0])
-                    .join("")
-                    .slice(0, 3)}
-              </span>
-              <img
-                src={`https://cdn.simpleicons.org/${partner.slug}/${partner.color}`}
-                alt=""
-                loading="lazy"
-                onLoad={(event) => {
-                  event.currentTarget.parentElement?.classList.add(
-                    "sponsor-logo-loaded",
-                  );
-                }}
-              />
-            </div>
-            <strong>{partner.name}</strong>
-            {className === "sponsor-tier-main" && (
-              <p className="sponsor-card-description">{partner.description}</p>
-            )}
-            {partner.category && (
-              <div className="sponsor-card-meta">
-                <span>{partner.category}</span>
-                <span>{partner.badge}</span>
-              </div>
-            )}
-          </a>
+            partner={partner}
+            level={level}
+            destacado={destacado}
+          />
         ))}
       </div>
     </div>
@@ -206,178 +111,35 @@ function SponsorGroup({ tier, level, className, partners }) {
 }
 
 export default function Sponsors() {
-  const [whatsappUrl, setWhatsappUrl] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const logo = formData.get("logo");
-    const details = [
-      "Hola, quiero postular a mi empresa como sponsor del workshop.",
-      `Nombre: ${formData.get("nombre")} ${formData.get("apellido")}`,
-      `Empresa: ${formData.get("empresa")}`,
-      `Email corporativo: ${formData.get("email")}`,
-      `Nivel de sponsor: ${formData.get("nivel")}`,
-      `Logo seleccionado: ${logo instanceof File && logo.name ? logo.name : "No adjuntado"}`,
-      `Mensaje: ${formData.get("mensaje") || "Sin mensaje adicional"}`,
-      "Si seleccioné un logo, lo enviaré como adjunto en este chat.",
-    ];
-
-    setWhatsappUrl(`${WHATSAPP_URL}?text=${encodeURIComponent(details.join("\n"))}`);
-  };
-
-  const handleLogoChange = (event) => {
-    const logo = event.currentTarget.files?.[0];
-    event.currentTarget.setCustomValidity(
-      logo && logo.size > MAX_LOGO_SIZE
-        ? "El archivo no puede superar los 5 MB."
-        : "",
-    );
-    setWhatsappUrl("");
-  };
-
   return (
-    <>
-      <section className="sponsors-section" id="sponsors" aria-labelledby="sponsors-title">
-        <div className="sponsors-heading">
-          <span className="etiqueta">QUIÉNES NOS ACOMPAÑAN</span>
-          <h2 id="sponsors-title">
-            Sponsors<span>.</span>
-          </h2>
-          <p>
-            Las marcas que impulsan el talento y hacen crecer la comunidad
-            tecnológica.
-          </p>
-        </div>
-
-        {sponsors.map((group) => (
-          <SponsorGroup key={group.tier} {...group} />
-        ))}
-
-        <a className="sponsor-join-link" href="#sumate-sponsor">
-          Sumate como sponsor <span aria-hidden="true">↓</span>
-        </a>
-      </section>
-
-      <section
-        className="sponsor-join-section"
-        id="sumate-sponsor"
-        aria-labelledby="sponsor-join-title"
-      >
-        <div className="sponsor-join-heading">
-          <span className="etiqueta">HAGAMOS ALGO GRANDE JUNTOS</span>
-          <h2 id="sponsor-join-title">Sumate como Sponsor</h2>
-          <p>
-            Conectá tu marca con más de 120 talentos IT, programadores junior,
-            semi-seniors y líderes tecnológicos del norte argentino. Completá el
-            formulario y nos contactaremos en menos de 24 horas hábiles.
-          </p>
-        </div>
-
-        <form
-          className="sponsor-form"
-          onSubmit={handleSubmit}
-          onChange={() => setWhatsappUrl("")}
-        >
-          <div className="sponsor-form-grid">
-            <label>
-              Nombre <span className="sponsor-required">*</span>
-              <input
-                name="nombre"
-                type="text"
-                placeholder="Ej. Martín"
-                autoComplete="given-name"
-                required
-              />
-            </label>
-            <label>
-              Apellido <span className="sponsor-required">*</span>
-              <input
-                name="apellido"
-                type="text"
-                placeholder="Ej. González"
-                autoComplete="family-name"
-                required
-              />
-            </label>
-            <label>
-              Empresa <span className="sponsor-required">*</span>
-              <input
-                name="empresa"
-                type="text"
-                placeholder="Ej. Acme Technologies"
-                autoComplete="organization"
-                required
-              />
-            </label>
-            <label>
-              Email corporativo <span className="sponsor-required">*</span>
-              <input
-                name="email"
-                type="email"
-                placeholder="martin@acme.com"
-                autoComplete="email"
-                required
-              />
-            </label>
-            <label className="sponsor-form-full">
-              Tipo de sponsor <span className="sponsor-required">*</span>
-              <select name="nivel" defaultValue="" required>
-                <option value="" disabled>
-                  Seleccioná un nivel de sponsoreo
-                </option>
-                <option value="Main partner">Main partner</option>
-                <option value="Gold tier">Gold tier</option>
-                <option value="Bronze tier">Bronze tier</option>
-              </select>
-            </label>
-            <label className="sponsor-form-full sponsor-logo-field">
-              Logo de la empresa
-              <input
-                name="logo"
-                type="file"
-                accept="image/png,image/jpeg,image/webp,image/svg+xml"
-                onChange={handleLogoChange}
-              />
-              <span>
-                PNG, JPG, WEBP o SVG. Máximo 5 MB. Si lo adjuntás, envialo
-                también en el chat de WhatsApp.
-              </span>
-            </label>
-            <label className="sponsor-form-full">
-              Mensaje opcional
-              <textarea
-                name="mensaje"
-                rows="3"
-                placeholder="Contanos sobre tu empresa y por qué buscan ser sponsor del evento."
-              />
-            </label>
-          </div>
-
-          <button className="sponsor-submit" type="submit">
-            <span aria-hidden="true">↗</span> Enviar postulación de Sponsor
-          </button>
-          {whatsappUrl && (
-            <p className="sponsor-form-feedback" role="status">
-              Tu postulación está lista.{" "}
-              <a href={whatsappUrl} target="_blank" rel="noreferrer">
-                Continuar por WhatsApp
-              </a>
-            </p>
-          )}
-        </form>
-
-        <p className="sponsor-contact">
-          ¿Preferís escribirnos directamente?{" "}
-          <a
-            href={`${WHATSAPP_URL}?text=${encodeURIComponent("Hola, quiero recibir información para sumarme como sponsor del workshop.")}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Contactanos por WhatsApp
-          </a>
+    <section
+      id="sponsors"
+      aria-labelledby="sponsors-title"
+      className="py-9"
+    >
+      <div className="mx-auto mb-8 max-w-[680px] text-center">
+        <p className="mb-3 text-base font-extrabold uppercase tracking-[3px] text-rc-red">
+          Quiénes nos acompañan
         </p>
-      </section>
-    </>
+        <h2 id="sponsors-title">
+          Sponsors<span className="text-rc-red">.</span>
+        </h2>
+        <p className="mx-auto mt-3.5 text-base text-rc-text-mute">
+          Las marcas que impulsan el talento y hacen crecer la comunidad
+          tecnológica.
+        </p>
+      </div>
+
+      {sponsors.map((group) => (
+        <SponsorGroup key={group.id} {...group} />
+      ))}
+
+      <a
+        href="#sumate-sponsor"
+        className="mx-auto mt-8 flex min-h-[52px] w-fit items-center justify-center gap-3 rounded-full border border-rc-red/50 bg-rc-red/10 px-6 text-lg font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-rc-red/20"
+      >
+        Sumate como sponsor <span aria-hidden="true">↓</span>
+      </a>
+    </section>
   );
 }

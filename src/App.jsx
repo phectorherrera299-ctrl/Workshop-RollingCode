@@ -9,6 +9,7 @@ import { Ubicacion } from "./components/Ubicacion";
 import { Footer } from './components/Footer'
 import Agenda from "./components/Agenda";
 import Sponsors from "./components/Sponsors";
+import SumateSponsor from "./components/SumateSponsor";
 import BotonWhatsapp from "./components/BotonWhatsapp";
 
 
@@ -30,9 +31,10 @@ function App() {
           <Contador />
           <Speakers />
           <Agenda />  
+          <Sponsors></Sponsors>
           <Entradas onComprar={comprar} />
           <Checkout entradaId={entradaId} setEntradaId={setEntradaId} />
-          <Sponsors />
+          <SumateSponsor></SumateSponsor>
           <Ubicacion />
         </Container>
       </main>
