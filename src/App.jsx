@@ -25,7 +25,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main className="landing-main mb-[19px]">
+      <main className="mb-[19px]">
         <Container className="flex flex-col gap-[19px]">
           <PublicidadWorkshop />
           <Contador />
