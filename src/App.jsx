@@ -1,13 +1,13 @@
 import Entradas from "./components/Entradas";
 import Container from "./components/Container";
 import Contador from "./components/Contador";
-import Speakers from "./pages/Speakers";
+import Speakers from "./components/Speakers";
 import Navbar from "./components/Navbar";
-import PublicidadWorkshop from "./PublicidadWorkshop";
+import PublicidadWorkshop from "./components/PublicidadWorkshop";
 import Checkout from "./components/Checkout";
-import { Ubicacion } from "./Ubicacion";
+import { Ubicacion } from "./components/Ubicacion";
 import { Footer } from './components/Footer'
-import Agenda from "./Agenda";
+import Agenda from "./components/Agenda";
 import Sponsors from "./components/Sponsors";
 
 import { useState } from "react";

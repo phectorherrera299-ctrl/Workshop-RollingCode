@@ -1,5 +1,5 @@
-import useContador from "./hooks/useContador";
-import useEnPantalla from "./hooks/useEnPantalla";
+import useContador from "../hooks/useContador";
+import useEnPantalla from "../hooks/useEnPantalla";
 
 const datos = [
   { valor: 120, texto: "lugares presenciales" },
