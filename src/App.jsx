@@ -6,12 +6,12 @@ import Navbar from "./components/Navbar";
 import PublicidadWorkshop from "./components/PublicidadWorkshop";
 import Checkout from "./components/Checkout";
 import { Ubicacion } from "./components/Ubicacion";
-import { Footer } from './components/Footer'
+import { Footer } from "./components/Footer";
 import Agenda from "./components/Agenda";
 import Sponsors from "./components/Sponsors";
 import SumateSponsor from "./components/SumateSponsor";
 import BotonWhatsapp from "./components/BotonWhatsapp";
-
+import ScrollReveal from "./components/ScrollReveal";
 
 import { useState } from "react";
 
@@ -25,23 +25,25 @@ function App() {
   return (
     <>
       <Navbar />
-      <main className="mb-[19px]">
+      <main>
         <Container className="flex flex-col gap-[19px]">
           <PublicidadWorkshop />
-          <Contador />
-          <Speakers />
-          <Agenda />  
-          <Sponsors></Sponsors>
-          <Entradas onComprar={comprar} />
-          <Checkout entradaId={entradaId} setEntradaId={setEntradaId} />
-          <SumateSponsor></SumateSponsor>
-          <Ubicacion />
+          <ScrollReveal><Contador /></ScrollReveal>
+          <ScrollReveal><Speakers /></ScrollReveal>
+          <ScrollReveal><Agenda /></ScrollReveal>
+          <ScrollReveal><Sponsors /></ScrollReveal>
+          <ScrollReveal><Entradas onComprar={comprar} /></ScrollReveal>
+          <ScrollReveal>
+            <Checkout entradaId={entradaId} setEntradaId={setEntradaId} />
+          </ScrollReveal>
+          <ScrollReveal><SumateSponsor /></ScrollReveal>
+          <ScrollReveal><Ubicacion /></ScrollReveal>
         </Container>
       </main>
       <Footer />
-      <BotonWhatsapp></BotonWhatsapp>
+      <BotonWhatsapp />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

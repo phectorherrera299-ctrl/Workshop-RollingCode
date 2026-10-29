@@ -118,7 +118,7 @@ export const Footer = () => {
   const base = import.meta.env.BASE_URL;
 
   return (
-    <footer id="footer" className="border-t border-rc-border bg-rc-black pt-16">
+     <footer id="footer" className="bg-rc-black pt-16"> 
       <Container>
         <div className="grid grid-cols-2 gap-x-4 gap-y-8 pb-12 lg:grid-cols-[1.5fr_0.8fr_0.8fr_1fr] lg:gap-10">
           <div className="col-span-2 lg:col-span-1">
