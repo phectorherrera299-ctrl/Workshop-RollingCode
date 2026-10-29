@@ -9,14 +9,15 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const base = import.meta.env.BASE_URL;
 
   return (
     <header>
-      <nav className="bg-surface w-full">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between px-4 py-2">
-          <a href="/" className="shrink-0">
+      <nav className="w-full border-b border-rc-line bg-rc-surface">
+        <div className="mx-auto flex max-w-[1248px] flex-wrap items-center justify-between px-6 py-2">
+          <a href={base} className="shrink-0">
             <img
-              src="/logo-rolling-blanco.png"
+              src={`${base}logo-rolling-blanco.png`}
               alt="RollingCode"
               width="200"
               height="64"
@@ -29,7 +30,7 @@ export default function Navbar() {
             onClick={() => setOpen(!open)}
             aria-controls="navbar-menu"
             aria-expanded={open}
-            aria-label="Toggle navigation"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
             className="rounded-md p-2 text-white lg:hidden"
           >
             <svg
@@ -65,7 +66,7 @@ export default function Navbar() {
                   <a
                     href={href}
                     onClick={() => setOpen(false)}
-                    className="navbar-text-soft px-2 py-1"
+                    className="px-2 py-1 text-base font-semibold text-rc-text-soft transition-colors hover:text-rc-white"
                   >
                     {label}
                   </a>
@@ -75,7 +76,7 @@ export default function Navbar() {
                 <a
                   href="#entradas"
                   onClick={() => setOpen(false)}
-                  className="navbar-important navbar-text-soft block px-4 py-2 text-center"
+                  className="flex min-h-11 items-center justify-center rounded-full bg-rc-red px-6 text-center text-base font-extrabold text-white transition-colors hover:bg-rc-red-dark"
                 >
                   Comprar entrada
                 </a>
