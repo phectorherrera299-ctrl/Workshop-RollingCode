@@ -9,6 +9,8 @@ import { Ubicacion } from "./components/Ubicacion";
 import { Footer } from './components/Footer'
 import Agenda from "./components/Agenda";
 import Sponsors from "./components/Sponsors";
+import BotonWhatsapp from "./components/BotonWhatsapp";
+
 
 import { useState } from "react";
 
@@ -35,6 +37,7 @@ function App() {
         </Container>
       </main>
       <Footer />
+      <BotonWhatsapp></BotonWhatsapp>
     </>
   )
 }
