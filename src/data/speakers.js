@@ -34,12 +34,14 @@ export const speakers = [
     tag: "Preparate para tu primera entrevista",
     desc: "Qué preguntan en una entrevista técnica, cómo practicar y cómo contar tus proyectos con claridad.",
     img: "img/tomas-gomez.jpeg",
+    zoom: "scale-[1.7] origin-[58%_0%]",
   },
   {
     name: "Pablo Basso",
     tag: "Mi primer trabajo en IT",
     desc: "Una charla en primera persona sobre cómo se consigue el primer puesto y qué se aprende en los primeros meses.",
     img: "img/pablo-basso.jpeg",
+    zoom: "scale-[1.8] origin-[24%_22%]", 
   },
   {
     name: "Julián Martín",

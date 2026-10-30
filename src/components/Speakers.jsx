@@ -3,31 +3,34 @@ import { speakers } from "../data/speakers";
 
 const base = import.meta.env.BASE_URL;
 
-function SpeakerCard({ name, tag, desc, img }) {
+function SpeakerCard({ name, tag, desc, img, zoom = "" }) {
   return (
-    <article className="group flex w-[78%] shrink-0 snap-center flex-col overflow-hidden rounded-rc-card border border-rc-border bg-rc-surface transition hover:border-rc-red/60 sm:w-[46%] md:w-[31%] lg:w-auto">
+    <article className="group flex w-[78%] shrink-0 snap-center flex-col overflow-hidden rounded-rc-card border border-rc-border bg-rc-surface transition hover:border-rc-red/100 sm:w-[46%] md:w-[31%] lg:w-auto">
       <div className="aspect-square w-full overflow-hidden bg-rc-surface-2">
         {img ? (
-          <img
-            src={`${base}${img}`}
-            alt={name}
-            loading="lazy"
-            className="h-full w-full object-cover object-top transition duration-300 group-hover:scale-105"
-          />
+          <div className={`h-full w-full ${zoom}`}>
+            <img
+              src={`${base}${img}`}
+              alt={name}
+              loading="lazy"
+              className="h-full w-full object-cover object-top transition duration-300 group-hover:scale-105"
+            />
+          </div>
         ) : (
           <div className="flex h-full w-full items-center justify-center text-sm text-rc-text-mute">
             Sin foto
           </div>
         )}
       </div>
-
       <div className="flex flex-1 flex-col gap-3 p-4 sm:p-5">
-        <h3 className="text-[26px] font-extrabold leading-tight">{name}</h3>
-
-        <span className="w-fit rounded-full bg-rc-red px-3 py-1 text-sm font-semibold text-white">
-          {tag}
-        </span>
-
+        <h3 className="min-h-[2.5em] text-[26px] font-extrabold leading-tight lg:text-[22px] xl:text-[26px]">
+          {name}
+        </h3>
+        <div className="min-h-12">
+          <span className="flex min-h-12 w-full items-center justify-center rounded-full bg-rc-red px-4 text-center text-sm font-semibold text-white">
+            {tag}
+          </span>
+        </div>
         <p className="text-sm text-rc-text-mute">{desc}</p>
       </div>
     </article>
@@ -106,7 +109,6 @@ export default function Speakers() {
       behavior: "smooth",
     });
   };
-
   return (
     <section id="speakers" aria-labelledby="speakers-title">
       <div className="flex items-end justify-between gap-4">
@@ -119,7 +121,6 @@ export default function Speakers() {
             Deslizá para conocer a los oradores
           </p>
         </div>
-
         <div className="hidden gap-2 sm:flex lg:hidden">
           <ArrowButton
             direction={-1}
@@ -133,7 +134,6 @@ export default function Speakers() {
           />
         </div>
       </div>
-
       <div
         ref={trackRef}
         onScroll={updateState}
@@ -143,7 +143,6 @@ export default function Speakers() {
           <SpeakerCard key={speaker.name} {...speaker} />
         ))}
       </div>
-
       <div className="mt-5 flex justify-center gap-1.5 lg:hidden">
         {speakers.map((speaker, index) => (
           <button
