@@ -1,3 +1,4 @@
+import { CalendarPlus } from "lucide-react";
 import { speakers } from "../data/speakers";
 
 const apertura = { hora: "18:00", titulo: "Acreditación y bienvenida" };
@@ -10,6 +11,17 @@ const charlas = [
     .map(({ hora, tag, name }) => ({ hora, titulo: tag, speaker: name })),
   cierre,
 ];
+
+const calendarUrl = `https://calendar.google.com/calendar/render?${new URLSearchParams(
+  {
+    action: "TEMPLATE",
+    text: "Workshop: ¿Por dónde empiezo a programar?",
+    dates: "20261119T210000Z/20261120T004000Z",
+    details:
+      "Diez charlas cortas para dar tus primeros pasos en programación. Organiza Rolling Code School.",
+    location: "Gral. Paz 576, San Miguel de Tucumán",
+  },
+).toString()}`;
 
 function Agenda() {
   return (
@@ -30,10 +42,21 @@ function Agenda() {
             noviembre
           </h2>
 
-          <p className="max-w-[360px] text-base text-rc-text-mute">
+          <p className="mb-8 max-w-[360px] text-base text-rc-text-mute">
             Diez charlas cortas para salir con un plan claro. Al final queda
             tiempo para preguntas y networking.
           </p>
+
+          <a
+            href={calendarUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-[52px] items-center gap-2 rounded-full bg-rc-red px-7 text-lg font-extrabold text-white transition hover:bg-rc-red-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <CalendarPlus className="h-5 w-5" aria-hidden="true" />
+            Agregar al calendario
+            <span className="sr-only"> (abre en una pestaña nueva)</span>
+          </a>
         </div>
 
         <ol className="relative before:absolute before:bottom-[31px] before:left-[99px] before:top-[30px] before:w-0.5 before:bg-rc-red sm:before:left-[113px]">
