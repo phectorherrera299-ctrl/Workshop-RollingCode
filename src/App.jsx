@@ -25,7 +25,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="pt-12">
         <Container className="flex flex-col gap-[19px]">
           <PublicidadWorkshop />
           <ScrollReveal><Contador /></ScrollReveal>
