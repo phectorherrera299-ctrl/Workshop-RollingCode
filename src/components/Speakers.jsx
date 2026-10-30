@@ -56,10 +56,6 @@ function SpeakerCard({ speaker, onOpen }) {
         </span>
 
         <p className="text-sm text-rc-text-mute">{desc}</p>
-
-        <p className="mt-auto pt-1 text-sm font-semibold underline underline-offset-4">
-          Ver más
-        </p>
       </div>
 
       <button
@@ -144,7 +140,7 @@ function SpeakerModal({ speaker, onClose }) {
                 </li>
               </ul>
 
-              <p className="mt-5 text-base text-rc-text-soft">{speaker.desc}</p>
+              <p className="mt-5 text-base text-rc-text-soft">{speaker.detalle ?? speaker.desc}</p>
 
               <a
                 href="#entradas"

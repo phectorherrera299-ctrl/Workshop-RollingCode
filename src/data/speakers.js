@@ -6,6 +6,8 @@ export const speakers = [
     img: "img/tomas-escudero.png",
     hora: "21:00",
     fin: "21:20",
+    detalle:
+      "Vas a ver cómo piensa un equipo de diseño y qué decisiones toma antes de que exista una línea de código. Aprendés a leer un mockup (colores, tipografías y medidas) para construir una pantalla idéntica al diseño.",
   },
   {
     name: "Franco Díaz",
@@ -14,6 +16,8 @@ export const speakers = [
     img: "img/franco-diaz.jpeg",
     hora: "18:40",
     fin: "19:00",
+    detalle:
+      "Un paso a paso para dejar de mirar tutoriales: cómo elegir una idea chica, dividirla en partes y terminarla con HTML, JavaScript y React. Te llevás un camino concreto para armar tu primer proyecto.",
   },
   {
     name: "Gastón Roger",
@@ -22,6 +26,8 @@ export const speakers = [
     img: "img/gaston.png",
     hora: "19:00",
     fin: "19:20",
+    detalle:
+      "Cómo pedirle ayuda a un asistente de IA sin perder el control de tu código, y cómo usarlo para armar y publicar un portfolio donde se vea lo que sabés hacer de verdad.",
   },
   {
     name: "Mauro Coniglio",
@@ -30,6 +36,7 @@ export const speakers = [
     img: "img/mauro.png",
     hora: "19:20",
     fin: "19:40",
+    detalle:"Los comandos que se usan todos los días (guardar cambios, crear ramas y subir al repositorio) y cómo resolver los problemas típicos del trabajo en equipo, como pisar el código de otra persona.",
   },
   {
     name: "José Díaz",
@@ -38,6 +45,7 @@ export const speakers = [
     img: "img/jose-diaz.jpeg",
     hora: "19:40",
     fin: "20:00",
+    detalle: "Cómo se arma una API paso a paso, qué rol cumple la base de datos y cómo conectar todo para que tu primer backend funcione de punta a punta.",
   },
   {
     name: "Tomás Gómez",
@@ -47,6 +55,7 @@ export const speakers = [
     zoom: "scale-[1.7] origin-[58%_0%]",
     hora: "20:00",
     fin: "20:20",
+    detalle: "Qué suelen preguntar en una entrevista técnica, cómo practicar para llegar con tranquilidad y cómo contar tus proyectos para que se entienda qué hiciste y qué aprendiste.",
   },
   {
     name: "Pablo Basso",
@@ -56,6 +65,7 @@ export const speakers = [
     zoom: "scale-[1.8] origin-[24%_22%]",
     hora: "20:20",
     fin: "20:40",
+    detalle: "Una charla en primera persona: cómo se consigue el primer puesto en IT, cómo es el proceso y qué se aprende durante los primeros meses de trabajo.",
   },
   {
     name: "Julián Martín",
@@ -64,6 +74,7 @@ export const speakers = [
     img: "img/julian-martin.png",
     hora: "20:40",
     fin: "21:00",
+    detalle: "Qué es testear y por qué ayuda a que el código no se rompa cuando cambiás algo. Vas a ver cómo escribir tus primeras pruebas, simples y sin complicarte.",
   },
   {
     name: "Daniela Cardozo",
@@ -72,11 +83,13 @@ export const speakers = [
     img: "img/daniela-cardozo.jpeg",
     hora: "18:20",
     fin: "18:40",
+    detalle: "Qué esperar de tu primera semana en un equipo: cómo es el día a día, qué herramientas vas a usar y cómo pedir ayuda sin miedo a preguntar.",
   },
   {
     name: "Andrés Perlo",
     tag: "Tu primera base de datos",
     desc: "Qué es una base de datos, para qué sirve y cómo guardar y consultar tus primeros datos.",
+    detalle: "Qué es una base de datos y para qué sirve, y cómo guardar y consultar tus primeros datos para entender dónde vive la información de una aplicación.",
     img: "img/andres-perlo.jpeg",
     hora: "21:20",
     fin: "21:40",
