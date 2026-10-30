@@ -1,120 +1,62 @@
+import { speakers } from "../data/speakers";
+
+const apertura = { hora: "18:00", titulo: "Acreditación y bienvenida" };
+const cierre = { hora: "21:40", titulo: "Preguntas y networking" };
+
+const charlas = [
+  apertura,
+  ...[...speakers]
+    .sort((a, b) => a.hora.localeCompare(b.hora))
+    .map(({ hora, tag, name }) => ({ hora, titulo: tag, speaker: name })),
+  cierre,
+];
+
 function Agenda() {
-  const charlas = [
-    {
-      hora: "18:00",
-      titulo: "Acreditación y bienvenida",
-      speaker: "",
-    },
-    {
-      hora: "18:20",
-      titulo: "Tu primer día como developer",
-      speaker: "Daniela Cardozo",
-    },
-    {
-      hora: "18:40",
-      titulo: "De cero a tu primer proyecto",
-      speaker: "Franco Díaz",
-    },
-    {
-      hora: "19:00",
-      titulo: "Armá tu portfolio con IA",
-      speaker: "Gastón Roger",
-    },
-    {
-      hora: "19:20",
-      titulo: "Git y GitHub sin miedo",
-      speaker: "Mauro Coniglio",
-    },
-    {
-      hora: "19:40",
-      titulo: "Tu primer backend con Node",
-      speaker: "José Díaz",
-    },
-    {
-      hora: "20:00",
-      titulo: "Preparate para tu primera entrevista",
-      speaker: "Tomás Gómez",
-    },
-    {
-      hora: "20:20",
-      titulo: "Mi primer trabajo en IT",
-      speaker: "Pablo Basso",
-    },
-    {
-      hora: "20:40",
-      titulo: "Testing: cómo no romper todo",
-      speaker: "Julián Martín",
-    },
-    {
-      hora: "21:00",
-      titulo: "Diseño para developers",
-      speaker: "Tomás Escudero",
-    },
-    {
-      hora: "21:20",
-      titulo: "Tu primera base de datos",
-      speaker: "Andrés Perlo",
-    },
-    {
-      hora: "21:40",
-      titulo: "Preguntas y networking",
-      speaker: "",
-    },
-  ];
-
   return (
-    <section
-      id="agenda"
-      className="w-full bg-[#0b0b0b] px-6 py-16 text-white md:px-12"
-    >
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 md:grid-cols-[1fr_1.5fr]">
-
-        {/* LADO IZQUIERDO */}
+    <section id="agenda" aria-labelledby="agenda-title">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.5fr] md:gap-12">
         <div>
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-red-600">
-            AGENDA
+          <p className="mb-3 text-base font-extrabold uppercase tracking-[3px] text-rc-red">
+            Agenda
           </p>
 
-          <h2 className="mb-4 text-4xl font-extrabold leading-tight">
+          <h2 id="agenda-title" className="mb-4">
             Jueves 19 de
             <br />
             noviembre
           </h2>
 
-          <p className="max-w-xs text-sm leading-relaxed text-gray-400">
-            Diez charlas cortas para salir con un plan claro.
-            Al final queda tiempo para preguntas y networking.
+          <p className="max-w-[360px] text-base text-rc-text-mute">
+            Diez charlas cortas para salir con un plan claro. Al final queda
+            tiempo para preguntas y networking.
           </p>
         </div>
 
-        {/* LADO DERECHO */}
-        <div>
-          {charlas.map((charla, index) => (
-            <div
-              key={index}
-              className="flex gap-6 border-b border-zinc-800 py-4"
+        <ol>
+          {charlas.map(({ hora, titulo, speaker }) => (
+            <li
+              key={hora}
+              className="flex items-baseline gap-4 border-b border-rc-border py-3.5 sm:gap-6"
             >
-              {/* HORARIO */}
-              <span className="w-14 shrink-0 text-base font-bold text-red-600">
-                {charla.hora}
-              </span>
+              <time
+                dateTime={hora}
+                className="w-[78px] shrink-0 text-2xl font-extrabold tabular-nums text-rc-red sm:w-[84px]"
+              >
+                {hora}
+              </time>
 
-              {/* TITULO Y SPEAKER */}
               <div>
-                <h3 className="text-sm font-semibold text-white md:text-base">
-                  {charla.titulo}
+                <h3 className="text-lg font-semibold leading-snug sm:text-[22px]">
+                  {titulo}
                 </h3>
 
-                {charla.speaker && (
-                  <p className="mt-1 text-xs text-gray-500">
-                    {charla.speaker}
-                  </p>
+                {speaker && (
+                  <p className="text-sm text-rc-text-mute">{speaker}</p>
                 )}
               </div>
-            </div>
+            </li>
           ))}
-        </div>
-
+        </ol>
       </div>
     </section>
   );
