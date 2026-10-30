@@ -25,17 +25,19 @@ function App() {
   return (
     <>
       <Navbar />
-      <main className="pt-12">
-        <Container className="flex flex-col gap-[19px]">
+      <main className="pt-12 pb-24">
+        <Container className="flex flex-col gap-24">
           <PublicidadWorkshop />
           <ScrollReveal><Contador /></ScrollReveal>
           <ScrollReveal><Speakers /></ScrollReveal>
           <ScrollReveal><Agenda /></ScrollReveal>
           <ScrollReveal><Sponsors /></ScrollReveal>
           <ScrollReveal><Entradas onComprar={comprar} /></ScrollReveal>
-          <ScrollReveal>
-            <Checkout entradaId={entradaId} setEntradaId={setEntradaId} />
-          </ScrollReveal>
+          <div className="-mt-10">
+            <ScrollReveal>
+              <Checkout entradaId={entradaId} setEntradaId={setEntradaId} />
+            </ScrollReveal>
+          </div>
           <ScrollReveal><SumateSponsor /></ScrollReveal>
           <ScrollReveal><Ubicacion /></ScrollReveal>
         </Container>

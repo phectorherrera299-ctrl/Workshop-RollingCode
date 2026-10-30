@@ -1,124 +1,110 @@
-function Agenda() {
-  const charlas = [
-    {
-      hora: "18:00",
-      titulo: "Acreditación y bienvenida",
-      speaker: "",
-    },
-    {
-      hora: "18:20",
-      titulo: "Tu primer día como developer",
-      speaker: "Daniela Cardozo",
-    },
-    {
-      hora: "18:40",
-      titulo: "De cero a tu primer proyecto",
-      speaker: "Franco Díaz",
-    },
-    {
-      hora: "19:00",
-      titulo: "Armá tu portfolio con IA",
-      speaker: "Gastón Roger",
-    },
-    {
-      hora: "19:20",
-      titulo: "Git y GitHub sin miedo",
-      speaker: "Mauro Coniglio",
-    },
-    {
-      hora: "19:40",
-      titulo: "Tu primer backend con Node",
-      speaker: "José Díaz",
-    },
-    {
-      hora: "20:00",
-      titulo: "Preparate para tu primera entrevista",
-      speaker: "Tomás Gómez",
-    },
-    {
-      hora: "20:20",
-      titulo: "Mi primer trabajo en IT",
-      speaker: "Pablo Basso",
-    },
-    {
-      hora: "20:40",
-      titulo: "Testing: cómo no romper todo",
-      speaker: "Julián Martín",
-    },
-    {
-      hora: "21:00",
-      titulo: "Diseño para developers",
-      speaker: "Tomás Escudero",
-    },
-    {
-      hora: "21:20",
-      titulo: "Tu primera base de datos",
-      speaker: "Andrés Perlo",
-    },
-    {
-      hora: "21:40",
-      titulo: "Preguntas y networking",
-      speaker: "",
-    },
-  ];
+import { CalendarPlus } from "lucide-react";
+import { speakers } from "../data/speakers";
 
+const apertura = { hora: "18:00", titulo: "Acreditación y bienvenida" };
+const cierre = { hora: "21:40", titulo: "Preguntas y networking" };
+
+const charlas = [
+  apertura,
+  ...[...speakers]
+    .sort((a, b) => a.hora.localeCompare(b.hora))
+    .map(({ hora, tag, name }) => ({ hora, titulo: tag, speaker: name })),
+  cierre,
+];
+
+const calendarUrl = `https://calendar.google.com/calendar/render?${new URLSearchParams(
+  {
+    action: "TEMPLATE",
+    text: "Workshop: ¿Por dónde empiezo a programar?",
+    dates: "20261119T210000Z/20261120T004000Z",
+    details: `Diez charlas cortas para dar tus primeros pasos en programación. Organiza Rolling Code School.\n\nMás info y entradas: ${window.location.origin}`,
+    location: "Gral. Paz 576, San Miguel de Tucumán",
+  },
+).toString()}`;
+
+const abrirSpeaker = (nombre) =>
+  window.dispatchEvent(new CustomEvent("abrir-speaker", { detail: nombre }));
+
+function Agenda() {
   return (
     <section
       id="agenda"
-      className="w-full bg-[#0b0b0b] px-6 py-16 text-white md:px-12"
+      aria-labelledby="agenda-title"
+      className="mx-10 mt-12"
     >
-      <div className="mx-auto grid max-w-5xl grid-cols-1 gap-12 md:grid-cols-[1fr_1.5fr]">
-
-        {/* LADO IZQUIERDO */}
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.5fr] md:gap-12">
         <div>
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-red-600">
-            AGENDA
+          <p className="mb-3 text-base font-extrabold uppercase tracking-[3px] text-rc-red">
+            Agenda
           </p>
 
-          <h2 className="mb-4 text-4xl font-extrabold leading-tight">
+          <h2 id="agenda-title" className="mb-4">
             Jueves 19 de
             <br />
             noviembre
           </h2>
 
-          <p className="max-w-xs text-sm leading-relaxed text-gray-400">
-            Diez charlas cortas para salir con un plan claro.
-            Al final queda tiempo para preguntas y networking.
+          <p className="mb-8 max-w-[360px] text-base text-rc-text-mute">
+            Diez charlas cortas para salir con un plan claro. Al final queda
+            tiempo para preguntas y networking.
           </p>
+
+          <a
+            href={calendarUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-[52px] items-center gap-2 rounded-full bg-rc-red px-7 text-lg font-extrabold text-white transition hover:bg-rc-red-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <CalendarPlus className="h-5 w-5" aria-hidden="true" />
+            Agregar al calendario
+            <span className="sr-only"> (abre en una pestaña nueva)</span>
+          </a>
         </div>
 
-        {/* LADO DERECHO */}
-        <div>
-          {charlas.map((charla, index) => (
-            <div
-              key={index}
-              className="flex gap-6 border-b border-zinc-800 py-4"
+        <ol className="relative before:absolute before:bottom-[31px] before:left-[99px] before:top-[30px] before:w-0.5 before:bg-rc-red sm:before:left-[113px]">
+          {charlas.map(({ hora, titulo, speaker }) => (
+            <li
+              key={hora}
+              className="group relative flex items-baseline gap-4 border-b border-rc-border py-3.5 sm:gap-6"
             >
-              {/* HORARIO */}
-              <span className="w-14 shrink-0 text-base font-bold text-red-600">
-                {charla.hora}
-              </span>
+              <time
+                dateTime={hora}
+                className="w-[78px] shrink-0 text-2xl font-extrabold tabular-nums text-rc-red sm:w-[84px]"
+              >
+                {hora}
+              </time>
 
-              {/* TITULO Y SPEAKER */}
-              <div>
-                <h3 className="text-sm font-semibold text-white md:text-base">
-                  {charla.titulo}
+              <span
+                aria-hidden="true"
+                className="relative mt-2.5 h-3 w-3 shrink-0 self-start rounded-full bg-rc-red ring-4 ring-rc-black"
+              />
+
+              <div className="origin-left transition-transform duration-200 motion-safe:group-hover:scale-[1.04]">
+                <h3 className="text-lg font-semibold leading-snug sm:text-[22px]">
+                  {speaker ? (
+                    <button
+                      type="button"
+                      onClick={() => abrirSpeaker(speaker)}
+                      aria-label={`Ver más sobre ${speaker}: ${titulo}`}
+                      className="cursor-pointer text-left after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rc-red"
+                    >
+                      {titulo}
+                    </button>
+                  ) : (
+                    titulo
+                  )}
                 </h3>
 
-                {charla.speaker && (
-                  <p className="mt-1 text-xs text-gray-500">
-                    {charla.speaker}
-                  </p>
+                {speaker && (
+                  <p className="text-sm text-rc-text-mute">{speaker}</p>
                 )}
               </div>
-            </div>
+            </li>
           ))}
-        </div>
-
+        </ol>
       </div>
     </section>
   );
 }
 
 export default Agenda;
-
