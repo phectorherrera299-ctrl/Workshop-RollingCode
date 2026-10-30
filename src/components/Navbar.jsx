@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const links = [
   { label: "Speakers", href: "#speakers" },
@@ -9,13 +9,36 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const base = import.meta.env.BASE_URL;
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const translucido = scrolled && !open;
+
   return (
-    <header>
-      <nav className="w-full border-b border-rc-line bg-rc-surface">
+    <header className="sticky top-0 z-50">
+      <nav
+        className={`w-full border-b border-rc-line backdrop-blur-md transition-colors duration-300 ${
+          translucido ? "bg-rc-surface/60" : "bg-rc-surface"
+        }`}
+      >
         <div className="mx-auto flex max-w-[1248px] flex-wrap items-center justify-between px-6 py-2">
-          <a href={base} className="shrink-0">
+          <a
+            href="#inicio"
+            onClick={(event) => {
+              event.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setOpen(false);
+            }}
+            aria-label="Ir al inicio"
+            className="shrink-0"
+          >
             <img
               src={`${base}logo-rolling-blanco.png`}
               alt="RollingCode"
