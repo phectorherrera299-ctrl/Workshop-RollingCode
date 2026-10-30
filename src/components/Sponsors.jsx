@@ -24,7 +24,7 @@ function SponsorCard({ partner, level, destacado }) {
       target="_blank"
       rel="noreferrer"
       aria-label={`Conocé a ${partner.name} (abre en una pestaña nueva)`}
-      className={`flex min-w-0 flex-col items-center rounded-rc-field border border-transparent p-3.5 text-center transition duration-200 hover:-translate-y-1 hover:border-rc-red/75 focus-visible:-translate-y-1 focus-visible:border-rc-red/75 focus-visible:outline-none ${
+      className={`flex min-w-0 flex-col items-center rounded-rc-option border border-rc-border bg-rc-surface p-4 text-center transition duration-200 hover:-translate-y-1 hover:border-rc-red/75 focus-visible:-translate-y-1 focus-visible:border-rc-red/75 focus-visible:outline-none ${
         destacado ? "" : "min-h-[132px] justify-center"
       }`}
     >
@@ -96,7 +96,7 @@ function SponsorGroup({ id, tier, level, partners }) {
         </p>
       )}
 
-      <div className={`mt-4 grid gap-4 ${grids[id]}`}>
+      <div className={`mt-4 grid gap-6 ${grids[id]}`}>
         {partners.map((partner) => (
           <SponsorCard
             key={partner.name}
@@ -112,11 +112,7 @@ function SponsorGroup({ id, tier, level, partners }) {
 
 export default function Sponsors() {
   return (
-    <section
-      id="sponsors"
-      aria-labelledby="sponsors-title"
-      className="py-9"
-    >
+    <section id="sponsors" aria-labelledby="sponsors-title">
       <div className="mx-auto mb-8 max-w-[680px] text-center">
         <p className="mb-3 text-base font-extrabold uppercase tracking-[3px] text-rc-red">
           Quiénes nos acompañan
