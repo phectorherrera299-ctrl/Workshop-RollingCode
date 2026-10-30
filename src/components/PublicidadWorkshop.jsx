@@ -13,7 +13,9 @@ export default function PublicidadWorkshop() {
         <div>
           <p className="mb-5 text-base text-rc-pink">
             <span className="font-light italic">WORKSHOP</span>{" "}
-            <span className="font-extrabold text-white">ENTRADAS LIMITADAS</span>
+            <span className="font-extrabold text-white">
+              ENTRADAS LIMITADAS
+            </span>
           </p>
           <h1 className="mb-5 uppercase">
             ¿Por dónde
@@ -23,9 +25,9 @@ export default function PublicidadWorkshop() {
             <span className="text-rc-black">programar?</span>
           </h1>
           <p className="mb-8 max-w-[520px] text-lg leading-[1.55] text-rc-pink sm:text-xl">
-            Una tarde con diez speakers de Rolling Code School para ordenar
-            tus primeros pasos: qué aprender, cómo practicar y cómo mostrar
-            lo que sabés.
+            Una tarde con diez speakers de Rolling Code School para ordenar tus
+            primeros pasos: qué aprender, cómo practicar y cómo mostrar lo que
+            sabés.
           </p>
 
           <div className="flex flex-wrap gap-3">
@@ -46,26 +48,38 @@ export default function PublicidadWorkshop() {
         </div>
         <div className="rounded-rc-box bg-rc-black p-6 sm:p-8">
           <div className="flex items-center gap-4 border-b border-rc-border pb-5">
-            <CalendarDays aria-hidden="true" className="h-7 w-7 shrink-0 text-rc-red" />
+            <CalendarDays
+              aria-hidden="true"
+              className="h-7 w-7 shrink-0 text-rc-red"
+            />
             <div>
               <p className="text-xl font-extrabold">JUE 19/11</p>
               <p className="text-xl text-rc-text-soft">18.00 hs</p>
             </div>
           </div>
-
           <div className="flex items-center gap-4 border-b border-rc-border py-5">
-            <MapPin aria-hidden="true" className="h-7 w-7 shrink-0 text-rc-red" />
+            <MapPin
+              aria-hidden="true"
+              className="h-7 w-7 shrink-0 text-rc-red"
+            />
             <div>
               <p className="text-base font-extrabold">Rolling Code School</p>
-              <p className="text-sm text-rc-text-mute">Gral. Paz 576, Entrepiso</p>
+              <p className="text-sm text-rc-text-mute">
+                Gral. Paz 576, Entrepiso
+              </p>
             </div>
           </div>
 
           <div className="flex items-center gap-4 pt-5">
-            <Ticket aria-hidden="true" className="h-7 w-7 shrink-0 text-rc-red" />
+            <Ticket
+              aria-hidden="true"
+              className="h-7 w-7 shrink-0 text-rc-red"
+            />
             <div>
               <p className="text-base font-extrabold">Entradas desde $15.000</p>
-              <p className="text-sm text-rc-text-mute">Early Bird hasta el 31/10</p>
+              <p className="text-sm text-rc-text-mute">
+                Early Bird hasta el 31/10
+              </p>
             </div>
           </div>
           <div className="mt-5 flex flex-wrap gap-2 text-sm font-semibold">
