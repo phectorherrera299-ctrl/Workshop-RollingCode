@@ -212,6 +212,16 @@ export default function Speakers() {
     return () => window.removeEventListener("resize", updateState);
   }, []);
 
+  useEffect(() => {
+    const abrirDesdeAgenda = (event) => {
+      const encontrado = speakers.find((s) => s.name === event.detail);
+      if (encontrado) setElegido(encontrado);
+    };
+
+    window.addEventListener("abrir-speaker", abrirDesdeAgenda);
+    return () => window.removeEventListener("abrir-speaker", abrirDesdeAgenda);
+  }, []);
+
   const scrollByCard = (direction) => {
     const track = trackRef.current;
     if (!track) return;

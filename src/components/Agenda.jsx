@@ -17,11 +17,13 @@ const calendarUrl = `https://calendar.google.com/calendar/render?${new URLSearch
     action: "TEMPLATE",
     text: "Workshop: ¿Por dónde empiezo a programar?",
     dates: "20261119T210000Z/20261120T004000Z",
-    details:
-      "Diez charlas cortas para dar tus primeros pasos en programación. Organiza Rolling Code School.",
+    details: `Diez charlas cortas para dar tus primeros pasos en programación. Organiza Rolling Code School.\n\nMás info y entradas: ${window.location.origin}`,
     location: "Gral. Paz 576, San Miguel de Tucumán",
   },
 ).toString()}`;
+
+const abrirSpeaker = (nombre) =>
+  window.dispatchEvent(new CustomEvent("abrir-speaker", { detail: nombre }));
 
 function Agenda() {
   return (
@@ -63,7 +65,7 @@ function Agenda() {
           {charlas.map(({ hora, titulo, speaker }) => (
             <li
               key={hora}
-              className="flex items-baseline gap-4 border-b border-rc-border py-3.5 sm:gap-6"
+              className="group relative flex items-baseline gap-4 border-b border-rc-border py-3.5 sm:gap-6"
             >
               <time
                 dateTime={hora}
@@ -77,9 +79,20 @@ function Agenda() {
                 className="relative mt-2.5 h-3 w-3 shrink-0 self-start rounded-full bg-rc-red ring-4 ring-rc-black"
               />
 
-              <div>
+              <div className="origin-left transition-transform duration-200 motion-safe:group-hover:scale-[1.04]">
                 <h3 className="text-lg font-semibold leading-snug sm:text-[22px]">
-                  {titulo}
+                  {speaker ? (
+                    <button
+                      type="button"
+                      onClick={() => abrirSpeaker(speaker)}
+                      aria-label={`Ver más sobre ${speaker}: ${titulo}`}
+                      className="cursor-pointer text-left after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rc-red"
+                    >
+                      {titulo}
+                    </button>
+                  ) : (
+                    titulo
+                  )}
                 </h3>
 
                 {speaker && (
