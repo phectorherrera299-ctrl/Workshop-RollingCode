@@ -1,5 +1,45 @@
-import { useState } from "react";
+import {
+  SiGooglecloud,
+  SiMercadopago,
+  SiAuth0,
+  SiPostman,
+} from "react-icons/si";
+import {
+  FaAws,
+  FaGithub,
+  FaDigitalOcean,
+  FaCloudflare,
+  FaDocker,
+} from "react-icons/fa";
+import { VscAzure } from "react-icons/vsc";
+import { IoLogoVercel } from "react-icons/io5";
+import { RiSupabaseFill } from "react-icons/ri";
+import { DiMongodb } from "react-icons/di";
+import { BsStripe } from "react-icons/bs";
 import { sponsors } from "../data/sponsors";
+
+const base = import.meta.env.BASE_URL;
+
+const imagenes = {
+  globant: "img/sponsors/globant.png",
+};
+
+const logos = {
+  googlecloud: { Icon: SiGooglecloud, color: "#4285F4" },
+  amazonaws: { Icon: FaAws, color: "#FF9900" },
+  mercadolibre: { Icon: SiMercadopago, color: "#FFE600" },
+  microsoft: { Icon: VscAzure, color: "#0078D4" },
+  github: { Icon: FaGithub, color: "#FFFFFF" },
+  auth0: { Icon: SiAuth0, color: "#EB5424" },
+  vercel: { Icon: IoLogoVercel, color: "#FFFFFF" },
+  supabase: { Icon: RiSupabaseFill, color: "#3FCF8E" },
+  digitalocean: { Icon: FaDigitalOcean, color: "#0080FF" },
+  cloudflare: { Icon: FaCloudflare, color: "#F38020" },
+  mongodb: { Icon: DiMongodb, color: "#47A248" },
+  docker: { Icon: FaDocker, color: "#2496ED" },
+  stripe: { Icon: BsStripe, color: "#635BFF" },
+  postman: { Icon: SiPostman, color: "#FF6C37" },
+};
 
 const grids = {
   main: "grid-cols-2 sm:grid-cols-3 [&>*:last-child]:col-span-full sm:[&>*:last-child]:col-span-1",
@@ -8,7 +48,8 @@ const grids = {
 };
 
 function SponsorCard({ partner, level, destacado }) {
-  const [cargado, setCargado] = useState(false);
+  const logo = logos[partner.slug];
+  const imagen = imagenes[partner.slug];
 
   const marca =
     partner.mark ??
@@ -35,27 +76,31 @@ function SponsorCard({ partner, level, destacado }) {
       )}
 
       <div
-        className={`relative grid h-[58px] w-16 shrink-0 place-items-center ${
+        className={`grid h-[58px] w-[58px] shrink-0 place-items-center rounded-rc-field bg-rc-black ${
           destacado ? "mb-2 mt-3" : "mb-2"
         }`}
       >
-        <span
-          aria-hidden="true"
-          className={`text-base font-extrabold tracking-tight text-white ${
-            cargado ? "invisible" : ""
-          }`}
-        >
-          {marca}
-        </span>
-        <img
-          src={`https://cdn.simpleicons.org/${partner.slug}/${partner.color}`}
-          alt=""
-          loading="lazy"
-          onLoad={() => setCargado(true)}
-          className={`absolute inset-0 m-auto h-9 w-9 object-contain ${
-            cargado ? "visible" : "invisible"
-          }`}
-        />
+        {logo ? (
+          <logo.Icon
+            aria-hidden="true"
+            className="h-9 w-9"
+            style={{ color: logo.color }}
+          />
+        ) : imagen ? (
+          <img
+            src={`${base}${imagen}`}
+            alt=""
+            loading="lazy"
+            className="h-9 w-9 object-contain"
+          />
+        ) : (
+          <span
+            aria-hidden="true"
+            className="text-2xl font-extrabold tracking-tight text-white"
+          >
+            {marca}
+          </span>
+        )}
       </div>
 
       <strong className="text-base font-extrabold leading-tight">
