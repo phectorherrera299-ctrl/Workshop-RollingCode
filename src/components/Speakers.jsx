@@ -1,39 +1,163 @@
 import { useEffect, useRef, useState } from "react";
+import { Clock, MapPin, X } from "lucide-react";
 import { speakers } from "../data/speakers";
 
 const base = import.meta.env.BASE_URL;
 
-function SpeakerCard({ name, tag, desc, img, zoom = "" }) {
+function SpeakerPhoto({ name, img, zoom = "", className = "" }) {
+  const [fallo, setFallo] = useState(false);
+
   return (
-    <article className="group flex w-[78%] shrink-0 snap-center flex-col overflow-hidden rounded-rc-card border border-rc-border bg-rc-surface transition hover:border-rc-red/100 sm:w-[46%] md:w-[31%] lg:w-auto">
-      <div className="aspect-square w-full overflow-hidden bg-rc-surface-2">
-        {img ? (
-          <div className={`h-full w-full ${zoom}`}>
-            <img
-              src={`${base}${img}`}
-              alt={name}
-              loading="lazy"
-              className="h-full w-full object-cover object-top transition duration-300 group-hover:scale-105"
-            />
-          </div>
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-sm text-rc-text-mute">
-            Sin foto
-          </div>
-        )}
+    <div className={`overflow-hidden bg-rc-surface-2 ${className}`}>
+      {img && !fallo ? (
+        <div className={`h-full w-full ${zoom}`}>
+          <img
+            src={`${base}${img}`}
+            alt={name}
+            loading="lazy"
+            decoding="async"
+            onError={() => setFallo(true)}
+            className="h-full w-full object-cover object-top transition duration-300 motion-safe:group-hover:scale-105"
+          />
+        </div>
+      ) : (
+        <div className="flex h-full w-full items-center justify-center text-sm text-rc-text-mute">
+          Sin foto
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SpeakerCard({ speaker, onOpen }) {
+  const { name, tag, desc, img, zoom, hora } = speaker;
+
+  return (
+    <article className="group relative flex w-[78%] shrink-0 snap-center flex-col overflow-hidden rounded-rc-card border border-rc-border bg-rc-surface transition hover:border-rc-red/60 sm:w-[46%] md:w-[31%] lg:w-auto">
+      <div className="relative">
+        <SpeakerPhoto
+          name={name}
+          img={img}
+          zoom={zoom}
+          className="aspect-square w-full"
+        />
+        <span className="absolute left-3 top-3 rounded-full bg-rc-black/80 px-3 py-1 text-sm font-extrabold tabular-nums">
+          {hora}
+        </span>
       </div>
+
       <div className="flex flex-1 flex-col gap-3 p-4 sm:p-5">
         <h3 className="min-h-[2.5em] text-[26px] font-extrabold leading-tight lg:text-[22px] xl:text-[26px]">
           {name}
         </h3>
-        <div className="min-h-12">
-          <span className="flex min-h-12 w-full items-center justify-center rounded-full bg-rc-red px-4 text-center text-sm font-semibold text-white">
-            {tag}
-          </span>
-        </div>
+
+        <span className="flex min-h-12 w-full items-center justify-center rounded-full bg-rc-red px-4 text-center text-sm font-semibold text-white">
+          {tag}
+        </span>
+
         <p className="text-sm text-rc-text-mute">{desc}</p>
+
+        <p className="mt-auto pt-1 text-sm font-semibold underline underline-offset-4">
+          Ver más
+        </p>
       </div>
+
+      <button
+        type="button"
+        onClick={() => onOpen(speaker)}
+        aria-label={`Ver más sobre ${name}`}
+        className="absolute inset-0 z-10 cursor-pointer rounded-rc-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rc-red"
+      />
     </article>
+  );
+}
+
+function SpeakerModal({ speaker, onClose }) {
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (speaker) {
+      if (!dialog.open) dialog.showModal();
+      document.body.style.overflow = "hidden";
+    } else if (dialog.open) {
+      dialog.close();
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [speaker]);
+
+  return (
+    <dialog
+      ref={dialogRef}
+      onClose={onClose}
+      onClick={(event) => {
+        if (event.target === dialogRef.current) onClose();
+      }}
+      aria-labelledby="speaker-modal-title"
+      className="m-auto max-h-[90vh] w-[min(92vw,760px)] overflow-y-auto rounded-rc-card border border-rc-border bg-rc-surface p-0 text-white backdrop:bg-black/70 backdrop:backdrop-blur-sm"
+    >
+      {speaker && (
+        <div className="relative p-5 sm:p-8">
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar"
+            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-rc-chip bg-rc-surface text-white transition hover:border-rc-red hover:text-rc-red"
+          >
+            <X aria-hidden="true" className="h-5 w-5" />
+          </button>
+
+          <div className="md:grid md:grid-cols-[260px_1fr] md:items-start md:gap-8">
+            <SpeakerPhoto
+              name={speaker.name}
+              img={speaker.img}
+              zoom={speaker.zoom}
+              className="mx-auto aspect-square w-40 rounded-rc-box md:mx-0 md:w-full"
+            />
+
+            <div className="mt-5 md:mt-0">
+              <p className="mb-2 text-base font-extrabold uppercase tracking-[3px] text-rc-red">
+                Jueves 19/11
+              </p>
+
+              <h2 id="speaker-modal-title" className="pr-12 text-3xl sm:text-4xl">
+                {speaker.name}
+              </h2>
+
+              <span className="mt-4 inline-flex min-h-9 items-center rounded-full bg-rc-red px-4 py-1 text-sm font-semibold text-white">
+                {speaker.tag}
+              </span>
+
+              <ul className="mt-5 flex flex-col gap-3 text-sm text-rc-text-soft">
+                <li className="flex items-center gap-3">
+                  <Clock aria-hidden="true" className="h-5 w-5 shrink-0 text-rc-red" />
+                  {speaker.hora} a {speaker.fin} hs · 20 minutos
+                </li>
+                <li className="flex items-center gap-3">
+                  <MapPin aria-hidden="true" className="h-5 w-5 shrink-0 text-rc-red" />
+                  Rolling Code School · Gral. Paz 576, Entrepiso
+                </li>
+              </ul>
+
+              <p className="mt-5 text-base text-rc-text-soft">{speaker.desc}</p>
+
+              <a
+                href="#entradas"
+                onClick={onClose}
+                className="mt-6 inline-flex min-h-[52px] items-center justify-center rounded-full bg-rc-red px-7 text-lg font-extrabold text-white transition hover:bg-rc-red-dark"
+              >
+                Comprar entrada
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </dialog>
   );
 }
 
@@ -69,6 +193,7 @@ export default function Speakers() {
   const [active, setActive] = useState(0);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  const [elegido, setElegido] = useState(null);
 
   const updateState = () => {
     const track = trackRef.current;
@@ -109,6 +234,7 @@ export default function Speakers() {
       behavior: "smooth",
     });
   };
+
   return (
     <section id="speakers" aria-labelledby="speakers-title">
       <div className="flex items-end justify-between gap-4">
@@ -121,6 +247,7 @@ export default function Speakers() {
             Deslizá para conocer a los oradores
           </p>
         </div>
+
         <div className="hidden gap-2 sm:flex lg:hidden">
           <ArrowButton
             direction={-1}
@@ -134,28 +261,37 @@ export default function Speakers() {
           />
         </div>
       </div>
+
       <div
         ref={trackRef}
         onScroll={updateState}
-        className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid lg:snap-none lg:grid-cols-5 lg:gap-6 lg:overflow-visible lg:pb-0"
+        className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] motion-safe:scroll-smooth [&::-webkit-scrollbar]:hidden lg:grid lg:snap-none lg:grid-cols-5 lg:gap-6 lg:overflow-visible lg:pb-0"
       >
         {speakers.map((speaker) => (
-          <SpeakerCard key={speaker.name} {...speaker} />
+          <SpeakerCard key={speaker.name} speaker={speaker} onOpen={setElegido} />
         ))}
       </div>
-      <div className="mt-5 flex justify-center gap-1.5 lg:hidden">
+
+      <div className="mt-3 flex justify-center gap-1 lg:hidden">
         {speakers.map((speaker, index) => (
           <button
             key={speaker.name}
             type="button"
             onClick={() => goTo(index)}
             aria-label={`Ir al speaker ${index + 1}`}
-            className={`h-1.5 rounded-full transition-all ${
-              index === active ? "w-6 bg-rc-red" : "w-1.5 bg-rc-chip"
-            }`}
-          />
+            aria-current={index === active}
+            className="flex h-6 items-center px-0.5"
+          >
+            <span
+              className={`block h-1.5 rounded-full transition-all ${
+                index === active ? "w-6 bg-rc-red" : "w-1.5 bg-rc-chip"
+              }`}
+            />
+          </button>
         ))}
       </div>
+
+      <SpeakerModal speaker={elegido} onClose={() => setElegido(null)} />
     </section>
   );
 }
