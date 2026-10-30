@@ -1,21 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const links = [
   { label: "Speakers", href: "#speakers" },
-  { label: "Cómo llegar", href: "#ubicacion" },
   { label: "Agenda", href: "#agenda" },
   { label: "Sponsors", href: "#sponsors" },
+  { label: "Cómo llegar", href: "#ubicacion" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const base = import.meta.env.BASE_URL;
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const translucido = scrolled && !open;
+
   return (
-    <header>
-      <nav className="w-full border-b border-rc-line bg-rc-surface">
+    <header className="sticky top-0 z-50">
+      <nav
+        className={`w-full border-b border-rc-line backdrop-blur-md transition-colors duration-300 ${
+          translucido ? "bg-rc-surface/60" : "bg-rc-surface"
+        }`}
+      >
         <div className="mx-auto flex max-w-[1248px] flex-wrap items-center justify-between px-6 py-2">
-          <a href={base} className="shrink-0">
+          <a
+            href="#inicio"
+            onClick={(event) => {
+              event.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              setOpen(false);
+            }}
+            aria-label="Ir al inicio"
+            className="shrink-0"
+          >
             <img
               src={`${base}logo-rolling-blanco.png`}
               alt="RollingCode"
@@ -31,7 +54,7 @@ export default function Navbar() {
             aria-controls="navbar-menu"
             aria-expanded={open}
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            className="rounded-md p-2 text-white lg:hidden"
+            className="rounded-md p-2 text-white min-[860px]:hidden"
           >
             <svg
               className="h-6 w-6"
@@ -58,9 +81,9 @@ export default function Navbar() {
 
           <div
             id="navbar-menu"
-            className={`${open ? "flex" : "hidden"} w-full basis-full flex-col gap-2 pb-4 lg:flex lg:w-auto lg:basis-auto lg:flex-row lg:items-center lg:gap-0 lg:pb-0`}
+            className={`${open ? "flex" : "hidden"} w-full basis-full flex-col gap-2 pb-4 min-[860px]:flex min-[860px]:w-auto min-[860px]:basis-auto min-[860px]:flex-row min-[860px]:items-center min-[860px]:gap-0 min-[860px]:pb-0`}
           >
-            <ul className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-2">
+            <ul className="flex flex-col gap-2 min-[860px]:flex-row min-[860px]:items-center min-[860px]:gap-2">
               {links.map(({ label, href }) => (
                 <li key={label} className="whitespace-nowrap">
                   <a
