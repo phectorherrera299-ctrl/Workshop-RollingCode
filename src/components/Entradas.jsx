@@ -1,5 +1,6 @@
 import Tarjeta from "./Tarjeta";
 import useCuentaRegresiva from "../hooks/useCuentaRegresiva";
+import { CUPO_PRESENCIAL } from "../data/cupo";
 
 const FECHA_LIMITE = new Date("2026-10-31T23:59:59-03:00").getTime();
 const dosDigitos = (n) => String(n).padStart(2, "0");
@@ -7,7 +8,6 @@ const dosDigitos = (n) => String(n).padStart(2, "0");
 const planes = [
   {
     id: "early", nombre: "Early Bird",
-    chip: "Quedan 38",
     precio: "$25.000",
     tachado: "$35.000",
     subtitulo: "Presencial · precio especial hasta el 31/10",
@@ -47,8 +47,12 @@ const planes = [
   },
 ];
 
-const Entradas = ({onComprar}) => {
+const Entradas = ({ onComprar, vendidas, onReiniciarCupo }) => {
   const { dias, horas, minutos } = useCuentaRegresiva(FECHA_LIMITE);
+
+  const quedan = Math.max(CUPO_PRESENCIAL - vendidas, 0);
+  const porcentajeVendido = Math.round((vendidas / CUPO_PRESENCIAL) * 100);
+  const modoDemo = new URLSearchParams(window.location.search).has("demo");
 
   const cajas = [
     { numero: dosDigitos(dias), etiqueta: "Días" },
@@ -89,18 +93,52 @@ const Entradas = ({onComprar}) => {
           ))}
         </div>
         <div className="lg:w-[350px]">
-          <div className="mb-2 flex justify-between text-sm">
-            <span className="font-semibold">Quedan 38 de 60 Early Bird</span>
-            <span className="text-rc-text-mute">63% vendidas</span>
+          <div className="mb-2 flex justify-between gap-3 text-sm">
+            <span className="font-semibold">
+              Se vendieron {vendidas} de {CUPO_PRESENCIAL} presenciales
+            </span>
+            <span className="text-rc-text-mute tabular-nums">
+              {porcentajeVendido}%
+            </span>
           </div>
-          <div className="h-2.5 rounded-full bg-rc-surface-2">
-            <div className="h-full w-[63%] rounded-full bg-rc-red"></div>
+          <div
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={CUPO_PRESENCIAL}
+            aria-valuenow={vendidas}
+            aria-label="Entradas presenciales vendidas"
+            className="h-2.5 rounded-full bg-rc-surface-2"
+          >
+            <div
+              className="h-full rounded-full bg-rc-red transition-[width] duration-700 ease-out motion-reduce:transition-none"
+              style={{ width: `${porcentajeVendido}%` }}
+            />
           </div>
+          {modoDemo && (
+            <button
+              type="button"
+              onClick={onReiniciarCupo}
+              className="mt-3 cursor-pointer text-xs text-rc-text-mute underline transition hover:text-white"
+            >
+              Reiniciar contador (demo)
+            </button>
+          )}
         </div>
       </div>
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         {planes.map((plan) => (
-          <Tarjeta key={plan.id} {...plan} onComprar={onComprar} />
+          <Tarjeta
+            key={plan.id}
+            {...plan}
+            chip={
+              plan.id === "early"
+                ? quedan === 0
+                  ? "Agotadas"
+                  : `Quedan ${quedan}`
+                : plan.chip
+            }
+            onComprar={onComprar}
+          />
         ))}
       </div>
     </section>

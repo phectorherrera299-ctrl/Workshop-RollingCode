@@ -12,7 +12,8 @@ const campoBase =
 const input = `${campoBase} h-12`;
 const textarea = `${campoBase} min-h-24 resize-y py-3`;
 
-const ayuda = "text-sm font-normal normal-case tracking-normal text-rc-text-mute";
+const ayuda =
+  "text-sm font-normal normal-case tracking-normal text-rc-text-mute";
 
 export default function SumateSponsor() {
   const [whatsappUrl, setWhatsappUrl] = useState("");
@@ -32,7 +33,9 @@ export default function SumateSponsor() {
       "Si seleccioné un logo, lo enviaré como adjunto en este chat.",
     ];
 
-    setWhatsappUrl(`${WHATSAPP_URL}?text=${encodeURIComponent(details.join("\n"))}`);
+    setWhatsappUrl(
+      `${WHATSAPP_URL}?text=${encodeURIComponent(details.join("\n"))}`,
+    );
   };
 
   const handleLogoChange = (event) => {
@@ -46,11 +49,7 @@ export default function SumateSponsor() {
   };
 
   return (
-    <section
-      id="sumate-sponsor"
-      aria-labelledby="sponsor-join-title"
-      className="scroll-mt-6 py-10"
-    >
+    <section id="sumate-sponsor" aria-labelledby="sponsor-join-title">
       <div className="mx-auto mb-7 max-w-[680px] text-center">
         <p className="mb-3 text-base font-extrabold uppercase tracking-[3px] text-rc-red">
           Hagamos algo grande juntos
@@ -139,7 +138,7 @@ export default function SumateSponsor() {
             </select>
           </label>
 
-          <label className={`${etiquetaCampo} py-2 text-center sm:col-span-2`}>
+          <label className={`${etiquetaCampo} sm:col-span-2`}>
             <span>Logo de la empresa</span>
             <input
               name="logo"
@@ -149,8 +148,8 @@ export default function SumateSponsor() {
               className="w-full text-sm font-normal normal-case tracking-normal text-rc-text-soft file:mr-3 file:cursor-pointer file:rounded-full file:border file:border-rc-chip file:bg-rc-surface-2 file:px-4 file:py-2 file:font-semibold file:text-white"
             />
             <span className={ayuda}>
-              PNG, JPG, WEBP o SVG. Máximo 5 MB. Si lo adjuntás, envialo
-              también en el chat de WhatsApp.
+              PNG, JPG, WEBP o SVG. Máximo 5 MB. Si lo adjuntás, envialo también
+              en el chat de WhatsApp.
             </span>
           </label>
 
@@ -173,7 +172,10 @@ export default function SumateSponsor() {
         </button>
 
         {whatsappUrl && (
-          <p role="status" className="mt-4 text-center text-sm text-rc-text-soft">
+          <p
+            role="status"
+            className="mt-4 text-center text-sm text-rc-text-soft"
+          >
             Tu postulación está lista.{" "}
             <a
               href={whatsappUrl}

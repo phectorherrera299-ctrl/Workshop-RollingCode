@@ -77,7 +77,7 @@ export const preguntas = [
       "networking",
     ],
     answer:
-      "Podés elegir entre dos modalidades. Presencial: 120 lugares, con coffee break y networking con los speakers. Virtual: transmisión en vivo con chat para hacer preguntas a los speakers. Ambas incluyen certificado de asistencia.",
+      "Podés elegir entre dos modalidades. Presencial: cupos limitados, con coffee break y networking con los speakers. Virtual: transmisión en vivo con chat para hacer preguntas a los speakers. Ambas incluyen certificado de asistencia.",
   },
   {
     label: "Cómo comprar mi entrada",

@@ -2,6 +2,7 @@ import { useState } from "react";
 import Datos from "./Datos";
 import Pago from "./Pago";
 import Listo from "./Listo";
+import { CUPO_PRESENCIAL } from "../data/cupo";
 
 const opciones = [
   {
@@ -9,40 +10,99 @@ const opciones = [
     nombre: "Early Bird",
     detalle: "Presencial · hasta el 31/10",
     precio: 25000,
+    grupo: "presencial",
   },
   {
     id: "general",
     nombre: "General",
     detalle: "Presencial · desde el 1/11",
     precio: 35000,
+    grupo: "presencial",
   },
   {
     id: "virtual",
     nombre: "Virtual",
     detalle: "Transmisión en vivo y grabación",
     precio: 15000,
+    grupo: "virtual",
   },
 ];
+
+const LIMITE_VIRTUAL = 200;
 
 const pasos = ["Entrada", "Datos", "Pago", "Listo"];
 const formato = (n) => `$${n.toLocaleString("es-AR")}`;
 const generarCodigo = () =>
   `RC-2026-${Math.floor(1000 + Math.random() * 9000)}`;
 
-const Checkout = ({entradaId, setEntradaId}) => {
+const totalDe = (cantidades, grupo) =>
+  opciones
+    .filter((opcion) => opcion.grupo === grupo)
+    .reduce((suma, opcion) => suma + cantidades[opcion.id], 0);
+
+const botonContador = (activa) =>
+  `flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 text-xl font-extrabold transition disabled:cursor-not-allowed disabled:opacity-40 ${
+    activa
+      ? "border-white text-white hover:bg-white/10"
+      : "border-rc-text-soft text-rc-black hover:border-rc-black"
+  }`;
+
+const Checkout = ({
+  cantidades,
+  setCantidades,
+  vendidas,
+  onCompraConfirmada,
+}) => {
   const [pasoActual, setPasoActual] = useState(0);
-  const [cantidad, setCantidad] = useState(1);
   const [datos, setDatos] = useState(null);
   const [reserva, setReserva] = useState("");
-  const entrada = opciones.find((opcion) => opcion.id === entradaId);
-  const subtotal = entrada.precio * cantidad;
+
+  const limites = {
+    presencial: Math.max(CUPO_PRESENCIAL - vendidas, 0),
+    virtual: LIMITE_VIRTUAL,
+  };
+
+  const seleccionadas = opciones.filter((opcion) => cantidades[opcion.id] > 0);
+  const presenciales = totalDe(cantidades, "presencial");
+  const virtuales = totalDe(cantidades, "virtual");
+  const cantidadTotal = presenciales + virtuales;
+  const excedeCupo = presenciales > limites.presencial;
+  const subtotal = opciones.reduce(
+    (suma, opcion) => suma + opcion.precio * cantidades[opcion.id],
+    0,
+  );
   const cargo = Math.round(subtotal * 0.05);
   const total = subtotal + cargo;
 
+  const textoContinuar =
+    cantidadTotal === 0
+      ? "Elegí al menos una entrada"
+      : excedeCupo
+        ? "Reducí las entradas presenciales"
+        : "Continuar";
+
+  const cambiar = (id, valor) => {
+    setCantidades((previas) => {
+      const opcion = opciones.find((o) => o.id === id);
+      const otras = opciones
+        .filter((o) => o.grupo === opcion.grupo && o.id !== id)
+        .reduce((suma, o) => suma + previas[o.id], 0);
+      const cantidad = Math.max(
+        0,
+        Math.min(valor, limites[opcion.grupo] - otras),
+      );
+      return { ...previas, [id]: cantidad };
+    });
+  };
+
+  const escribir = (id, texto) => {
+    const digitos = texto.replace(/\D/g, "").slice(0, 3);
+    cambiar(id, digitos === "" ? 0 : parseInt(digitos, 10));
+  };
+
   const reiniciar = () => {
     setPasoActual(0);
-    setEntradaId("early");
-    setCantidad(1);
+    setCantidades(Object.fromEntries(opciones.map((opcion) => [opcion.id, 0])));
     setDatos(null);
     setReserva("");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -51,7 +111,7 @@ const Checkout = ({entradaId, setEntradaId}) => {
   return (
     <section
       id="checkout"
-      className="mt-14 rounded-rc-red-block bg-rc-gradient p-8 min-[1360px]:-mx-14 min-[1360px]:p-14"
+      className="rounded-rc-red-block bg-rc-gradient p-5 sm:p-8 min-[1360px]:-mx-14 min-[1360px]:p-14"
     >
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
@@ -77,28 +137,32 @@ const Checkout = ({entradaId, setEntradaId}) => {
           ))}
         </ol>
       </div>
-      <div className="mt-10 grid gap-6 lg:grid-cols-[1.43fr_1fr]">
-        <div className="rounded-rc-box bg-white p-9">
+      <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.43fr_1fr]">
+        <div className="min-w-0 rounded-rc-box bg-white p-5 sm:p-9">
           {pasoActual === 0 && (
             <>
               <h3 className="text-[22px] font-extrabold text-rc-black">
-                Elegí tu entrada
+                Elegí tus entradas
               </h3>
+              <p className="mt-1 text-sm text-rc-text-on-white">
+                Podés combinar tipos de entrada en una misma compra.
+              </p>
               <div className="mt-4 flex flex-col gap-3">
                 {opciones.map((opcion) => {
-                  const activa = opcion.id === entradaId;
+                  const cantidad = cantidades[opcion.id];
+                  const activa = cantidad > 0;
+                  const grupoLleno =
+                    totalDe(cantidades, opcion.grupo) >= limites[opcion.grupo];
                   return (
-                    <button
+                    <div
                       key={opcion.id}
-                      onClick={() => setEntradaId(opcion.id)}
-                      aria-pressed={activa}
-                      className={`flex w-full cursor-pointer items-center justify-between rounded-rc-option border-2 px-5 py-3.5 text-left transition ${
+                      className={`flex flex-col gap-4 rounded-rc-option border-2 px-5 py-3.5 transition sm:flex-row sm:items-center sm:justify-between ${
                         activa
                           ? "border-rc-black bg-rc-black text-white"
-                          : "border-rc-text-soft text-rc-black hover:border-rc-black"
+                          : "border-rc-text-soft text-rc-black"
                       }`}
                     >
-                      <span>
+                      <div>
                         <span className="block font-extrabold">
                           {opcion.nombre}
                         </span>
@@ -111,46 +175,72 @@ const Checkout = ({entradaId, setEntradaId}) => {
                         >
                           {opcion.detalle}
                         </span>
-                      </span>
-                      <span className="text-lg font-extrabold">
-                        ${opcion.precio.toLocaleString("es-AR")}
-                      </span>
-                    </button>
+                        <span className="mt-1 block text-lg font-extrabold">
+                          {formato(opcion.precio)}
+                        </span>
+                      </div>
+
+                      <div className="flex w-full items-center gap-2 sm:w-auto sm:gap-3">
+                        <button
+                          type="button"
+                          onClick={() => cambiar(opcion.id, cantidad - 1)}
+                          disabled={cantidad === 0}
+                          aria-label={`Quitar una entrada ${opcion.nombre}`}
+                          className={botonContador(activa)}
+                        >
+                          −
+                        </button>
+
+                        <input
+                          type="text"
+                          inputMode="numeric"
+                          autoComplete="off"
+                          placeholder="0"
+                          value={cantidad === 0 ? "" : String(cantidad)}
+                          onChange={(event) =>
+                            escribir(opcion.id, event.target.value)
+                          }
+                          aria-label={`Cantidad de entradas ${opcion.nombre}`}
+                          className="h-12 min-w-0 flex-1 rounded-rc-field border-2 border-rc-text-soft bg-white text-center text-xl font-extrabold tabular-nums text-rc-black outline-none placeholder:text-rc-text-mute focus:border-rc-red sm:w-20 sm:flex-none"
+                        />
+
+                        <button
+                          type="button"
+                          onClick={() => cambiar(opcion.id, cantidad + 1)}
+                          disabled={grupoLleno}
+                          aria-label={`Agregar una entrada ${opcion.nombre}`}
+                          className={botonContador(activa)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
-              <div className="mt-6 flex items-center justify-between">
-                <span className="font-extrabold text-rc-black">Cantidad</span>
 
-                <div className="flex items-center gap-4">
-                  <button
-                    onClick={() => setCantidad(cantidad - 1)}
-                    disabled={cantidad === 1}
-                    aria-label="Quitar una entrada"
-                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-2 border-rc-text-soft text-xl font-extrabold text-rc-black transition hover:border-rc-black disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    −
-                  </button>
-
-                  <span className="w-6 text-center text-xl font-extrabold tabular-nums text-rc-black">
-                    {cantidad}
-                  </span>
-
-                  <button
-                    onClick={() => setCantidad(cantidad + 1)}
-                    disabled={cantidad === 10}
-                    aria-label="Agregar una entrada"
-                    className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-2 border-rc-text-soft text-xl font-extrabold text-rc-black transition hover:border-rc-black disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-              <button
-                onClick={() => setPasoActual(1)}
-                className="mt-6 min-h-[52px] w-full cursor-pointer rounded-full bg-rc-black text-lg font-extrabold text-white transition hover:bg-rc-surface-2 active:scale-95"
+              <div
+                role="status"
+                className="mt-4 flex flex-col gap-1 text-sm text-rc-text-on-white"
               >
-                Continuar
+                <p>
+                  Presenciales: {presenciales} de {limites.presencial} lugares
+                  disponibles
+                  {presenciales >= limites.presencial && " · cupo completo"}
+                </p>
+                <p>
+                  Virtuales: {virtuales} de {limites.virtual} entradas
+                  {virtuales >= limites.virtual && " · llegaste al máximo"}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setPasoActual(1)}
+                disabled={cantidadTotal === 0 || excedeCupo}
+                className="mt-6 min-h-[52px] w-full cursor-pointer rounded-full bg-rc-black text-lg font-extrabold text-white transition hover:bg-rc-surface-2 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-rc-black disabled:active:scale-100"
+              >
+                {textoContinuar}
               </button>
 
               <p className="mt-6 text-sm text-rc-text-on-white">
@@ -175,6 +265,7 @@ const Checkout = ({entradaId, setEntradaId}) => {
               onVolver={() => setPasoActual(1)}
               onPagar={() => {
                 setReserva(generarCodigo());
+                onCompraConfirmada(presenciales);
                 setPasoActual(3);
               }}
             />
@@ -183,11 +274,16 @@ const Checkout = ({entradaId, setEntradaId}) => {
             <Listo
               email={datos.email}
               reserva={reserva}
+              resumen={seleccionadas.map((opcion) => ({
+                nombre: opcion.nombre,
+                cantidad: cantidades[opcion.id],
+              }))}
+              total={formato(total)}
               onReiniciar={reiniciar}
             />
           )}
         </div>
-        <div className="self-start rounded-rc-box bg-rc-black p-9">
+        <div className="min-w-0 self-start rounded-rc-box bg-rc-black p-6 sm:p-9">
           <p className="text-xs font-extrabold uppercase tracking-[2px] text-rc-red">
             Tu pedido
           </p>
@@ -199,13 +295,31 @@ const Checkout = ({entradaId, setEntradaId}) => {
           </p>
 
           <div className="mt-5 border-t border-rc-border pt-4">
-            <div className="flex justify-between text-sm text-rc-text-soft">
-              <span>
-                {cantidad} {cantidad === 1 ? "entrada" : "entradas"}{" "}
-                {entrada.nombre}
-              </span>
-              <span className="tabular-nums">{formato(subtotal)}</span>
-            </div>
+            {seleccionadas.length === 0 ? (
+              <p className="text-sm text-rc-text-mute">
+                Todavía no elegiste entradas.
+              </p>
+            ) : (
+              <div className="flex flex-col gap-3">
+                {seleccionadas.map((opcion) => {
+                  const cantidad = cantidades[opcion.id];
+                  return (
+                    <div
+                      key={opcion.id}
+                      className="flex justify-between text-sm text-rc-text-soft"
+                    >
+                      <span>
+                        {cantidad} {cantidad === 1 ? "entrada" : "entradas"}{" "}
+                        {opcion.nombre}
+                      </span>
+                      <span className="tabular-nums">
+                        {formato(opcion.precio * cantidad)}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             <div className="mt-3 flex justify-between text-sm text-rc-text-soft">
               <span>Cargo por servicio (5%)</span>
               <span className="tabular-nums">{formato(cargo)}</span>
