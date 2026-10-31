@@ -102,9 +102,7 @@ const Checkout = ({
 
   const reiniciar = () => {
     setPasoActual(0);
-    setCantidades(
-      Object.fromEntries(opciones.map((opcion) => [opcion.id, 0])),
-    );
+    setCantidades(Object.fromEntries(opciones.map((opcion) => [opcion.id, 0])));
     setDatos(null);
     setReserva("");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -154,8 +152,7 @@ const Checkout = ({
                   const cantidad = cantidades[opcion.id];
                   const activa = cantidad > 0;
                   const grupoLleno =
-                    totalDe(cantidades, opcion.grupo) >=
-                    limites[opcion.grupo];
+                    totalDe(cantidades, opcion.grupo) >= limites[opcion.grupo];
                   return (
                     <div
                       key={opcion.id}
@@ -277,6 +274,11 @@ const Checkout = ({
             <Listo
               email={datos.email}
               reserva={reserva}
+              resumen={seleccionadas.map((opcion) => ({
+                nombre: opcion.nombre,
+                cantidad: cantidades[opcion.id],
+              }))}
+              total={formato(total)}
               onReiniciar={reiniciar}
             />
           )}
