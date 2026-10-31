@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { preguntas } from "../data/chatBot";
+import { preguntas, contacto } from "../data/chatBot";
 
 const logoSrc = "/img/logoRolling/logo-rolling.jpg";
 const botName = "Rolling Code";
@@ -33,6 +33,31 @@ const findQuestion = (text) => {
   return best;
 };
 
+function ContactLinks() {
+  if (!contacto.whatsapp && !contacto.email) return null;
+  const linkClass =
+    "inline-block rounded-full bg-rc-red px-3 py-1 text-xs font-extrabold text-rc-white transition hover:bg-rc-red-dark";
+  return (
+    <div className="mt-2 flex flex-wrap gap-2">
+      {contacto.whatsapp && (
+        <a
+          className={linkClass}
+          href={`https://wa.me/${contacto.whatsapp}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          WhatsApp
+        </a>
+      )}
+      {contacto.email && (
+        <a className={linkClass} href={`mailto:${contacto.email}`}>
+          Email
+        </a>
+      )}
+    </div>
+  );
+}
+
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -47,10 +72,12 @@ export default function ChatBot() {
     const clean = text.trim();
     if (!clean) return;
     const match = item ?? findQuestion(clean);
-    const reply = match ? match.answer : fallback;
+    const reply = match
+      ? { text: match.answer, showContact: match.showContact }
+      : { text: fallback, showContact: true };
     setMessages((prev) => [...prev, { from: "user", text: clean }]);
     setTimeout(
-      () => setMessages((prev) => [...prev, { from: "bot", text: reply }]),
+      () => setMessages((prev) => [...prev, { from: "bot", ...reply }]),
       400
     );
   };
@@ -88,6 +115,7 @@ export default function ChatBot() {
                   }`}
                 >
                   {m.text}
+                  {m.showContact && <ContactLinks />}
                 </div>
               </div>
             ))}
