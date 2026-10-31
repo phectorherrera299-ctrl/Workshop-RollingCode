@@ -12,6 +12,7 @@ import Sponsors from "./components/Sponsors";
 import SumateSponsor from "./components/SumateSponsor";
 import BotonWhatsapp from "./components/BotonWhatsapp";
 import ScrollReveal from "./components/ScrollReveal";
+import { CUPO_PRESENCIAL, VENDIDAS_INICIALES } from "./data/cupo";
 
 import { useState } from "react";
 
@@ -21,6 +22,7 @@ function App() {
     general: 0,
     virtual: 0,
   });
+  const [vendidas, setVendidas] = useState(VENDIDAS_INICIALES);
 
   const comprar = (id) => {
     setCantidades((previas) => ({
@@ -29,6 +31,14 @@ function App() {
     }));
     document.getElementById("checkout")?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const registrarCompra = (presenciales) => {
+    setVendidas((actuales) =>
+      Math.min(actuales + presenciales, CUPO_PRESENCIAL),
+    );
+  };
+
+  const reiniciarCupo = () => setVendidas(VENDIDAS_INICIALES);
 
   return (
     <>
@@ -40,12 +50,20 @@ function App() {
           <ScrollReveal><Speakers /></ScrollReveal>
           <ScrollReveal><Agenda /></ScrollReveal>
           <ScrollReveal><Sponsors /></ScrollReveal>
-          <ScrollReveal><Entradas onComprar={comprar} /></ScrollReveal>
+          <ScrollReveal>
+            <Entradas
+              onComprar={comprar}
+              vendidas={vendidas}
+              onReiniciarCupo={reiniciarCupo}
+            />
+          </ScrollReveal>
           <div className="-mt-10">
             <ScrollReveal>
               <Checkout
                 cantidades={cantidades}
                 setCantidades={setCantidades}
+                vendidas={vendidas}
+                onCompraConfirmada={registrarCompra}
               />
             </ScrollReveal>
           </div>
