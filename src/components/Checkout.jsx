@@ -2,6 +2,7 @@ import { useState } from "react";
 import Datos from "./Datos";
 import Pago from "./Pago";
 import Listo from "./Listo";
+import { CUPO_PRESENCIAL } from "../data/cupo";
 
 const opciones = [
   {
@@ -27,7 +28,7 @@ const opciones = [
   },
 ];
 
-const LIMITES = { presencial: 120, virtual: 200 };
+const LIMITE_VIRTUAL = 200;
 
 const pasos = ["Entrada", "Datos", "Pago", "Listo"];
 const formato = (n) => `$${n.toLocaleString("es-AR")}`;
@@ -46,21 +47,39 @@ const botonContador = (activa) =>
       : "border-rc-text-soft text-rc-black hover:border-rc-black"
   }`;
 
-const Checkout = ({ cantidades, setCantidades }) => {
+const Checkout = ({
+  cantidades,
+  setCantidades,
+  vendidas,
+  onCompraConfirmada,
+}) => {
   const [pasoActual, setPasoActual] = useState(0);
   const [datos, setDatos] = useState(null);
   const [reserva, setReserva] = useState("");
+
+  const limites = {
+    presencial: Math.max(CUPO_PRESENCIAL - vendidas, 0),
+    virtual: LIMITE_VIRTUAL,
+  };
 
   const seleccionadas = opciones.filter((opcion) => cantidades[opcion.id] > 0);
   const presenciales = totalDe(cantidades, "presencial");
   const virtuales = totalDe(cantidades, "virtual");
   const cantidadTotal = presenciales + virtuales;
+  const excedeCupo = presenciales > limites.presencial;
   const subtotal = opciones.reduce(
     (suma, opcion) => suma + opcion.precio * cantidades[opcion.id],
     0,
   );
   const cargo = Math.round(subtotal * 0.05);
   const total = subtotal + cargo;
+
+  const textoContinuar =
+    cantidadTotal === 0
+      ? "Elegí al menos una entrada"
+      : excedeCupo
+        ? "Reducí las entradas presenciales"
+        : "Continuar";
 
   const cambiar = (id, valor) => {
     setCantidades((previas) => {
@@ -70,7 +89,7 @@ const Checkout = ({ cantidades, setCantidades }) => {
         .reduce((suma, o) => suma + previas[o.id], 0);
       const cantidad = Math.max(
         0,
-        Math.min(valor, LIMITES[opcion.grupo] - otras),
+        Math.min(valor, limites[opcion.grupo] - otras),
       );
       return { ...previas, [id]: cantidad };
     });
@@ -94,7 +113,7 @@ const Checkout = ({ cantidades, setCantidades }) => {
   return (
     <section
       id="checkout"
-      className="rounded-rc-red-block bg-rc-gradient p-8 min-[1360px]:-mx-14 min-[1360px]:p-14"
+      className="rounded-rc-red-block bg-rc-gradient p-5 sm:p-8 min-[1360px]:-mx-14 min-[1360px]:p-14"
     >
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
@@ -120,8 +139,8 @@ const Checkout = ({ cantidades, setCantidades }) => {
           ))}
         </ol>
       </div>
-      <div className="mt-10 grid gap-6 lg:grid-cols-[1.43fr_1fr]">
-        <div className="rounded-rc-box bg-white p-9">
+      <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.43fr_1fr]">
+        <div className="min-w-0 rounded-rc-box bg-white p-5 sm:p-9">
           {pasoActual === 0 && (
             <>
               <h3 className="text-[22px] font-extrabold text-rc-black">
@@ -135,7 +154,8 @@ const Checkout = ({ cantidades, setCantidades }) => {
                   const cantidad = cantidades[opcion.id];
                   const activa = cantidad > 0;
                   const grupoLleno =
-                    totalDe(cantidades, opcion.grupo) >= LIMITES[opcion.grupo];
+                    totalDe(cantidades, opcion.grupo) >=
+                    limites[opcion.grupo];
                   return (
                     <div
                       key={opcion.id}
@@ -163,7 +183,7 @@ const Checkout = ({ cantidades, setCantidades }) => {
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-3">
+                      <div className="flex w-full items-center gap-2 sm:w-auto sm:gap-3">
                         <button
                           type="button"
                           onClick={() => cambiar(opcion.id, cantidad - 1)}
@@ -184,7 +204,7 @@ const Checkout = ({ cantidades, setCantidades }) => {
                             escribir(opcion.id, event.target.value)
                           }
                           aria-label={`Cantidad de entradas ${opcion.nombre}`}
-                          className="h-12 w-20 rounded-rc-field border-2 border-rc-text-soft bg-white text-center text-xl font-extrabold tabular-nums text-rc-black outline-none placeholder:text-rc-text-mute focus:border-rc-red"
+                          className="h-12 min-w-0 flex-1 rounded-rc-field border-2 border-rc-text-soft bg-white text-center text-xl font-extrabold tabular-nums text-rc-black outline-none placeholder:text-rc-text-mute focus:border-rc-red sm:w-20 sm:flex-none"
                         />
 
                         <button
@@ -207,22 +227,23 @@ const Checkout = ({ cantidades, setCantidades }) => {
                 className="mt-4 flex flex-col gap-1 text-sm text-rc-text-on-white"
               >
                 <p>
-                  Presenciales: {presenciales} de {LIMITES.presencial} lugares
-                  {presenciales >= LIMITES.presencial && " · cupo completo"}
+                  Presenciales: {presenciales} de {limites.presencial} lugares
+                  disponibles
+                  {presenciales >= limites.presencial && " · cupo completo"}
                 </p>
                 <p>
-                  Virtuales: {virtuales} de {LIMITES.virtual} entradas
-                  {virtuales >= LIMITES.virtual && " · llegaste al máximo"}
+                  Virtuales: {virtuales} de {limites.virtual} entradas
+                  {virtuales >= limites.virtual && " · llegaste al máximo"}
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={() => setPasoActual(1)}
-                disabled={cantidadTotal === 0}
+                disabled={cantidadTotal === 0 || excedeCupo}
                 className="mt-6 min-h-[52px] w-full cursor-pointer rounded-full bg-rc-black text-lg font-extrabold text-white transition hover:bg-rc-surface-2 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-rc-black disabled:active:scale-100"
               >
-                {cantidadTotal === 0 ? "Elegí al menos una entrada" : "Continuar"}
+                {textoContinuar}
               </button>
 
               <p className="mt-6 text-sm text-rc-text-on-white">
@@ -247,6 +268,7 @@ const Checkout = ({ cantidades, setCantidades }) => {
               onVolver={() => setPasoActual(1)}
               onPagar={() => {
                 setReserva(generarCodigo());
+                onCompraConfirmada(presenciales);
                 setPasoActual(3);
               }}
             />
@@ -259,7 +281,7 @@ const Checkout = ({ cantidades, setCantidades }) => {
             />
           )}
         </div>
-        <div className="self-start rounded-rc-box bg-rc-black p-9">
+        <div className="min-w-0 self-start rounded-rc-box bg-rc-black p-6 sm:p-9">
           <p className="text-xs font-extrabold uppercase tracking-[2px] text-rc-red">
             Tu pedido
           </p>
