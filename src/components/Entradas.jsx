@@ -4,10 +4,14 @@ import useCuentaRegresiva from "../hooks/useCuentaRegresiva";
 const FECHA_LIMITE = new Date("2026-10-31T23:59:59-03:00").getTime();
 const dosDigitos = (n) => String(n).padStart(2, "0");
 
+const CUPO_PRESENCIAL = 120;
+const VENDIDAS = 38;
+const porcentajeVendido = Math.round((VENDIDAS / CUPO_PRESENCIAL) * 100);
+
 const planes = [
   {
     id: "early", nombre: "Early Bird",
-    chip: "Quedan 38",
+    chip: `Quedan ${CUPO_PRESENCIAL - VENDIDAS}`,
     precio: "$25.000",
     tachado: "$35.000",
     subtitulo: "Presencial · precio especial hasta el 31/10",
@@ -89,12 +93,26 @@ const Entradas = ({onComprar}) => {
           ))}
         </div>
         <div className="lg:w-[350px]">
-          <div className="mb-2 flex justify-between text-sm">
-            <span className="font-semibold">Quedan 38 de 60 Early Bird</span>
-            <span className="text-rc-text-mute">63% vendidas</span>
+          <div className="mb-2 flex justify-between gap-3 text-sm">
+            <span className="font-semibold">
+              Se vendieron {VENDIDAS} de {CUPO_PRESENCIAL} presenciales
+            </span>
+            <span className="text-rc-text-mute tabular-nums">
+              {porcentajeVendido}%
+            </span>
           </div>
-          <div className="h-2.5 rounded-full bg-rc-surface-2">
-            <div className="h-full w-[63%] rounded-full bg-rc-red"></div>
+          <div
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={CUPO_PRESENCIAL}
+            aria-valuenow={VENDIDAS}
+            aria-label="Entradas presenciales vendidas"
+            className="h-2.5 rounded-full bg-rc-surface-2"
+          >
+            <div
+              className="h-full rounded-full bg-rc-red"
+              style={{ width: `${porcentajeVendido}%` }}
+            />
           </div>
         </div>
       </div>
