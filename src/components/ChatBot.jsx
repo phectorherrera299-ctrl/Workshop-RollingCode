@@ -7,8 +7,35 @@ const botName = "Rolling Code";
 const welcome =
   "¡Hola! 👋 Soy el asistente de Rolling Code. Elegí una opción o escribime tu consulta.";
 
+const fallback =
+  "No estoy seguro de haber entendido tu consulta. Probá con alguna de las opciones de abajo.";
+
+const normalize = (text) =>
+  text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const findQuestion = (text) => {
+  const padded = ` ${normalize(text)} `;
+  let best = null;
+  let bestScore = 0;
+  for (const item of preguntas) {
+    const score = item.keywords.filter((k) => padded.includes(` ${normalize(k)} `)).length;
+    if (score > bestScore) {
+      best = item;
+      bestScore = score;
+    }
+  }
+  return best;
+};
+
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
   const [messages, setMessages] = useState([{ from: "bot", text: welcome }]);
   const endRef = useRef(null);
 
@@ -16,12 +43,22 @@ export default function ChatBot() {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, open]);
 
-  const sendOption = (item) => {
-    setMessages((prev) => [...prev, { from: "user", text: item.label }]);
+  const send = (text, item) => {
+    const clean = text.trim();
+    if (!clean) return;
+    const match = item ?? findQuestion(clean);
+    const reply = match ? match.answer : fallback;
+    setMessages((prev) => [...prev, { from: "user", text: clean }]);
     setTimeout(
-      () => setMessages((prev) => [...prev, { from: "bot", text: item.answer }]),
+      () => setMessages((prev) => [...prev, { from: "bot", text: reply }]),
       400
     );
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    send(input);
+    setInput("");
   };
 
   return (
@@ -61,13 +98,28 @@ export default function ChatBot() {
             {preguntas.map((item) => (
               <button
                 key={item.label}
-                onClick={() => sendOption(item)}
+                onClick={() => send(item.label, item)}
                 className="rounded-full bg-rc-chip px-3 py-1 text-xs text-rc-text-soft transition hover:bg-rc-red hover:text-rc-white"
               >
                 {item.label}
               </button>
             ))}
           </div>
+
+          <form onSubmit={handleSubmit} className="flex gap-2 border-t border-rc-border bg-rc-surface p-2">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Escribí tu consulta..."
+              className="flex-1 rounded-full border border-rc-border bg-rc-black px-3 py-2 text-sm text-rc-white outline-none placeholder:text-rc-text-mute focus:border-rc-red"
+            />
+            <button
+              type="submit"
+              className="rounded-full bg-rc-red px-4 py-2 text-sm font-extrabold text-rc-white transition hover:bg-rc-red-dark"
+            >
+              Enviar
+            </button>
+          </form>
         </div>
       )}
 
