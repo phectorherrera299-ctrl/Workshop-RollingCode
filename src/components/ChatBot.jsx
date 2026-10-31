@@ -3,8 +3,12 @@ import { useState } from "react";
 const logo_src = "/img/logoRolling/logo-rolling.jpg";
 const bot_name = "Rolling Code";
 
+const welcome =
+  "¡Hola! 👋 Soy el asistente de Rolling Code. Elegí una opción o escribime tu consulta.";
+
 export default function ChatBot() {
   const [open, setOpen] = useState(false);
+  const [messages] = useState([{ from: "bot", text: welcome }]);
 
   return (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3">
@@ -21,8 +25,20 @@ export default function ChatBot() {
               ✕
             </button>
           </div>
-          <div className="flex-1 p-3">
-            <p className="text-sm text-rc-text-mute">Acá van a ir los mensajes.</p>
+          <div className="flex-1 space-y-2 overflow-y-auto bg-rc-black p-3">
+            {messages.map((m, i) => (
+              <div key={i} className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}>
+                <div
+                  className={`max-w-[85%] rounded-rc-option px-3 py-2 text-sm ${
+                    m.from === "user"
+                      ? "rounded-br-sm bg-rc-red text-rc-white"
+                      : "rounded-bl-sm border border-rc-border bg-rc-surface-2 text-rc-text-soft"
+                  }`}
+                >
+                  {m.text}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
