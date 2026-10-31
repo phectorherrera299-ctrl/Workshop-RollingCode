@@ -12,11 +12,27 @@ import Sponsors from "./components/Sponsors";
 import SumateSponsor from "./components/SumateSponsor";
 import ScrollReveal from "./components/ScrollReveal";
 import ChatBot from "./components/ChatBot";
+import ExperienceTools from "./components/ExperienceTools";
+import Comunidad from "./components/Comunidad";
+import SchoolGallery from "./components/SchoolGallery";
 import { CUPO_PRESENCIAL, VENDIDAS_INICIALES } from "./data/cupo";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import FavoriteSpeakers from "./components/FavoriteSpeakers";
+import { speakers } from "./data/speakers";
 
 function App() {
+  const [favoritos, setFavoritos] = useState(() => {
+    try {
+      const guardados = JSON.parse(localStorage.getItem("rolling-favoritos") || "[]");
+      return Array.isArray(guardados) ? [...new Set(guardados)].filter(name => speakers.some(s => s.name === name)) : [];
+    } catch { return []; }
+  });
+  const [verFavoritos, setVerFavoritos] = useState(false);
+  const alternarFavorito = name => setFavoritos(prev => prev.includes(name) ? prev.filter(item => item !== name) : [...prev, name]);
+  useEffect(() => {
+    try { localStorage.setItem("rolling-favoritos", JSON.stringify(favoritos)); } catch { /* Los favoritos siguen disponibles durante la visita. */ }
+  }, [favoritos]);
   const [cantidades, setCantidades] = useState({
     early: 0,
     general: 0,
@@ -41,14 +57,15 @@ function App() {
   const reiniciarCupo = () => setVendidas(VENDIDAS_INICIALES);
 
   return (
-    <>
-      <Navbar />
+    <div className="min-h-screen">
+      <Navbar favoritos={favoritos} onOpenFavorites={() => setVerFavoritos(true)} />
       <main className="pt-12 pb-24">
         <Container className="flex flex-col gap-24">
           <PublicidadWorkshop />
+          <SchoolGallery />
           <ScrollReveal><Contador /></ScrollReveal>
-          <ScrollReveal><Speakers /></ScrollReveal>
-          <ScrollReveal><Agenda /></ScrollReveal>
+          <ScrollReveal><Speakers favoritos={favoritos} alternarFavorito={alternarFavorito} /></ScrollReveal>
+          <ScrollReveal><Agenda favoritos={favoritos} onToggleFavorite={alternarFavorito} /></ScrollReveal>
           <ScrollReveal><Sponsors /></ScrollReveal>
           <ScrollReveal>
             <Entradas
@@ -67,14 +84,16 @@ function App() {
               />
             </ScrollReveal>
           </div>
+          <Comunidad />
           <ScrollReveal><SumateSponsor /></ScrollReveal>
           <ScrollReveal><Ubicacion /></ScrollReveal>
           <ChatBot></ChatBot>
         </Container>
       </main>
       <Footer />
-      <ChatBot></ChatBot>
-    </>
+      <ExperienceTools />
+      <FavoriteSpeakers open={verFavoritos} onClose={() => setVerFavoritos(false)} favoritos={favoritos} onToggle={alternarFavorito} />
+    </div>
   );
 }
 

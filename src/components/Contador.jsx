@@ -36,7 +36,7 @@ const Contador = () => {
   return (
     <section
       ref={ref}
-      className="mx-10 rounded-rc-option border border-rc-border bg-rc-surface px-6 py-6 transition-transform duration-200 hover:scale-[1.02] sm:px-10 sm:py-8"
+      className="mx-0 sm:mx-6 lg:mx-10 rounded-rc-option border border-rc-border bg-rc-surface px-6 py-6 transition-transform duration-200 hover:scale-[1.02] sm:px-10 sm:py-8"
     >
       <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
         {datos.map((dato) => (

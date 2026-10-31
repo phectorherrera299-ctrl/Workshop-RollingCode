@@ -113,7 +113,7 @@ const Checkout = ({
       id="checkout"
       className="rounded-rc-red-block bg-rc-gradient p-5 sm:p-8 min-[1360px]:-mx-14 min-[1360px]:p-14"
     >
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div className="checkout-heading flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="text-base font-extrabold uppercase tracking-[3px] text-white">
             Compra segura
@@ -122,7 +122,7 @@ const Checkout = ({
             Finalizá tu compra
           </h2>
         </div>
-        <ol className="flex flex-wrap gap-2">
+        <ol className="checkout-steps flex flex-wrap gap-2">
           {pasos.map((paso, i) => (
             <li
               key={paso}
@@ -137,8 +137,8 @@ const Checkout = ({
           ))}
         </ol>
       </div>
-      <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.43fr_1fr]">
-        <div className="min-w-0 rounded-rc-box bg-white p-5 sm:p-9">
+      <div className="checkout-layout mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.43fr_1fr]">
+        <div className="checkout-panel min-w-0 rounded-rc-box bg-white p-5 sm:p-9">
           {pasoActual === 0 && (
             <>
               <h3 className="text-[22px] font-extrabold text-rc-black">
@@ -156,7 +156,7 @@ const Checkout = ({
                   return (
                     <div
                       key={opcion.id}
-                      className={`flex flex-col gap-4 rounded-rc-option border-2 px-5 py-3.5 transition sm:flex-row sm:items-center sm:justify-between ${
+                      className={`checkout-option flex flex-col gap-4 rounded-rc-option border-2 px-5 py-3.5 transition sm:flex-row sm:items-center sm:justify-between ${
                         activa
                           ? "border-rc-black bg-rc-black text-white"
                           : "border-rc-text-soft text-rc-black"
@@ -180,7 +180,7 @@ const Checkout = ({
                         </span>
                       </div>
 
-                      <div className="flex w-full items-center gap-2 sm:w-auto sm:gap-3">
+                      <div className="checkout-quantity flex w-full items-center gap-2 sm:w-auto sm:gap-3">
                         <button
                           type="button"
                           onClick={() => cambiar(opcion.id, cantidad - 1)}
@@ -283,7 +283,7 @@ const Checkout = ({
             />
           )}
         </div>
-        <div className="min-w-0 self-start rounded-rc-box bg-rc-black p-6 sm:p-9">
+        <div className="checkout-summary min-w-0 self-start rounded-rc-box bg-rc-black p-6 sm:p-9">
           <p className="text-xs font-extrabold uppercase tracking-[2px] text-rc-red">
             Tu pedido
           </p>

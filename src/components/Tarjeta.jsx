@@ -27,7 +27,7 @@ const Tarjeta = ({
 }) => {
   return (
     <article
-      className={`flex min-w-0 flex-col rounded-rc-card p-6 transition duration-300 hover:-translate-y-1 sm:p-9 ${
+      className={`ticket-card flex min-w-0 flex-col rounded-rc-card p-6 transition duration-300 hover:-translate-y-1 sm:p-9 ${
         destacada
           ? "bg-rc-gradient hover:shadow-[0_20px_40px_-12px_rgba(224,32,42,0.5)]"
           : "border border-rc-border bg-rc-surface hover:border-rc-red/50"
@@ -41,7 +41,7 @@ const Tarjeta = ({
           {chip}
         </span>
       </div>
-      <div className="mt-4 flex flex-wrap items-baseline gap-3">
+      <div className="ticket-price mt-4 flex flex-wrap items-baseline gap-3">
         <span className="text-[40px] font-extrabold leading-none tracking-[-1px] sm:text-[56px]">
           {precio}
         </span>
@@ -57,7 +57,7 @@ const Tarjeta = ({
         {subtitulo}
       </p>
       <ul
-        className={`mt-6 flex flex-1 flex-col gap-3 ${destacada ? "text-white" : "text-rc-text-soft"}`}
+        className={`ticket-benefits mt-6 flex flex-1 flex-col gap-3 ${destacada ? "text-white" : "text-rc-text-soft"}`}
       >
         {items.map((item) => (
           <li key={item} className="flex items-center gap-3">
@@ -68,6 +68,10 @@ const Tarjeta = ({
           </li>
         ))}
       </ul>
+      <details className={`ticket-mobile-benefits ${destacada ? "text-white" : "text-rc-text-soft"}`}>
+        <summary>Qué incluye <span aria-hidden="true">+</span></summary>
+        <ul>{items.map(item => <li key={item}><Check /><span>{item}</span></li>)}</ul>
+      </details>
       <button
         onClick={() => onComprar(id)}
         className={`mt-8 min-h-[52px] cursor-pointer rounded-full text-lg font-extrabold transition duration-200 active:scale-95 ${

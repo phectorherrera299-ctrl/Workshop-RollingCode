@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { preguntas, contacto } from "../data/chatBot";
 
-const logoSrc = "/img/logoRolling/logo-rolling.jpg";
+const logoSrc = `${import.meta.env.BASE_URL}img/logoRolling/logo-rolling.jpg`;
 const botName = "Rolling Code";
 
 const welcome =
@@ -101,9 +101,9 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 sm:bottom-12 sm:right-12">
+    <div className="chat-widget fixed bottom-24 right-4 z-50 flex flex-col items-end gap-4 sm:bottom-12 sm:right-12">
       {open && (
-        <div className="flex h-[28rem] max-h-[70vh] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-rc-box border border-rc-border bg-rc-surface shadow-2xl sm:w-80">
+        <div className="flex h-[28rem] max-h-[65dvh] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-rc-box border border-rc-border bg-rc-surface shadow-2xl sm:w-80">
           <div className="bg-rc-gradient flex items-center gap-2 px-4 py-3 text-rc-white">
             <img
               src={logoSrc}
@@ -207,7 +207,7 @@ export default function ChatBot() {
           className={`relative flex items-center gap-3 rounded-full text-rc-white shadow-2xl ring-2 ring-white/30 transition hover:scale-105 ${
             open
               ? "h-14 w-14 justify-center bg-rc-red"
-              : "bg-rc-gradient py-2 pl-2 pr-6"
+              : "bg-rc-gradient p-2 sm:pr-6"
           }`}
         >
           {open ? (
@@ -219,7 +219,7 @@ export default function ChatBot() {
                 alt=""
                 className="h-12 w-12 rounded-full bg-rc-black object-cover ring-2 ring-white"
               />
-              <span className="text-sm font-extrabold">¿Tenés dudas?</span>
+              <span className="hidden text-sm font-extrabold sm:inline">¿Tenés dudas?</span>
             </>
           )}
         </button>

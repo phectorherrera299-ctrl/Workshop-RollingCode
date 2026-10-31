@@ -1,4 +1,5 @@
-import { CalendarPlus } from "lucide-react";
+import { CalendarPlus, Heart } from "lucide-react";
+import { FavoriteList } from "./FavoriteSpeakers";
 import { speakers } from "../data/speakers";
 import { calendarUrl } from "../data/calendario";
 
@@ -16,12 +17,12 @@ const charlas = [
 const abrirSpeaker = (nombre) =>
   window.dispatchEvent(new CustomEvent("abrir-speaker", { detail: nombre }));
 
-function Agenda() {
+function Agenda({ favoritos, onToggleFavorite }) {
   return (
     <section
       id="agenda"
       aria-labelledby="agenda-title"
-      className="mx-10 mt-12"
+      className="mx-0 mt-4 sm:mx-6 sm:mt-12 lg:mx-10"
     >
       <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.5fr] md:gap-12">
         <div>
@@ -50,6 +51,10 @@ function Agenda() {
             Agregar al calendario
             <span className="sr-only"> (abre en una pestaña nueva)</span>
           </a>
+          <div className="agenda-favorites" id="mis-favoritos">
+            <div className="agenda-favorites-heading"><Heart size={18} aria-hidden="true" /><h3>Mi selección</h3><span>{favoritos.length}</span></div>
+            <FavoriteList favoritos={favoritos} onToggle={onToggleFavorite} />
+          </div>
         </div>
 
         <ol className="relative before:absolute before:bottom-[31px] before:left-[99px] before:top-[30px] before:w-0.5 before:bg-rc-red sm:before:left-[113px]">

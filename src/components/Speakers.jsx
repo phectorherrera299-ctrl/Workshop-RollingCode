@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Clock, MapPin, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Clock, Heart, MapPin, X } from "lucide-react";
 import { speakers } from "../data/speakers";
 
 const base = import.meta.env.BASE_URL;
@@ -29,7 +29,7 @@ function SpeakerPhoto({ name, img, zoom = "", className = "" }) {
   );
 }
 
-function SpeakerCard({ speaker, onOpen }) {
+function SpeakerCard({ speaker, onOpen, favorite, onToggleFavorite }) {
   const { name, tag, desc, img, zoom, hora } = speaker;
 
   return (
@@ -64,6 +64,18 @@ function SpeakerCard({ speaker, onOpen }) {
         aria-label={`Ver más sobre ${name}`}
         className="absolute inset-0 z-10 cursor-pointer rounded-rc-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rc-red"
       />
+      <button
+        type="button"
+        onClick={() => onToggleFavorite(speaker.name)}
+        aria-label={`${favorite ? "Quitar de" : "Agregar a"} mi agenda: ${name}`}
+        aria-pressed={favorite}
+        className="absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full bg-rc-black/80 text-white transition hover:bg-rc-red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      >
+        <Heart
+          aria-hidden="true"
+          className={`h-5 w-5 ${favorite ? "fill-rc-red text-rc-red" : ""}`}
+        />
+      </button>
     </article>
   );
 }
@@ -184,14 +196,17 @@ function ArrowButton({ direction, onClick, disabled }) {
   );
 }
 
-export default function Speakers() {
+export default function Speakers({ favoritos, alternarFavorito }) {
   const trackRef = useRef(null);
   const [active, setActive] = useState(0);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
   const [elegido, setElegido] = useState(null);
+  const [soloFavoritos, setSoloFavoritos] = useState(false);
 
-  const updateState = () => {
+  const visibles = soloFavoritos ? speakers.filter(speaker => favoritos.includes(speaker.name)) : speakers;
+
+  const updateState = useCallback(() => {
     const track = trackRef.current;
     if (!track) return;
 
@@ -203,14 +218,14 @@ export default function Speakers() {
     if (!card) return;
     const step = card.offsetWidth + 16;
     const index = Math.round(track.scrollLeft / step);
-    setActive(Math.min(Math.max(index, 0), speakers.length - 1));
-  };
+    setActive(Math.min(Math.max(index, 0), visibles.length - 1));
+  }, [visibles.length]);
 
   useEffect(() => {
     updateState();
     window.addEventListener("resize", updateState);
     return () => window.removeEventListener("resize", updateState);
-  }, []);
+  }, [updateState]);
 
   useEffect(() => {
     const abrirDesdeAgenda = (event) => {
@@ -249,9 +264,21 @@ export default function Speakers() {
             Speakers
           </p>
           <h2 id="speakers-title">Diez charlas, un mismo objetivo</h2>
-          <p className="mt-3 text-sm text-rc-text-mute lg:hidden">
-            Deslizá para conocer a los oradores
-          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-rc-text-mute">
+            <p className="lg:hidden">Deslizá para conocer a los oradores</p>
+            <button
+              type="button"
+              onClick={() => setSoloFavoritos((actual) => !actual)}
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-semibold transition ${
+                soloFavoritos
+                  ? "border-rc-red bg-rc-red text-white"
+                  : "border-rc-chip hover:border-rc-red hover:text-white"
+              }`}
+            >
+              <Heart className={`h-4 w-4 ${soloFavoritos ? "fill-white" : ""}`} />
+              Mi agenda ({favoritos.length})
+            </button>
+          </div>
         </div>
 
         <div className="hidden gap-2 sm:flex lg:hidden">
@@ -273,13 +300,28 @@ export default function Speakers() {
         onScroll={updateState}
         className="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] motion-safe:scroll-smooth [&::-webkit-scrollbar]:hidden lg:grid lg:snap-none lg:grid-cols-5 lg:gap-6 lg:overflow-visible lg:pb-0"
       >
-        {speakers.map((speaker) => (
-          <SpeakerCard key={speaker.name} speaker={speaker} onOpen={setElegido} />
+        {(soloFavoritos
+          ? speakers.filter((speaker) => favoritos.includes(speaker.name))
+          : speakers
+        ).map((speaker) => (
+          <SpeakerCard
+            key={speaker.name}
+            speaker={speaker}
+            onOpen={setElegido}
+            favorite={favoritos.includes(speaker.name)}
+            onToggleFavorite={alternarFavorito}
+          />
         ))}
       </div>
 
+      {soloFavoritos && favoritos.length === 0 && (
+        <p className="mt-6 rounded-rc-option border border-dashed border-rc-border p-5 text-center text-sm text-rc-text-mute">
+          Todavía no guardaste charlas. Tocá el corazón de un speaker para armar tu agenda.
+        </p>
+      )}
+
       <div className="mt-3 flex justify-center gap-1 lg:hidden">
-        {speakers.map((speaker, index) => (
+        {visibles.map((speaker, index) => (
           <button
             key={speaker.name}
             type="button"

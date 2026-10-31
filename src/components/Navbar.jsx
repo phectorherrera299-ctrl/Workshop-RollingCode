@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
+import { Heart } from "lucide-react";
 
 const links = [
   { label: "Speakers", href: "#speakers" },
   { label: "Agenda", href: "#agenda" },
-  { label: "Sponsors", href: "#sponsors" },
+  { label: "Playground", href: "#laboratorio" },
+  { label: "Preguntas", href: "#preguntas" },
   { label: "Cómo llegar", href: "#ubicacion" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ favoritos, onOpenFavorites }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const base = import.meta.env.BASE_URL;
@@ -40,11 +42,11 @@ export default function Navbar() {
             className="shrink-0"
           >
             <img
-              src={`${base}logo-rolling-blanco.png`}
+              src={`${base}rollingcode-oficial.webp`}
               alt="RollingCode"
               width="200"
               height="64"
-              className="inline-block align-text-top"
+              className="brand-logo inline-block h-auto w-[180px] align-text-top"
             />
           </a>
 
@@ -54,7 +56,7 @@ export default function Navbar() {
             aria-controls="navbar-menu"
             aria-expanded={open}
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            className="rounded-md p-2 text-white min-[860px]:hidden"
+            className="rounded-md p-2 text-white min-[1100px]:hidden"
           >
             <svg
               className="h-6 w-6"
@@ -81,9 +83,9 @@ export default function Navbar() {
 
           <div
             id="navbar-menu"
-            className={`${open ? "flex" : "hidden"} w-full basis-full flex-col gap-2 pb-4 min-[860px]:flex min-[860px]:w-auto min-[860px]:basis-auto min-[860px]:flex-row min-[860px]:items-center min-[860px]:gap-0 min-[860px]:pb-0`}
+            className={`${open ? "flex" : "hidden"} w-full basis-full flex-col gap-2 pb-4 min-[1100px]:flex min-[1100px]:w-auto min-[1100px]:basis-auto min-[1100px]:flex-row min-[1100px]:items-center min-[1100px]:gap-0 min-[1100px]:pb-0`}
           >
-            <ul className="flex flex-col gap-2 min-[860px]:flex-row min-[860px]:items-center min-[860px]:gap-2">
+            <ul className="flex flex-col gap-2 min-[1100px]:flex-row min-[1100px]:items-center min-[1100px]:gap-2">
               {links.map(({ label, href }) => (
                 <li key={label} className="whitespace-nowrap">
                   <a
@@ -95,6 +97,9 @@ export default function Navbar() {
                   </a>
                 </li>
               ))}
+              <li className="whitespace-nowrap">
+                <button type="button" className="nav-favorites" onClick={() => { setOpen(false); onOpenFavorites(); }} aria-label="Ver speakers favoritos"><Heart size={20} fill={favoritos.length ? "currentColor" : "none"} aria-hidden="true" /></button>
+              </li>
               <li className="whitespace-nowrap">
                 <a
                   href="#entradas"

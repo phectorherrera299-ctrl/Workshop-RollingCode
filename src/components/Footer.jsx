@@ -54,9 +54,9 @@ export const Footer = () => {
             className="inline-flex items-center"
           >
             <img
-              src={`${base}logo-rolling-blanco.png`}
+              src={`${base}rollingcode-oficial.webp`}
               alt="Rolling Code School"
-              className="block h-auto w-44 max-w-full sm:w-52"
+              className="brand-logo block h-auto w-44 max-w-full sm:w-52"
             />
           </a>
 

@@ -48,7 +48,7 @@ const planes = [
 ];
 
 const Entradas = ({ onComprar, vendidas, onReiniciarCupo }) => {
-  const { dias, horas, minutos } = useCuentaRegresiva(FECHA_LIMITE);
+  const { dias, horas, minutos, segundos } = useCuentaRegresiva(FECHA_LIMITE);
 
   const quedan = Math.max(CUPO_PRESENCIAL - vendidas, 0);
   const porcentajeVendido = Math.round((vendidas / CUPO_PRESENCIAL) * 100);
@@ -58,6 +58,7 @@ const Entradas = ({ onComprar, vendidas, onReiniciarCupo }) => {
     { numero: dosDigitos(dias), etiqueta: "Días" },
     { numero: dosDigitos(horas), etiqueta: "Horas" },
     { numero: dosDigitos(minutos), etiqueta: "Min" },
+    { numero: dosDigitos(segundos), etiqueta: "Seg" },
   ];
   return (
     <section id="entradas" className="bg-transparent">
@@ -65,7 +66,7 @@ const Entradas = ({ onComprar, vendidas, onReiniciarCupo }) => {
         Entradas
       </p>
       <h2>Asegurá tu lugar antes de que suba el precio</h2>
-      <div className="mt-8 flex flex-col gap-6 rounded-rc-card border border-rc-red/25 bg-linear-to-r from-rc-red-deep/30 to-rc-surface p-9 lg:flex-row lg:items-center lg:justify-between">
+      <div className="ticket-promo mt-8 flex flex-col gap-6 rounded-rc-card border border-rc-red/25 bg-linear-to-r from-rc-red-deep/30 to-rc-surface p-5 sm:p-7 xl:flex-row xl:items-center xl:justify-between">
         <div className="max-w-xs">
           <p className="text-xs font-extrabold uppercase tracking-[2px] text-rc-red">
             Early Bird
@@ -77,14 +78,14 @@ const Entradas = ({ onComprar, vendidas, onReiniciarCupo }) => {
             Después la entrada pasa de $25.000 a $35.000.
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="countdown-grid">
           {cajas.map((t) => (
             <div
               key={t.etiqueta}
-              className="w-28 rounded-rc-option border border-rc-border bg-rc-black py-4 text-center"
+              className="countdown-box rounded-rc-option border border-rc-border bg-rc-black py-4 text-center"
             >
-              <div className="text-[40px] font-extrabold leading-none tabular-nums">
-                {t.numero}
+              <div className="countdown-value font-extrabold leading-none tabular-nums">
+                <span key={t.numero} className={t.etiqueta === "Seg" ? "second-tick" : undefined}>{t.numero}</span>
               </div>
               <div className="text-xs uppercase text-rc-text-mute">
                 {t.etiqueta}
@@ -92,7 +93,7 @@ const Entradas = ({ onComprar, vendidas, onReiniciarCupo }) => {
             </div>
           ))}
         </div>
-        <div className="lg:w-[350px]">
+        <div className="w-full xl:w-[300px] xl:min-w-0">
           <div className="mb-2 flex justify-between gap-3 text-sm">
             <span className="font-semibold">
               Se vendieron {vendidas} de {CUPO_PRESENCIAL} presenciales
@@ -107,10 +108,10 @@ const Entradas = ({ onComprar, vendidas, onReiniciarCupo }) => {
             aria-valuemax={CUPO_PRESENCIAL}
             aria-valuenow={vendidas}
             aria-label="Entradas presenciales vendidas"
-            className="h-2.5 rounded-full bg-rc-surface-2"
+            className="ticket-progress h-2.5 rounded-full bg-rc-surface-2"
           >
             <div
-              className="h-full rounded-full bg-rc-red transition-[width] duration-700 ease-out motion-reduce:transition-none"
+              className="ticket-progress-fill h-full rounded-full bg-rc-red transition-[width] duration-700 ease-out motion-reduce:transition-none"
               style={{ width: `${porcentajeVendido}%` }}
             />
           </div>
@@ -125,7 +126,7 @@ const Entradas = ({ onComprar, vendidas, onReiniciarCupo }) => {
           )}
         </div>
       </div>
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+      <div className="ticket-plans mt-6 grid gap-6 lg:grid-cols-2">
         {planes.map((plan) => (
           <Tarjeta
             key={plan.id}

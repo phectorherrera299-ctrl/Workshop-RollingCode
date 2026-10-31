@@ -5,7 +5,8 @@ const calcular = (fechaLimite) => {
   const dias = Math.floor(restante / 86400000);
   const horas = Math.floor((restante % 86400000) / 3600000);
   const minutos = Math.floor((restante % 3600000) / 60000);
-  return { dias, horas, minutos };
+  const segundos = Math.floor((restante % 60000) / 1000);
+  return { dias, horas, minutos, segundos };
 };
 
 const useCuentaRegresiva = (fechaLimite) => {
