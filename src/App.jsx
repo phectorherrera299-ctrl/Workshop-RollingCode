@@ -12,6 +12,7 @@ import Sponsors from "./components/Sponsors";
 import SumateSponsor from "./components/SumateSponsor";
 import BotonWhatsapp from "./components/BotonWhatsapp";
 import ScrollReveal from "./components/ScrollReveal";
+import ChatBot from "./components/ChatBot";
 
 import { useState } from "react";
 
@@ -40,6 +41,7 @@ function App() {
           </div>
           <ScrollReveal><SumateSponsor /></ScrollReveal>
           <ScrollReveal><Ubicacion /></ScrollReveal>
+          <ChatBot></ChatBot>
         </Container>
       </main>
       <Footer />
