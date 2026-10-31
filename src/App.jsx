@@ -10,7 +10,6 @@ import { Footer } from "./components/Footer";
 import Agenda from "./components/Agenda";
 import Sponsors from "./components/Sponsors";
 import SumateSponsor from "./components/SumateSponsor";
-import BotonWhatsapp from "./components/BotonWhatsapp";
 import ScrollReveal from "./components/ScrollReveal";
 import ChatBot from "./components/ChatBot";
 import { CUPO_PRESENCIAL, VENDIDAS_INICIALES } from "./data/cupo";
@@ -74,7 +73,7 @@ function App() {
         </Container>
       </main>
       <Footer />
-      <BotonWhatsapp />
+      <ChatBot></ChatBot>
     </>
   );
 }
