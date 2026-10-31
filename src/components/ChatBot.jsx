@@ -24,7 +24,9 @@ const findQuestion = (text) => {
   let best = null;
   let bestScore = 0;
   for (const item of preguntas) {
-    const score = item.keywords.filter((k) => padded.includes(` ${normalize(k)} `)).length;
+    const score = item.keywords.filter((k) =>
+      padded.includes(` ${normalize(k)} `),
+    ).length;
     if (score > bestScore) {
       best = item;
       bestScore = score;
@@ -62,7 +64,17 @@ export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([{ from: "bot", text: welcome }]);
+  const [showHint, setShowHint] = useState(false);
   const endRef = useRef(null);
+
+  useEffect(() => {
+    const showTimer = setTimeout(() => setShowHint(true), 5000);
+    const hideTimer = setTimeout(() => setShowHint(false), 13000);
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -78,7 +90,7 @@ export default function ChatBot() {
     setMessages((prev) => [...prev, { from: "user", text: clean }]);
     setTimeout(
       () => setMessages((prev) => [...prev, { from: "bot", ...reply }]),
-      400
+      400,
     );
   };
 
@@ -89,11 +101,15 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 sm:bottom-12 sm:right-12">
       {open && (
-        <div className="flex h-[28rem] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-rc-box border border-rc-border bg-rc-surface shadow-2xl sm:w-80">
+        <div className="flex h-[28rem] max-h-[70vh] w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-rc-box border border-rc-border bg-rc-surface shadow-2xl sm:w-80">
           <div className="bg-rc-gradient flex items-center gap-2 px-4 py-3 text-rc-white">
-            <img src={logoSrc} alt="" className="h-8 w-8 rounded-full object-cover" />
+            <img
+              src={logoSrc}
+              alt=""
+              className="h-8 w-8 rounded-full object-cover"
+            />
             <span className="flex-1 text-sm font-semibold">{botName}</span>
             <button
               onClick={() => setOpen(false)}
@@ -106,7 +122,10 @@ export default function ChatBot() {
 
           <div className="flex-1 space-y-2 overflow-y-auto bg-rc-black p-3">
             {messages.map((m, i) => (
-              <div key={i} className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                key={i}
+                className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}
+              >
                 <div
                   className={`max-w-[85%] rounded-rc-option px-3 py-2 text-sm ${
                     m.from === "user"
@@ -134,7 +153,10 @@ export default function ChatBot() {
             ))}
           </div>
 
-          <form onSubmit={handleSubmit} className="flex gap-2 border-t border-rc-border bg-rc-surface p-2">
+          <form
+            onSubmit={handleSubmit}
+            className="flex gap-2 border-t border-rc-border bg-rc-surface p-2"
+          >
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -151,17 +173,57 @@ export default function ChatBot() {
         </div>
       )}
 
-      <button
-        onClick={() => setOpen((o) => !o)}
-        aria-label={open ? "Cerrar chat" : "Abrir chat"}
-        className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-rc-black shadow-lg ring-2 ring-rc-red transition hover:scale-105"
-      >
-        {open ? (
-          <span className="text-xl text-rc-white">✕</span>
-        ) : (
-          <img src={logoSrc} alt="Abrir chat" className="h-full w-full object-cover" />
+      {showHint && !open && (
+        <div className="relative max-w-[16rem] rounded-rc-option bg-rc-white shadow-2xl">
+          <button
+            onClick={() => {
+              setOpen(true);
+              setShowHint(false);
+            }}
+            className="block px-4 py-3 pr-9 text-left text-sm font-semibold text-rc-black"
+          >
+            ¡Hola! 👋 ¿Tenés dudas sobre el workshop?
+          </button>
+          <button
+            onClick={() => setShowHint(false)}
+            aria-label="Cerrar aviso"
+            className="absolute right-2 top-2 text-sm leading-none text-rc-text-on-white hover:text-rc-black"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+
+      <div className="relative">
+        {!open && (
+          <span className="absolute inset-0 animate-[ping_1.5s_ease-out_2s_3] rounded-full bg-rc-red opacity-30 motion-reduce:animate-none" />
         )}
-      </button>
+        <button
+          onClick={() => {
+            setOpen((o) => !o);
+            setShowHint(false);
+          }}
+          aria-label={open ? "Cerrar chat" : "Abrir chat"}
+          className={`relative flex items-center gap-3 rounded-full text-rc-white shadow-2xl ring-2 ring-white/30 transition hover:scale-105 ${
+            open
+              ? "h-14 w-14 justify-center bg-rc-red"
+              : "bg-rc-gradient py-2 pl-2 pr-6"
+          }`}
+        >
+          {open ? (
+            <span className="text-xl">✕</span>
+          ) : (
+            <>
+              <img
+                src={logoSrc}
+                alt=""
+                className="h-12 w-12 rounded-full bg-rc-black object-cover ring-2 ring-white"
+              />
+              <span className="text-sm font-extrabold">¿Tenés dudas?</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 }
