@@ -103,9 +103,6 @@
 .window-caption { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px; font-size: 14px; font-weight: 800; }
 .window-caption svg { color: var(--color-rc-red); flex-shrink: 0; }
 .gallery-viewport:hover .gallery-track, .gallery-viewport:focus-within .gallery-track, .gallery-viewport.is-paused .gallery-track { animation-play-state: paused; }
-.gallery-controls { display: flex; justify-content: space-between; gap: 16px; font-size: 12px; color: var(--color-rc-text-mute); }
-.gallery-controls span, .gallery-controls button { display: flex; align-items: center; gap: 8px; }
-.gallery-controls button { cursor: pointer; border: 1px solid var(--color-rc-border); border-radius: 24px; padding: 8px 14px; }
 .gallery-dialog { position: fixed; inset: 0; margin: auto; padding: 0; width: min(960px, 94vw); max-height: calc(100dvh - 64px); overflow-y: auto; border: 1px solid var(--color-rc-border); border-radius: 24px; background: var(--color-rc-surface); color: var(--color-rc-white); }
 .gallery-dialog::backdrop { background: #000d; backdrop-filter: blur(10px); }
 .gallery-dialog-content { position: relative; padding: 60px 24px 8px; }
@@ -144,5 +141,5 @@
 @keyframes ticket-stripes { to { background-position: 35px 0; } }
 @keyframes ticket-shine { 60%, 100% { transform: translateX(100%); } }
 @keyframes path-in { from { opacity: .2; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-@media (max-width: 767px) { .gallery-heading { align-items: start; flex-direction: column; gap: 16px; } .gallery-controls { flex-wrap: wrap; } .gallery-window { width: 78vw; } .photo-footer { flex-direction: column; align-items: start; padding: 18px; } }
+@media (max-width: 767px) { .gallery-heading { align-items: start; flex-direction: column; gap: 16px; } .gallery-window { width: 78vw; } .photo-footer { flex-direction: column; align-items: start; padding: 18px; } }
 @media (prefers-reduced-motion: reduce) { .gallery-track { animation: none; transform: none; } .gallery-viewport { overflow-x: auto; } .gallery-group:nth-child(2) { display: none; } .gallery-window, .gallery-window:nth-child(2) { transform: none; } .ticket-progress-fill, .ticket-progress-fill::after, .second-tick, .path-animated, .benefit-detail, .faq-item[open] > p { animation: none; } }

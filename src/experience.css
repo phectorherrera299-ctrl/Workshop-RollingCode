@@ -48,8 +48,6 @@ button, a, input, summary { -webkit-tap-highlight-color:transparent; }
   main > .gap-24 { gap:64px; }
   .gallery-viewport { margin-left:-16px; margin-right:-16px; }
   .gallery-heading { padding:0; }
-  .gallery-controls { align-items:start; }
-  .gallery-controls > span { max-width:210px; }
   .quick-actions { width:max-content; max-width:calc(100vw - 24px); }
   .quick-actions > button:first-child { font-size:12px; padding-left:16px; padding-right:16px; }
   .chat-widget > .relative > button { min-width:60px; min-height:60px; }
